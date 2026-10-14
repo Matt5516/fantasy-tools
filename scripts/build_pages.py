@@ -23,6 +23,10 @@ for pos in ['QB', 'RB', 'WR', 'TE']:
 sf_sorted = sorted(valued, key=lambda p: -(p.get('v2') or p['v1']))
 sf_rank = {p['id']: i + 1 for i, p in enumerate(sf_sorted)}; one_rank = {p['id']: i + 1 for i, p in enumerate(valued)}
 PAGES = []
+TOOLS = S.get('tools', []); LM = S.get('linkmap', {})
+LINK_RE = re.compile(r'href="((?:\.\./)*|\./)?(\?[^"#]*)?#(tool|cobra|market|trade|league|rankings)"')
+def fix_links(t):  # old one-page anchors -> tool pages (same mapping as _build/build.py)
+    return LINK_RE.sub(lambda m: f'href="{m.group(1) or ""}{LM[m.group(3)]}/{m.group(2) or ""}"' if m.group(3) in LM and (m.group(1) or m.group(2)) else m.group(0), t)
 
 def write(slug, section, nav, title, desc, h1, lede, answer, body, cta=('Open the trade calculator', ''), cta_text='Check any trade with players and picks.', ld_extra=None, featured=False, changefreq='daily'):
     url = URL + slug + '/'
@@ -32,9 +36,9 @@ def write(slug, section, nav, title, desc, h1, lede, answer, body, cta=('Open th
     ld = json.dumps({"@context": "https://schema.org", "@graph": g}, ensure_ascii=False).replace('</', '<\\/')
     t = S['template']
     for k, v in [('__LD__', ld), ('__TITLE__', E(title)), ('__DESC__', E(desc)), ('__H1__', h1), ('__LEDE__', lede), ('__ANSWER__', answer), ('__BODY__', body),
-                 ('__SECTION__', E(section)), ('__NAV__', E(nav)), ('__UPDH__', genh), ('__UPD__', gen), ('__CTAL__', E(cta[0])), ('__CTAQ__', cta[1]), ('__CTAT__', E(cta_text)), ('__SLUG__', slug)]:
+                 ('__SECTION__', E(section)), ('__NAV__', E(nav)), ('__UPDH__', genh), ('__UPD__', gen), ('__CTAL__', E(cta[0])), ('__CTAQ__', cta[1]), ('__CTAA__', 'tool' if re.search(r'start|sit', cta[0], re.I) else 'trade'), ('__CTAT__', E(cta_text)), ('__SLUG__', slug)]:
         t = t.replace(k, v)
-    d = ROOT / slug; d.mkdir(exist_ok=True); (d / 'index.html').write_text(t); (d / '.generated').write_text('')
+    d = ROOT / slug; d.mkdir(exist_ok=True); (d / 'index.html').write_text(fix_links(t)); (d / '.generated').write_text('')
     PAGES.append(dict(slug=slug, section=section, nav=nav, desc=desc, featured=featured, changefreq=changefreq))
 
 def table(rows, sf=False, n=None, show_val=True):
@@ -155,10 +159,10 @@ write('guides', 'Guides', 'All guides', f'All guides | {NAME}', f'Every {NAME} p
       f'{NAME} guides & rankings', 'Rankings refresh daily from open data.', f'{len(allp)} pages, updated {genh}.', body, changefreq='daily')
 PAGES.pop()
 # ---- sitemap: statics + generated + guides + glossary ----
-ent = [('', '1.0', 'daily')] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.6', p.get('changefreq', 'monthly')) for p in statics] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.5', p['changefreq']) for p in PAGES] + [('guides/', '0.5', 'daily'), ('glossary/', '0.4', 'monthly')]
+ent = [('', '1.0', 'daily')] + [(t + '/', '0.9', 'daily') for t in TOOLS] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.6', p.get('changefreq', 'monthly')) for p in statics] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.5', p['changefreq']) for p in PAGES] + [('guides/', '0.5', 'daily'), ('glossary/', '0.4', 'monthly')]
 (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{URL}{s}</loc><lastmod>{gen}</lastmod><changefreq>{cf}</changefreq><priority>{p}</priority></url>\n' for s, p, cf in ent) + '</urlset>\n')
 # remove stale generated folders (e.g. a player who dropped out of the top 150)
-keep = {p['slug'] for p in allp} | {'guides', 'glossary'}
+keep = {p['slug'] for p in allp} | {'guides', 'glossary'} | set(TOOLS)
 for d in ROOT.iterdir():
     if d.is_dir() and (d / '.generated').exists() and d.name not in keep: shutil.rmtree(d)
 (ROOT / 'data' / 'pages.json').write_text(json.dumps([{k: p[k] for k in ('slug', 'section', 'nav')} for p in PAGES]))

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-root="../" data-repo="fantasy-tools">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -52,7 +52,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="topbar"><div class="wrap">
   <a class="brand" href="../" aria-label="DynastyMath home"><svg class="logo-mark" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#g)"/><path d="M11 33.5l-2.2-15.6 8.4 6.4L24 12l6.8 12.3 8.4-6.4-2.2 15.6z" fill="#fff"/><rect x="11" y="35.6" width="26" height="4.4" rx="1.6" fill="#fff"/><circle cx="24" cy="26.5" r="2.6" fill="url(#g)"/></svg><span class="wordmark">Dynasty<span class="wm-hi">Math</span></span></a>
-  <nav class="topnav" aria-label="Main"><a href="../#tool" class="">Start/Sit</a><a href="../guides/" class="hide-sm">Guides</a><a href="../glossary/" class="hide-sm">Glossary</a>
+  <nav class="topnav" aria-label="Main"><a href="../start-sit/" class="">Start/sit</a><a href="../trade-analyzer/" class="hide-sm">Dynasty trade analyzer</a><a href="../league-import/" class="hide-sm">Sleeper league import</a><a href="../guides/" class="hide-sm">Guides</a>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button></nav>
 </div></header>
 <main id="main"><div class="wrap">
@@ -63,9 +63,9 @@
 <div class="page-grid">
 <article class="prose page-body"><div class="stats s3"><div class="stat"><div class="k">1QB value</div><div class="v">563</div></div><div class="stat"><div class="k">Superflex value</div><div class="v">410</div></div><div class="stat"><div class="k">Position rank</div><div class="v">WR55</div></div><div class="stat"><div class="k">Age</div><div class="v">32</div></div><div class="stat"><div class="k">PPR PPG (2026)</div><div class="v">13.3</div></div><div class="stat"><div class="k">Status</div><div class="v">Questionable</div></div></div>
 <h2>Players with similar value</h2><p>Straight-up trades for any of these are roughly fair in 1QB:</p><div class="table-scroll"><table><thead><tr><th scope="col">#</th><th scope="col">Player</th><th scope="col">Pos rank</th><th scope="col">Age</th><th scope="col">PPR PPG</th><th scope="col">1QB value</th></tr></thead><tbody><tr><td>1</td><td><span class="pos-tag" style="background:#b45309">TE</span> <a href="../dynasty-value-terrance-ferguson/">Terrance Ferguson</a> <span class="hint" style="display:inline">LAR</span></td><td>TE18</td><td>23</td><td>6.4</td><td><b>563</b></td></tr><tr><td>2</td><td><span class="pos-tag" style="background:#1d4ed8">WR</span> <a href="../dynasty-value-chris-godwin/">Chris Godwin</a> <span class="hint" style="display:inline">TB</span></td><td>WR56</td><td>30</td><td>7.7</td><td><b>556</b></td></tr><tr><td>3</td><td><span class="pos-tag" style="background:#1d4ed8">WR</span> <a href="../dynasty-value-courtland-sutton/">Courtland Sutton</a> <span class="hint" style="display:inline">DEN</span></td><td>WR54</td><td>31</td><td>5.5</td><td><b>581</b></td></tr><tr><td>4</td><td><span class="pos-tag" style="background:#1d4ed8">WR</span> <a href="../dynasty-value-khalil-shakir/">Khalil Shakir</a> <span class="hint" style="display:inline">BUF</span></td><td>WR53</td><td>26</td><td>8.3</td><td><b>583</b></td></tr><tr><td>5</td><td><span class="pos-tag" style="background:#b45309">TE</span> <a href="../dynasty-value-dallas-goedert/">Dallas Goedert</a> <span class="hint" style="display:inline">PHI</span></td><td>TE16</td><td>31</td><td>11.6</td><td><b>586</b></td></tr><tr><td>6</td><td><span class="pos-tag" style="background:#b45309">TE</span> <a href="../dynasty-value-brenton-strange/">Brenton Strange</a> <span class="hint" style="display:inline">JAX</span></td><td>TE17</td><td>25</td><td>10.1</td><td><b>586</b></td></tr></tbody></table></div>
-<p><a class="btn" href="../?a=2449&b=12487#trade">Compare Stefon Diggs vs Terrance Ferguson</a></p><p class="hint">Values: DynastyProcess open data (GPL-3.0), updated 2026-10-09. Stats and projections: Sleeper public API. Updated October 14, 2026. Values are a starting point, not a guarantee; adjust for your league.</p></article>
+<p><a class="btn" href="../trade-analyzer/?a=2449&b=12487">Compare Stefon Diggs vs Terrance Ferguson</a></p><p class="hint">Values: DynastyProcess open data (GPL-3.0), updated 2026-10-09. Stats and projections: Sleeper public API. Updated October 14, 2026. Values are a starting point, not a guarantee; adjust for your league.</p></article>
 <aside class="side">
- <div class="cta-card"><b>DynastyMath</b><p>Check any trade with players and picks.</p><a class="btn" href="../?a=2449#tool">Trade calculator with Diggs</a></div>
+ <div class="cta-card"><b>DynastyMath</b><p>Check any trade with players and picks.</p><a class="btn" href="../trade-analyzer/?a=2449">Trade calculator with Diggs</a></div>
  
 </aside>
 </div>
@@ -77,6 +77,7 @@
 <footer class="site"><div class="wrap">
 <div class="foot-grid">
  <div><a class="brand" href="../"><svg class="logo-mark" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="f" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#f)"/><path d="M11 33.5l-2.2-15.6 8.4 6.4L24 12l6.8 12.3 8.4-6.4-2.2 15.6z" fill="#fff"/><rect x="11" y="35.6" width="26" height="4.4" rx="1.6" fill="#fff"/><circle cx="24" cy="26.5" r="2.6" fill="url(#f)"/></svg><span class="wordmark">Dynasty<span class="wm-hi">Math</span></span></a><p class="hint">Win the week. Win the trade. Build the dynasty.</p></div>
+ <div><h2 class="foot-h">Free tools</h2><ul class="foot-links"><li><a href="../start-sit/">Start/sit tool</a></li><li><a href="../trade-analyzer/">Dynasty trade analyzer</a></li><li><a href="../league-import/">Sleeper league import</a></li><li><a href="../waiver-wire/">Waiver wire helper</a></li><li><a href="../rookie-draft-board/">Rookie draft board</a></li></ul></div>
  <div><h2 class="foot-h">Popular guides</h2><ul class="foot-links"><li><a href="../how-dynasty-trade-values-work/">How dynasty trade values work</a></li><li><a href="../how-to-decide-start-sit/">How to make start/sit decisions</a></li><li><a href="../dynasty-trade-calculators-compared/">Trade calculators compared</a></li><li><a href="../guides/">All guides →</a></li></ul></div>
  <div><h2 class="foot-h">More free tools</h2><ul class="foot-links"><li><a href="https://matt5516.github.io/card-flip-calc/">GradeOrFlip</a></li><li><a href="https://matt5516.github.io/open-enrollment-calc/">EnrollMath</a></li><li><a href="../glossary/">Glossary</a></li></ul></div>
 </div>

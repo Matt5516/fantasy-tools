@@ -55,4 +55,45 @@
   d.addEventListener('click',function(e){ if(e.target.closest('#themeBtn')) setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
   // Email signup placeholder (no provider connected yet)
   d.addEventListener('submit',function(e){ var f=e.target; if(f.matches('form[data-signup-placeholder]')){ e.preventDefault(); var m=f.parentNode.querySelector('.signup-msg'); if(m) m.textContent='Thanks! The email list opens soon. We have not stored your address.'; } });
+
+  // ---- v4 shared components ----
+  // Preset chips: <div class="presets" data-target="inputId"><button data-v="25">$25</button>…</div> sets the input and fires input
+  d.addEventListener('click',function(e){ var b=e.target.closest('.presets button'); if(!b) return; var box=b.parentNode, inp=d.getElementById(box.dataset.target); if(!inp) return;
+    inp.value=b.dataset.v; inp.dispatchEvent(new Event('input',{bubbles:true})); UI.syncPresets(); });
+  UI.syncPresets=function(){ d.querySelectorAll('.presets').forEach(function(box){ var inp=d.getElementById(box.dataset.target); if(!inp) return; box.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed',String(b.dataset.v===String(inp.value))); }); }); };
+  d.addEventListener('input',function(e){ if(e.target.id) UI.syncPresets(); });
+  // Stepper: <div class="stepper"><button data-step="-1">−</button><input …><button data-step="1">+</button></div>
+  d.addEventListener('click',function(e){ var b=e.target.closest('.stepper button'); if(!b) return; var inp=b.parentNode.querySelector('input'); var v=(+inp.value||0)+(+b.dataset.step)*(+inp.step||1);
+    if(inp.min!=='') v=Math.max(+inp.min,v); if(inp.max!=='') v=Math.min(+inp.max,v); inp.value=v; inp.dispatchEvent(new Event('input',{bubbles:true})); });
+  // Range + number pairs: <input type=range data-mirror="id">
+  d.addEventListener('input',function(e){ var r=e.target; if(r.dataset&&r.dataset.mirror){ var t=d.getElementById(r.dataset.mirror); t.value=r.value; t.dispatchEvent(new Event('input',{bubbles:true})); }
+    d.querySelectorAll('input[data-mirror="'+r.id+'"]').forEach(function(x){ if(x!==r) x.value=r.value; }); });
+  // Print / save as PDF
+  d.addEventListener('click',function(e){ if(e.target.closest('[data-print]')) window.print(); });
+  // Tiny localStorage store
+  UI.store={ get:function(k,def){ try{ var v=JSON.parse(localStorage.getItem(k)); return v==null?def:v; }catch(e){ return def; } }, set:function(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
+  UI.root=function(){ return d.documentElement.getAttribute('data-root')||''; };
+  if(d.readyState!=='loading') UI.syncPresets(); else d.addEventListener('DOMContentLoaded',UI.syncPresets);
+})();
+/* Feedback: thumbs + "what should we add?" + optional email. Opens a prefilled GitHub issue (public, labelled "feedback")
+   on this site's repo, or an email to the owner. Nothing is sent until the visitor submits it in GitHub or their mail app. */
+(function(){ var d=document, repo=d.documentElement.getAttribute('data-repo'), MAIL='matt63sorensen@yahoo.com'; if(!repo) return;
+  function init(){ if(d.getElementById('fbBtn')) return;
+    var b=d.createElement('button'); b.type='button'; b.id='fbBtn'; b.className='fb-btn'; b.innerHTML='<span aria-hidden="true">💬</span>Feedback'; d.body.appendChild(b);
+    var dl=d.createElement('dialog'); dl.className='fb'; dl.setAttribute('aria-labelledby','fbH');
+    dl.innerHTML='<form method="dialog" id="fbForm"><h2 id="fbH">Was this useful?</h2><div class="fb-thumbs" role="group" aria-label="Was this useful?"><button type="button" data-r="yes" aria-pressed="false">👍 Yes</button><button type="button" data-r="no" aria-pressed="false">👎 Not really</button></div>'+
+      '<label for="fbText">What should we add or fix?</label><textarea id="fbText" rows="3" maxlength="1500" placeholder="e.g. add SGC crossover pricing"></textarea>'+
+      '<label for="fbEmail" style="margin-top:8px;display:block">Your email <span class="hint" style="display:inline">(optional, only if you want a reply)</span></label><input id="fbEmail" type="email" autocomplete="email" placeholder="you@example.com">'+
+      '<p class="fb-url">Page: <span id="fbUrl"></span></p>'+
+      '<div class="actions"><button type="button" class="btn sm" id="fbGh">Send via GitHub</button><button type="button" class="btn ghost sm" id="fbMail">Send by email</button><button type="submit" class="btn ghost sm" value="cancel">Close</button></div>'+
+      '<p class="hint" style="margin-top:8px">GitHub issues are public and need a free GitHub login; your email is never put in a GitHub issue. No GitHub? Use “Send by email”.</p></form>';
+    d.body.appendChild(dl); var rate='';
+    function msg(){ var t=d.getElementById('fbText').value.trim(); return {t:t, title:'[feedback] '+(rate==='yes'?'👍 ':rate==='no'?'👎 ':'')+(t.slice(0,60)||d.title.split('|')[0].trim()),
+      body:'**Page:** '+location.href+'\n**Useful:** '+(rate||'not answered')+'\n\n**What should we add or fix?**\n'+(t||'(nothing written)')+'\n\n---\nSent from the feedback button.'}; }
+    b.addEventListener('click',function(){ d.getElementById('fbUrl').textContent=location.href; if(dl.showModal) dl.showModal(); else dl.setAttribute('open',''); });
+    dl.addEventListener('click',function(e){ var r=e.target.closest('[data-r]'); if(r){ rate=r.dataset.r; dl.querySelectorAll('[data-r]').forEach(function(x){ x.setAttribute('aria-pressed',String(x===r)); }); } });
+    d.getElementById('fbGh').addEventListener('click',function(){ var m=msg(); window.open('https://github.com/Matt5516/'+repo+'/issues/new?template=feedback.md&labels=feedback&title='+encodeURIComponent(m.title)+'&body='+encodeURIComponent(m.body),'_blank','noopener'); dl.close&&dl.close(); });
+    d.getElementById('fbMail').addEventListener('click',function(){ var m=msg(), e=d.getElementById('fbEmail').value.trim(); location.href='mailto:'+MAIL+'?subject='+encodeURIComponent(m.title)+'&body='+encodeURIComponent(m.body+(e?'\nReply to: '+e:'')); dl.close&&dl.close(); });
+  }
+  if(d.readyState==='loading') d.addEventListener('DOMContentLoaded',init); else init();
 })();

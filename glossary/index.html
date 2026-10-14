@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-root="../" data-repo="fantasy-tools">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -52,7 +52,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="topbar"><div class="wrap">
   <a class="brand" href="../" aria-label="DynastyMath home"><svg class="logo-mark" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#g)"/><path d="M11 33.5l-2.2-15.6 8.4 6.4L24 12l6.8 12.3 8.4-6.4-2.2 15.6z" fill="#fff"/><rect x="11" y="35.6" width="26" height="4.4" rx="1.6" fill="#fff"/><circle cx="24" cy="26.5" r="2.6" fill="url(#g)"/></svg><span class="wordmark">Dynasty<span class="wm-hi">Math</span></span></a>
-  <nav class="topnav" aria-label="Main"><a href="../#tool" class="">Start/Sit</a><a href="../guides/" class="hide-sm">Guides</a><a href="../glossary/" class="hide-sm">Glossary</a>
+  <nav class="topnav" aria-label="Main"><a href="../start-sit/" class="">Start/sit</a><a href="../trade-analyzer/" class="hide-sm">Dynasty trade analyzer</a><a href="../league-import/" class="hide-sm">Sleeper league import</a><a href="../guides/" class="hide-sm">Guides</a>
     <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button></nav>
 </div></header>
 <main id="main"><div class="wrap">
@@ -63,7 +63,7 @@
 <div class="page-grid">
 <article class="prose page-body"><p class="hint">Jump to: <a href="#l-A">A</a> <a href="#l-B">B</a> <a href="#l-C">C</a> <a href="#l-D">D</a> <a href="#l-F">F</a> <a href="#l-H">H</a> <a href="#l-P">P</a> <a href="#l-R">R</a> <a href="#l-S">S</a> <a href="#l-T">T</a> <a href="#l-W">W</a></p><dl class="gloss"><h2 id="l-A">A</h2><dt id="adp">ADP</dt><dd>Average draft position: where a player is typically drafted.</dd><h2 id="l-B">B</h2><dt id="bye-week">Bye week</dt><dd>The week a team does not play.</dd><h2 id="l-C">C</h2><dt id="consolidation-trade">Consolidation trade</dt><dd>Trading several pieces for one better player.</dd><dt id="contender">Contender</dt><dd>A team built to win now; usually trades picks for proven starters.</dd><h2 id="l-D">D</h2><dt id="dynasty-league">Dynasty league</dt><dd>A league where you keep your whole roster year to year and draft rookies.</dd><h2 id="l-F">F</h2><dt id="floor-ceiling">Floor / ceiling</dt><dd>A player’s likely worst and best realistic weekly outcomes.</dd><h2 id="l-H">H</h2><dt id="handcuff">Handcuff</dt><dd>The backup to a starter, usually a running back, who would take over if the starter is hurt.</dd><h2 id="l-P">P</h2><dt id="ppr">PPR</dt><dd>Point per reception scoring. <a href="../ppr-vs-half-ppr/">PPR vs half</a>.</dd><h2 id="l-R">R</h2><dt id="rebuild">Rebuild</dt><dd>Trading veterans for young players and picks to win later.</dd><dt id="rookie-draft">Rookie draft</dt><dd>Annual dynasty draft of incoming rookies; picks are tradable assets. <a href="../rookie-draft-pick-values/">Pick values</a>.</dd><h2 id="l-S">S</h2><dt id="start-sit">Start/sit</dt><dd>The weekly decision of who goes in your lineup. <a href="../how-to-decide-start-sit/">How to decide</a>.</dd><dt id="superflex">Superflex</dt><dd>A lineup slot that can hold a QB. <a href="../what-is-superflex/">Explained</a>.</dd><h2 id="l-T">T</h2><dt id="taxi-squad">Taxi squad</dt><dd>Dynasty bench spots for young players that do not count against the main roster.</dd><dt id="te-premium">TE premium</dt><dd>Extra points per catch for tight ends. <a href="../te-premium-explained/">Explained</a>.</dd><dt id="trade-value">Trade value</dt><dd>A number placing players and picks on one scale. <a href="../how-dynasty-trade-values-work/">How it works</a>.</dd><h2 id="l-W">W</h2><dt id="waiver-wire">Waiver wire</dt><dd>The pool of unrostered players. <a href="../waiver-wire-trending/">Trending adds</a>.</dd></dl></article>
 <aside class="side">
- <div class="cta-card"><b>DynastyMath</b><p>Win the week. Win the trade. Build the dynasty.</p><a class="btn" href="../#tool">Start/sit &amp; trade tools</a></div>
+ <div class="cta-card"><b>DynastyMath</b><p>Win the week. Win the trade. Build the dynasty.</p><a class="btn" href="../start-sit/">Start/sit &amp; trade tools</a></div>
  
 </aside>
 </div>
@@ -75,6 +75,7 @@
 <footer class="site"><div class="wrap">
 <div class="foot-grid">
  <div><a class="brand" href="../"><svg class="logo-mark" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="f" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#f)"/><path d="M11 33.5l-2.2-15.6 8.4 6.4L24 12l6.8 12.3 8.4-6.4-2.2 15.6z" fill="#fff"/><rect x="11" y="35.6" width="26" height="4.4" rx="1.6" fill="#fff"/><circle cx="24" cy="26.5" r="2.6" fill="url(#f)"/></svg><span class="wordmark">Dynasty<span class="wm-hi">Math</span></span></a><p class="hint">Win the week. Win the trade. Build the dynasty.</p></div>
+ <div><h2 class="foot-h">Free tools</h2><ul class="foot-links"><li><a href="../start-sit/">Start/sit tool</a></li><li><a href="../trade-analyzer/">Dynasty trade analyzer</a></li><li><a href="../league-import/">Sleeper league import</a></li><li><a href="../waiver-wire/">Waiver wire helper</a></li><li><a href="../rookie-draft-board/">Rookie draft board</a></li></ul></div>
  <div><h2 class="foot-h">Popular guides</h2><ul class="foot-links"><li><a href="../how-dynasty-trade-values-work/">How dynasty trade values work</a></li><li><a href="../how-to-decide-start-sit/">How to make start/sit decisions</a></li><li><a href="../dynasty-trade-calculators-compared/">Trade calculators compared</a></li><li><a href="../guides/">All guides →</a></li></ul></div>
  <div><h2 class="foot-h">More free tools</h2><ul class="foot-links"><li><a href="https://matt5516.github.io/card-flip-calc/">GradeOrFlip</a></li><li><a href="https://matt5516.github.io/open-enrollment-calc/">EnrollMath</a></li><li><a href="../glossary/">Glossary</a></li></ul></div>
 </div>

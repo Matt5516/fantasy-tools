@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://matt5516.github.io/fantasy-tools/</loc><lastmod>2026-10-14</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://matt5516.github.io/fantasy-tools/start-sit/</loc><lastmod>2026-10-14</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://matt5516.github.io/fantasy-tools/trade-analyzer/</loc><lastmod>2026-10-14</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://matt5516.github.io/fantasy-tools/league-import/</loc><lastmod>2026-10-14</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://matt5516.github.io/fantasy-tools/waiver-wire/</loc><lastmod>2026-10-14</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://matt5516.github.io/fantasy-tools/rookie-draft-board/</loc><lastmod>2026-10-14</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
   <url><loc>https://matt5516.github.io/fantasy-tools/how-dynasty-trade-values-work/</loc><lastmod>2026-10-14</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://matt5516.github.io/fantasy-tools/what-is-superflex/</loc><lastmod>2026-10-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://matt5516.github.io/fantasy-tools/te-premium-explained/</loc><lastmod>2026-10-14</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
