@@ -207,3 +207,6 @@ dialog.fb textarea,dialog.fb input{width:100%;box-sizing:border-box}
 dialog.fb .fb-url{font-size:.8rem;color:var(--muted);word-break:break-all}
 dialog.fb .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 @media print{.fb-btn{display:none}}
+/* reserve space for JS-filled results (avoids layout shift) */
+#ssChips{min-height:104px}#ssOut{min-height:420px}#aChips,#bChips{min-height:48px}#trOut{min-height:780px}#dbOut{min-height:900px}
+#cpPlans{min-height:1680px}@media(min-width:700px){#cpPlans{min-height:1160px}}#cpOut{min-height:600px}
