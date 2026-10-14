@@ -158,3 +158,4 @@ table.bk input{min-width:70px}table.bk td:first-child input{min-width:130px}
 .gloss dt{font-weight:800;margin-top:12px;font-family:var(--display)}.gloss dd{margin:2px 0 0}
 ul.cols{columns:2 180px;padding-left:18px}ul.cols li{margin:3px 0}
 @media (prefers-reduced-motion:reduce){.float-a,.float-b,.draw,.pop{animation:none!important;stroke-dashoffset:0}}
+.answer-box .answer{background:none;border:0;padding:0;margin:0;border-radius:0}
