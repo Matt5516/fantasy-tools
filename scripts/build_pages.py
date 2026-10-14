@@ -129,6 +129,7 @@ for p in valued[:150]:
     v1, v2 = p['v1'], p.get('v2') or p['v1']
     comps = sorted([q for q in valued if q['id'] != p['id']], key=lambda q: abs(q['v1'] - v1))[:6]
     pk = min(picks, key=lambda q: abs(q['v1'] - v1)) if picks else None
+    if pk and abs(pk['v1'] - v1) > 0.2 * v1: pk = None  # only mention a pick when it is genuinely comparable
     nm = E(p['n'])
     write(f'dynasty-value-{slugify(p["n"])}', 'Player values', f'{p["n"]} dynasty value', f'{p["n"]} Dynasty Value {SEASON}: Rank & Trade Comps',
           f'{p["n"]} dynasty value today: #{one_rank[p["id"]]} overall in 1QB, #{sf_rank[p["id"]]} in superflex, {p["pos"]}{pr.get(p["id"])}. Comparable players and picks. Updated {genh}.',
