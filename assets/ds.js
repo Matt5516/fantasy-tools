@@ -104,7 +104,7 @@
   if(embed) d.documentElement.classList.add('embed');
   function cleanUrl(){ var u=new URL(location.href); u.searchParams.delete('embed'); return u.toString(); }
   function resultEl(){ return d.querySelector('main .sticky [aria-live]')||d.querySelector('main [aria-live]'); }
-  function lines(){ var el=resultEl(); if(!el) return []; return (el.innerText||'').split('\n').map(function(s){return s.trim();}).filter(function(s){return s&&s.length<90;}).slice(0,7); }
+  function lines(){ var el=resultEl(); if(!el) return []; var L=(el.innerText||'').split('\n').map(function(s){return s.trim();}).filter(function(s){return s&&s.length<90;}); var o=[]; L.forEach(function(s){ if(o.length&&/^[-+−$€£\d]/.test(s)&&!/[:\d]$/.test(o[o.length-1])) o[o.length-1]+=': '+s; else o.push(s); }); return o.slice(0,7); }
   function wrap(ctx,t,max){ var out=[],cur=''; t.split(' ').forEach(function(wd){ var x=cur?cur+' '+wd:wd; if(ctx.measureText(x).width>max&&cur){out.push(cur);cur=wd;} else cur=x; }); if(cur) out.push(cur); return out; }
   function image(){ var cs=getComputedStyle(d.documentElement), b1=cs.getPropertyValue('--brand').trim()||'#333', b2=cs.getPropertyValue('--brand-2').trim()||b1;
     var cv=d.createElement('canvas'); cv.width=1200; cv.height=630; var x=cv.getContext('2d'); var g=x.createLinearGradient(0,0,1200,630); g.addColorStop(0,b1); g.addColorStop(1,b2); x.fillStyle=g; x.fillRect(0,0,1200,630);

@@ -201,3 +201,13 @@ for d in ROOT.iterdir():
     if d.is_dir() and (d / '.generated').exists() and d.name not in keep: shutil.rmtree(d)
 (ROOT / 'data' / 'pages.json').write_text(json.dumps([{k: p[k] for k in ('slug', 'section', 'nav')} for p in PAGES]))
 print(f'fantasy data pages: {len(PAGES)} generated + {len(statics)} static + guides/glossary; total URLs in sitemap {len(ent)}')
+# ---- link this week's cheat sheet from the hub and start/sit pages (idempotent; refreshed daily) ----
+if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
+    for rel, pre in [('index.html', ''), ('start-sit/index.html', '../'), ('waiver-wire/index.html', '../')]:
+        f = ROOT / rel
+        if not f.exists(): continue
+        h = re.sub(r'<!--wk-->.*?<!--/wk-->', '', f.read_text(), flags=re.S)
+        lk = f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a></p><!--/wk-->'
+        if rel == 'index.html': h = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + lk, h, count=1, flags=re.S); f.write_text(h); continue
+        h = h.replace('<main id="main"><div class="wrap">', f'<main id="main"><div class="wrap"><!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a></p><!--/wk-->', 1)
+        f.write_text(h)
