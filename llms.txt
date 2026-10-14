@@ -60,3 +60,4 @@ No. This is a free fantasy football tool for season-long leagues. It doesn't tak
 ## Related tools
 - [GradeOrFlip](https://matt5516.github.io/card-flip-calc/): Is it worth grading? Profit and break-even by grade for PSA, SGC, BGS and CGC.
 - [EnrollMath](https://matt5516.github.io/open-enrollment-calc/): HSA vs PPO break-even, COBRA cost and marketplace comparison with 2026/2027 IRS limits.
+- [BagOrBulk](https://matt5516.github.io/material-calc/): Concrete, gravel, mulch and topsoil calculators: yards, tons, bags, and whether bags or bulk costs less.
