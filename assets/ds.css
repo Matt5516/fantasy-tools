@@ -210,3 +210,9 @@ dialog.fb .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 /* reserve space for JS-filled results (avoids layout shift) */
 #ssChips{min-height:104px}#ssOut{min-height:420px}#aChips,#bChips{min-height:48px}#trOut{min-height:780px}#dbOut{min-height:900px}
 #cpPlans{min-height:1680px}@media(min-width:700px){#cpPlans{min-height:1160px}}#cpOut{min-height:600px}
+/* v5 share + embed */
+.share-embed{margin:22px 0;padding:18px 20px;border-radius:16px;background:var(--surface-2)}.share-embed h2{margin:0 0 4px;font-size:1.15rem}
+.embed-box{margin-top:12px}.embed-box summary{cursor:pointer;font-weight:700;min-height:32px}.embed-code{width:100%;font:13px/1.4 ui-monospace,monospace;padding:10px;border-radius:10px;border:1px solid var(--line,#ccc);background:var(--surface,#fff);color:var(--ink);box-sizing:border-box}
+html.embed .topbar,html.embed footer.site,html.embed .content,html.embed .crumbs,html.embed .share-embed,html.embed .skip,html.embed .how,html.embed .eyebrow,html.embed #fbBtn,html.embed .fb-btn{display:none!important}
+html.embed .page-hero{padding-top:8px;padding-bottom:4px}html.embed body{padding-bottom:44px}
+.embed-credit{position:fixed;right:10px;bottom:10px;z-index:50;background:var(--brand);color:var(--brand-ink,#fff);padding:6px 12px;border-radius:999px;font-weight:700;font-size:.85rem;text-decoration:none}

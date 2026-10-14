@@ -97,3 +97,35 @@
   }
   if(d.readyState==='loading') d.addEventListener('DOMContentLoaded',init); else init();
 })();
+/* v5: share bar, result image, embed mode */
+(function(){ var d=document, w=window;
+  var q=new URLSearchParams(location.search), inFrame=false; try{inFrame=w.self!==w.top;}catch(e){inFrame=true;}
+  var embed=q.get('embed')==='1';
+  if(embed) d.documentElement.classList.add('embed');
+  function cleanUrl(){ var u=new URL(location.href); u.searchParams.delete('embed'); return u.toString(); }
+  function resultEl(){ return d.querySelector('main .sticky [aria-live]')||d.querySelector('main [aria-live]'); }
+  function lines(){ var el=resultEl(); if(!el) return []; return (el.innerText||'').split('\n').map(function(s){return s.trim();}).filter(function(s){return s&&s.length<90;}).slice(0,7); }
+  function wrap(ctx,t,max){ var out=[],cur=''; t.split(' ').forEach(function(wd){ var x=cur?cur+' '+wd:wd; if(ctx.measureText(x).width>max&&cur){out.push(cur);cur=wd;} else cur=x; }); if(cur) out.push(cur); return out; }
+  function image(){ var cs=getComputedStyle(d.documentElement), b1=cs.getPropertyValue('--brand').trim()||'#333', b2=cs.getPropertyValue('--brand-2').trim()||b1;
+    var cv=d.createElement('canvas'); cv.width=1200; cv.height=630; var x=cv.getContext('2d'); var g=x.createLinearGradient(0,0,1200,630); g.addColorStop(0,b1); g.addColorStop(1,b2); x.fillStyle=g; x.fillRect(0,0,1200,630);
+    x.fillStyle='rgba(255,255,255,.96)'; x.beginPath(); if(x.roundRect) x.roundRect(48,48,1104,534,28); else x.rect(48,48,1104,534); x.fill();
+    var site=(d.querySelector('meta[property="og:site_name"]')||{}).content||d.title.split('|').pop().trim(), h1=(d.querySelector('h1')||{}).textContent||d.title;
+    x.fillStyle=b1; x.font='700 30px system-ui,sans-serif'; x.fillText(site,96,116);
+    x.fillStyle='#111'; x.font='800 46px system-ui,sans-serif'; var y=180; wrap(x,h1,1000).slice(0,2).forEach(function(l){x.fillText(l,96,y); y+=56;});
+    x.font='500 30px system-ui,sans-serif'; x.fillStyle='#333'; var L=lines(); if(!L.length) L=['Free, no signup. Try your own numbers.'];
+    L.forEach(function(l){ if(y>500) return; wrap(x,l,1000).slice(0,1).forEach(function(s){x.fillText(s,96,y+10); y+=44;}); });
+    x.fillStyle='#555'; x.font='600 24px system-ui,sans-serif'; x.fillText(cleanUrl().replace(/^https?:\/\//,'').split('?')[0],96,552);
+    cv.toBlob(function(bl){ if(!bl){ UI.toast('Could not make the image'); return; } var f; try{ f=new File([bl],'result.png',{type:'image/png'}); }catch(e){}
+      if(f&&navigator.canShare&&navigator.canShare({files:[f]})){ navigator.share({files:[f],title:h1,url:cleanUrl()}).catch(function(){}); return; }
+      var a=d.createElement('a'); a.href=URL.createObjectURL(bl); a.download=(site+'-result.png').replace(/\s+/g,'-').toLowerCase(); d.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500); UI.toast('Image saved'); },'image/png'); }
+  function init(){
+    if(embed){ var c=d.createElement('a'); c.className='embed-credit'; c.href=cleanUrl(); c.target='_blank'; c.rel='noopener'; var nm=(d.querySelector('meta[property="og:site_name"]')||{}).content||'the full site';
+      c.textContent='Open on '+nm+' ↗'; d.body.appendChild(c); d.querySelectorAll('main a[href]').forEach(function(a){ if(!a.target && !/^#/.test(a.getAttribute('href'))) a.target='_blank'; }); }
+    d.addEventListener('click',function(e){ var el=e.target.closest&&e.target.closest('[data-share]'); if(!el) return; var k=el.getAttribute('data-share'), u=cleanUrl(), box=el.closest('.share-embed'), title=box?box.getAttribute('data-share-title'):d.title;
+      if(k==='copy'){ UI.share?UI.share(u,title,title):UI.copy(u,'Link copied'); }
+      else if(k==='img'){ image(); }
+      else if(k==='embed'){ var ta=box&&box.querySelector('textarea'); if(ta) UI.copy(ta.value,'Embed code copied'); }
+      else { var eu=encodeURIComponent(u), href=el.getAttribute('href'); el.setAttribute('href', href.replace(/(url=|u=|body=)[^&]*/, '$1'+eu)); } });
+  }
+  if(d.readyState==='loading') d.addEventListener('DOMContentLoaded',init); else init();
+})();

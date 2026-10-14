@@ -124,6 +124,27 @@ if WEEK:
               f'Top Week {WEEK} {lab} plays: <strong>{E(rows[0]["n"])}</strong> ({rows[0]["proj"]["ppr"]} projected PPR), {E(rows[1]["n"])} and {E(rows[2]["n"])}. Players ruled out are excluded.',
               body + f'<p class="hint">Projections from Sleeper’s public API, updated {genh}. Injury statuses change late in the week; check before kickoff.</p><p>Deciding between two players? Use the <a href="../#tool">start/sit tool</a>. Other positions: ' + ' · '.join(f'<a href="../start-sit-{k}/">{l}</a>' for k, l in [('qb', 'QB'), ('rb', 'RB'), ('wr', 'WR'), ('te', 'TE'), ('flex', 'Flex')] if k != key) + '</p>',
               cta=('Compare two players', ''), cta_text='Who should I start? Compare up to 4 players.', featured=key in ('flex', 'rb'), ld_extra=[itemlist(rows, f'Week {WEEK} {lab} rankings')])
+# ---- weekly cheat sheet (targets "week N start sit" searches); older week URLs redirect here ----
+OLDWEEKS = []
+if WEEK:
+    secs = ''
+    for key, pos_list, n, lab in [('qb', ['QB'], 12, 'QB'), ('rb', ['RB'], 24, 'RB'), ('wr', ['WR'], 30, 'WR'), ('te', ['TE'], 12, 'TE')]:
+        rows = ssrows(pos_list, n)
+        if not rows: continue
+        q = len(rows) // 3
+        secs += f'<h2>Week {WEEK} {lab}: start, flex, sit</h2><div class="table-scroll"><table><thead><tr><th scope="col">Must start</th><th scope="col">Start / flex</th><th scope="col">Sit in shallow leagues</th></tr></thead><tbody><tr>' + ''.join('<td>' + '<br>'.join(f'{E(p["n"])} <span class="hint" style="display:inline">{p["proj"]["ppr"]}</span>' for p in grp) + '</td>' for grp in (rows[:q], rows[q:2*q], rows[2*q:])) + f'</tr></tbody></table></div><p><a href="../start-sit-{key}/">Full Week {WEEK} {lab} rankings</a></p>'
+    top = ssrows(['QB', 'RB', 'WR', 'TE'], 3)
+    if top:
+        write(f'week-{WEEK}-start-sit', 'Weekly start/sit', f'Week {WEEK} start/sit cheat sheet', f'Week {WEEK} Start/Sit Cheat Sheet ({SEASON}): Who to Start in Fantasy',
+              f'Week {WEEK} fantasy football start/sit cheat sheet for QB, RB, WR and TE: must-starts, flex plays and sits from PPR projections. Updated {genh}.',
+              f'Week {WEEK} start/sit cheat sheet', f'Every position on one page, sorted by Week {WEEK} PPR projection. Numbers are projected PPR points.',
+              f'Highest Week {WEEK} projections: <strong>{E(top[0]["n"])}</strong> ({top[0]["proj"]["ppr"]}), {E(top[1]["n"])} and {E(top[2]["n"])}. Players ruled out are left off.',
+              secs + f'<p class="hint">Projections from Sleeper’s public API, updated {genh}. Check injury news before kickoff (<a href="../injury-report/">injury report</a>). Stuck between two guys? <a href="../start-sit/">Compare them in the start/sit tool</a>.</p>',
+              cta=('Compare two players', ''), cta_text='Who should I start? Compare up to 4 players.', featured=True)
+        for w in range(1, WEEK):
+            d = ROOT / f'week-{w}-start-sit'; d.mkdir(exist_ok=True); OLDWEEKS.append(d.name)
+            (d / 'index.html').write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Week {w} start/sit has moved to Week {WEEK}</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{URL}week-{WEEK}-start-sit/"><meta http-equiv="refresh" content="0; url=../week-{WEEK}-start-sit/"></head><body><p><a href="../week-{WEEK}-start-sit/">Week {WEEK} start/sit cheat sheet</a></p></body></html>')
+            (d / '.generated').write_text('')
 inj = [p for p in players if p.get('inj') and p.get('v1')]
 inj.sort(key=lambda p: -p['v1'])
 if inj:
@@ -175,7 +196,7 @@ PAGES.pop()
 ent = [('', '1.0', 'daily')] + [(t + '/', '0.9', 'daily') for t in TOOLS] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.6', p.get('changefreq', 'monthly')) for p in statics] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.5', p['changefreq']) for p in PAGES] + [('guides/', '0.5', 'daily'), ('glossary/', '0.4', 'monthly')]
 (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{URL}{s}</loc><lastmod>{gen}</lastmod><changefreq>{cf}</changefreq><priority>{p}</priority></url>\n' for s, p, cf in ent) + '</urlset>\n')
 # remove stale generated folders (e.g. a player who dropped out of the top 150)
-keep = {p['slug'] for p in allp} | {'guides', 'glossary'} | set(TOOLS)
+keep = {p['slug'] for p in allp} | {'guides', 'glossary'} | set(TOOLS) | set(OLDWEEKS)
 for d in ROOT.iterdir():
     if d.is_dir() and (d / '.generated').exists() and d.name not in keep: shutil.rmtree(d)
 (ROOT / 'data' / 'pages.json').write_text(json.dumps([{k: p[k] for k in ('slug', 'section', 'nav')} for p in PAGES]))
