@@ -1,0 +1,20 @@
+# Refresh player data daily on GitHub's free Actions tier, then commit if changed.
+# Works when this folder is the root of its own GitHub repo (move it to repo root if not).
+name: refresh-player-data
+on:
+  schedule: [{ cron: '17 11 * * *' }]   # daily ~6am Central
+  workflow_dispatch: {}
+permissions: { contents: write }
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node scripts/refresh-data.mjs
+      - run: |
+          git config user.name "data-bot"
+          git config user.email "data-bot@users.noreply.github.com"
+          git add data/players.json
+          git diff --cached --quiet || (git commit -m "Refresh player data" && git push)

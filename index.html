@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fantasy Football Start/Sit Tool &amp; Dynasty Trade Analyzer (Free)</title>
+<meta name="description" content="Free fantasy football start/sit tool using weekly projections and points per game, plus a dynasty trade analyzer with superflex and TE premium. Updated daily.">
+<link rel="canonical" href="https://matt5516.github.io/fantasy-tools/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Start/Sit + Dynasty Trade Analyzer">
+<meta property="og:description" content="Who should I start? Is this dynasty trade fair? Free, fast, updated daily.">
+<meta property="og:url" content="https://matt5516.github.io/fantasy-tools/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1f6feb">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+<!-- AD NETWORK HEAD SCRIPT GOES HERE (e.g. AdSense). Intentionally empty. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Fantasy Football Start/Sit & Dynasty Trade Analyzer","url":"https://matt5516.github.io/fantasy-tools/","applicationCategory":"GameApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Compare players to start or sit and analyze dynasty trades."}
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap"><a class="logo" href="./">Fantasy Tools</a><nav class="site"><a href="#startsit">Start/Sit</a><a href="#trade">Trade Analyzer</a></nav></div></header>
+<main class="wrap">
+  <div class="ad-slot ad-leaderboard" data-ad-slot="top-leaderboard"></div>
+  <h1>Fantasy Football Start/Sit &amp; Dynasty Trade Analyzer</h1>
+  <p class="lede">Pick who to start this week and check whether a dynasty trade is fair. Data: <span id="dataInfo">loading…</span></p>
+  <datalist id="playerList"></datalist>
+
+  <section class="card" id="startsit">
+    <h2>Start/Sit comparison</h2>
+    <div class="grid cols-2">
+      <div><label for="fmt">Scoring</label><select id="fmt"><option value="ppr">PPR</option><option value="half">Half PPR</option><option value="std">Standard</option></select></div>
+      <div class="hint" style="align-self:end">Type 2–4 player names. Score = 70% this week's projection + 30% season points per game, reduced for injury status.</div>
+    </div>
+    <div class="grid cols-2" style="margin-top:12px" id="ssInputs"></div>
+    <div id="ssOut" aria-live="polite" style="margin-top:12px"></div>
+  </section>
+
+  <div class="ad-slot ad-inline" data-ad-slot="in-content-1"></div>
+
+  <section class="card" id="trade">
+    <h2>Dynasty trade analyzer</h2>
+    <div class="grid cols-2">
+      <div><label for="sf">League type</label><select id="sf"><option value="0">1QB</option><option value="1">Superflex / 2QB</option></select></div>
+      <div><label for="tep">TE premium?</label><select id="tep"><option value="0">No</option><option value="1">Yes</option></select></div>
+    </div>
+    <div class="grid cols-2" style="margin-top:12px">
+      <div><h3>Side A gives</h3><div id="sideA"></div></div>
+      <div><h3>Side B gives</h3><div id="sideB"></div></div>
+    </div>
+    <div id="tradeOut" aria-live="polite" style="margin-top:12px"></div>
+    <p class="hint">Value (0–10,000) comes from dynasty ADP with an age curve by position. Extra pieces in a deal are discounted, because one great player is usually worth more than two good ones.</p>
+  </section>
+
+  <section class="card">
+    <h2>Fantasy apps</h2>
+    <div class="grid cols-2">
+      <!-- REFERRAL SLOT PLACEHOLDER: fantasy-app referral (e.g. DFS / pick'em app). No links until a partner is approved. No sportsbooks. -->
+      <div class="referral-slot" data-referral-slot="fantasy-app-1">Partner offer placeholder</div>
+      <div class="referral-slot" data-referral-slot="fantasy-app-2">Partner offer placeholder</div>
+    </div>
+    <p class="disclaimer" style="margin-top:12px"><strong>21+ only. Play responsibly.</strong> Paid fantasy contests are for adults 21 and older (age rules vary by state) and are not available everywhere. If you or someone you know has a gambling problem, call or text 1-800-GAMBLER.</p>
+  </section>
+
+  <section class="card signup" id="signup">
+    <h2>Weekly start/sit email</h2>
+    <!-- EMAIL SIGNUP PLACEHOLDER: replace with newsletter provider embed. Not connected. -->
+    <form data-signup-placeholder><label class="sr-only" for="email">Email</label><input id="email" type="email" placeholder="you@example.com" required><button type="submit">Sign up</button></form>
+    <p class="hint signup-msg"></p>
+  </section>
+  <section class="card"><h2>About the data</h2><p class="sources">Player info, injury status, season stats, weekly projections and ADP come from the free public <a rel="nofollow noopener" href="https://docs.sleeper.com/">Sleeper API</a>, refreshed daily. Not affiliated with Sleeper or the NFL. For entertainment; no outcome is guaranteed.</p></section>
+  <div class="ad-slot ad-footer" data-ad-slot="footer"></div>
+</main>
+<footer class="site"><div class="wrap">© 2026 Fantasy Tools · Free · 21+ for paid contests · <a href="privacy.html">Privacy</a></div></footer>
+<script src="assets/common.js" defer></script>
+<script src="assets/calc.js" defer></script>
+<script src="assets/app.js" defer></script>
+</body>
+</html>
