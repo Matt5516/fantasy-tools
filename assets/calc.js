@@ -17,6 +17,11 @@
   var PEAK = {QB:32, RB:25, WR:28, TE:29}, DECAY = {QB:0.05, RB:0.10, WR:0.07, TE:0.07};
   function dynastyValue(p, opt){
     opt = opt||{};
+    if (p.v1){ // DynastyProcess open values (1QB / superflex)
+      var dv = opt.superflex ? (p.v2||p.v1) : p.v1;
+      if (opt.tePremium && p.pos==='TE') dv *= 1.15;
+      return Math.round(dv);
+    }
     var adp = p.dadp || Math.min(400, (p.rank||300)*1.2+20); // fallback when ADP missing
     var v = 10000*Math.exp(-0.0125*(adp-1));
     if (p.age) v *= Math.max(0.35, 1 - DECAY[p.pos]*Math.max(0, p.age-PEAK[p.pos]));
@@ -34,6 +39,14 @@
     var verdict = Math.abs(gap)<=0.05 ? 'Fair trade' : (gap>0 ? 'Side A wins' : 'Side B wins');
     return {a:a, b:b, gapPct:Math.round(gap*1000)/10, verdict:verdict};
   }
-  var api={startScore:startScore,startSit:startSit,dynastyValue:dynastyValue,sideValue:sideValue,trade:trade};
+  // Players that would even up the trade if added to the side that's behind. pool: [{p, v}] already valued.
+  function balance(aVals, bVals, pool, exclude){
+    var a=sideValue(aVals), b=sideValue(bVals); if (Math.abs(a-b)/Math.max(a,b,1) <= 0.05) return {side:null, list:[]};
+    var behind = a<b ? 'A' : 'B', mine = a<b ? aVals : bVals, target = Math.max(a,b);
+    var list = pool.filter(function(x){return !exclude[x.p.id];}).map(function(x){ var nv=sideValue(mine.concat([x.v])); return {p:x.p, v:x.v, after:nv, miss:Math.abs(nv-target)}; })
+      .filter(function(x){ return x.after >= target*0.95 && x.after <= target*1.08; }).sort(function(x,y){return x.miss-y.miss;}).slice(0,5);
+    return {side:behind, gap:Math.abs(a-b), list:list};
+  }
+  var api={balance:balance,startScore:startScore,startSit:startSit,dynastyValue:dynastyValue,sideValue:sideValue,trade:trade};
   if (typeof module!=='undefined'&&module.exports) module.exports=api; else root.FFCalc=api;
 })(this);

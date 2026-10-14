@@ -17,6 +17,29 @@ async function get(path, optional = false) {
 const r1 = n => Math.round(n * 10) / 10;
 const state = await get('/state/nfl');
 const season = state.season, week = Math.max(1, state.week || 1), stype = state.season_type === 'post' ? 'post' : 'regular';
+// DynastyProcess open dynasty values (GPL-3.0, https://github.com/dynastyprocess/data). Attribution shown on the site.
+const DP = 'https://raw.githubusercontent.com/dynastyprocess/data/master/files/';
+async function csv(name) {
+  try { const r = await fetch(DP + name); if (!r.ok) throw new Error(name + ' ' + r.status); return parseCSV(await r.text()); }
+  catch (e) { console.warn('WARN', e.message); return null; }
+}
+function parseCSV(t) {
+  const rows = []; let row = [], f = '', q = false;
+  for (let i = 0; i < t.length; i++) { const c = t[i];
+    if (q) { if (c === '"' && t[i + 1] === '"') { f += '"'; i++; } else if (c === '"') q = false; else f += c; }
+    else if (c === '"') q = true; else if (c === ',') { row.push(f); f = ''; } else if (c === '\n') { row.push(f); rows.push(row); row = []; f = ''; } else if (c !== '\r') f += c; }
+  if (f || row.length) { row.push(f); rows.push(row); }
+  const [h, ...rest] = rows; return rest.filter(r => r.length === h.length).map(r => Object.fromEntries(h.map((k, i) => [k, r[i]])));
+}
+const STATE_SEASON = (await (await fetch('https://api.sleeper.app/v1/state/nfl')).json()).season;
+const [dpValues, dpIds] = await Promise.all([csv('values.csv'), csv('db_playerids.csv')]);
+const fpToSleeper = new Map((dpIds || []).filter(r => r.fantasypros_id && r.sleeper_id && r.sleeper_id !== 'NA').map(r => [r.fantasypros_id, r.sleeper_id]));
+const dpBySleeper = new Map(), picks = [];
+for (const v of dpValues || []) {
+  const v1 = +v.value_1qb, v2 = +v.value_2qb;
+  if (v.pos === 'PICK') { const yr = parseInt(v.player, 10); if (yr && yr <= +STATE_SEASON) continue; picks.push({ id: 'pick:' + v.player, n: v.player, pos: 'PICK', v1, v2 }); continue; }
+  const sid = fpToSleeper.get(v.fp_id); if (sid) dpBySleeper.set(sid, { v1, v2 });
+}
 const [players, stats, proj, projPrev, trend] = await Promise.all([
   get('/players/nfl'),
   get(`/stats/nfl/${stype}/${season}`, true),
@@ -39,11 +62,12 @@ for (const [id, p] of Object.entries(players)) {
     proj: j.pts_ppr != null ? { ppr: r1(j.pts_ppr), half: r1(j.pts_half_ppr ?? j.pts_ppr), std: r1(j.pts_std ?? j.pts_ppr) } : null,
     dadp, trend: trending.get(id) || 0
   };
+  const dv = dpBySleeper.get(id); if (dv) { row.v1 = dv.v1; row.v2 = dv.v2; }
   // keep the file small: drop deep-bench players with no signal
-  if (row.rank > 600 && !row.ppg && !row.proj && !row.dadp) continue;
+  if (row.rank > 600 && !row.ppg && !row.proj && !row.dadp && !row.v1) continue;
   out.push(row);
 }
 out.sort((a, b) => a.rank - b.rank);
-const data = { generated: new Date().toISOString(), season, week, seasonType: stype, source: 'Sleeper public API (api.sleeper.app)', players: out };
+const data = { generated: new Date().toISOString(), season, week, seasonType: stype, source: 'Sleeper public API (api.sleeper.app); dynasty values: DynastyProcess (GPL-3.0)', valuesDate: (dpValues && dpValues[0] && dpValues[0].scrape_date) || null, players: out, picks };
 await writeFile(new URL('../data/players.json', import.meta.url), JSON.stringify(data));
-console.log(`Wrote ${out.length} players for ${season} week ${week} (stats: ${!!stats}, projections: ${!!proj}).`);
+console.log(`Wrote ${out.length} players, ${picks.length} picks, ${dpBySleeper.size} DP values for ${season} week ${week} (stats: ${!!stats}, projections: ${!!proj}).`);

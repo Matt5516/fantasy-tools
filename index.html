@@ -2,79 +2,176 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fantasy Football Start/Sit Tool &amp; Dynasty Trade Analyzer (Free)</title>
-<meta name="description" content="Free fantasy football start/sit tool using weekly projections and points per game, plus a dynasty trade analyzer with superflex and TE premium. Updated daily.">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fantasy Football Start/Sit Tool &amp; Dynasty Trade Calculator (Free, 2026)</title>
+<meta name="description" content="Free fantasy football start/sit tool and dynasty trade calculator with superflex, TE premium and picks. Import your Sleeper league. Updated daily.">
 <link rel="canonical" href="https://matt5516.github.io/fantasy-tools/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="author" content="Fantasy Tools">
+<meta name="theme-color" content="#7c3aed">
+<meta name="color-scheme" content="light dark">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Start/Sit + Dynasty Trade Analyzer">
-<meta property="og:description" content="Who should I start? Is this dynasty trade fair? Free, fast, updated daily.">
+<meta property="og:site_name" content="Fantasy Tools">
+<meta property="og:title" content="Who should I start? + Dynasty trade calculator">
+<meta property="og:description" content="Free start/sit calls from weekly projections, a dynasty trade calculator with picks and superflex, and Sleeper league import.">
 <meta property="og:url" content="https://matt5516.github.io/fantasy-tools/">
-<meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#1f6feb">
+<meta property="og:image" content="https://matt5516.github.io/fantasy-tools/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Who should I start? + Dynasty trade calculator">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Who should I start? + Dynasty trade calculator">
+<meta name="twitter:description" content="Free start/sit calls from weekly projections, a dynasty trade calculator with picks and superflex, and Sleeper league import.">
+<meta name="twitter:image" content="https://matt5516.github.io/fantasy-tools/og.png">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/style.css">
-<!-- AD NETWORK HEAD SCRIPT GOES HERE (e.g. AdSense). Intentionally empty. -->
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Fantasy Football Start/Sit & Dynasty Trade Analyzer","url":"https://matt5516.github.io/fantasy-tools/","applicationCategory":"GameApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Compare players to start or sit and analyze dynasty trades."}
-</script>
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="alternate" type="text/plain" href="llms.txt" title="LLM summary">
+<link rel="preload" href="data/players.json" as="fetch" crossorigin>
+<script>(function(){try{var t=localStorage.getItem('theme');}catch(e){}if(!t)t='dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="assets/ds.css">
+<style>:root{--brand:#7c3aed;--brand-2:#06b6d4}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://matt5516.github.io/fantasy-tools/#app", "name": "Fantasy Tools", "url": "https://matt5516.github.io/fantasy-tools/", "applicationCategory": "SportsApplication", "operatingSystem": "Any (web browser)", "browserRequirements": "Requires JavaScript", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free fantasy football start/sit tool and dynasty trade calculator with superflex, TE premium and picks. Import your Sleeper league. Updated daily.", "featureList": ["Start/sit comparison for 2-4 players from weekly projections, points per game and injury status", "Dynasty trade calculator with draft picks, 1QB/superflex and TE premium", "Suggestions for which player balances a trade", "Sleeper league import with an optimal lineup", "Sortable dynasty rankings", "Shareable links for league chats", "Dark mode"], "dateModified": "2026-10-14", "inLanguage": "en-US", "screenshot": "https://matt5516.github.io/fantasy-tools/og.png"}, {"@type": "WebPage", "@id": "https://matt5516.github.io/fantasy-tools/#page", "url": "https://matt5516.github.io/fantasy-tools/", "name": "Fantasy Football Start/Sit Tool & Dynasty Trade Calculator (Free, 2026)", "description": "Free fantasy football start/sit tool and dynasty trade calculator with superflex, TE premium and picks. Import your Sleeper league. Updated daily.", "dateModified": "2026-10-14", "isPartOf": {"@type": "WebSite", "name": "Fantasy Tools", "url": "https://matt5516.github.io/fantasy-tools/"}, "primaryImageOfPage": "https://matt5516.github.io/fantasy-tools/og.png", "speakable": {"@type": "SpeakableSpecification", "cssSelector": [".answer"]}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Fantasy Tools", "item": "https://matt5516.github.io/fantasy-tools/"}, {"@type": "ListItem", "position": 2, "name": "Start/sit and dynasty trade analyzer", "item": "https://matt5516.github.io/fantasy-tools/#tool"}]}, {"@type": "HowTo", "name": "How to analyze a dynasty fantasy football trade", "description": "Add the players and picks on each side, set your league format and read the verdict.", "totalTime": "PT2M", "estimatedCost": {"@type": "MonetaryAmount", "currency": "USD", "value": "0"}, "step": [{"@type": "HowToStep", "position": 1, "name": "Pick your format", "text": "Choose 1QB or superflex and whether your league gives tight ends a premium.", "url": "https://matt5516.github.io/fantasy-tools/#tool"}, {"@type": "HowToStep", "position": 2, "name": "Add each side", "text": "Search and add the players and draft picks each team gives up.", "url": "https://matt5516.github.io/fantasy-tools/#tool"}, {"@type": "HowToStep", "position": 3, "name": "Read the verdict", "text": "The calculator totals each side, discounts extra pieces in 2-for-1 deals, and calls the trade fair if the sides are within 5%.", "url": "https://matt5516.github.io/fantasy-tools/#tool"}, {"@type": "HowToStep", "position": 4, "name": "Balance it", "text": "If one side is short, use the suggested players that would even the deal, then share the link in your league chat.", "url": "https://matt5516.github.io/fantasy-tools/#tool"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Who should I start this week?", "acceptedAnswer": {"@type": "Answer", "text": "Start the player with the higher start score: 70% this week's projected points and 30% season points per game, reduced for injury status (Questionable × 0.85, Doubtful × 0.25, Out or IR = 0). Check news before kickoff, since injuries and weather change fast."}}, {"@type": "Question", "name": "How does the dynasty trade calculator value players?", "acceptedAnswer": {"@type": "Answer", "text": "Player and draft pick values come from DynastyProcess open data, which is built from expert consensus rankings for 1QB and superflex leagues. Players without a DynastyProcess value use Sleeper dynasty ADP with an age curve. Values run from 0 to about 10,000."}}, {"@type": "Question", "name": "Why does a 2-for-1 trade look worse than the totals suggest?", "acceptedAnswer": {"@type": "Answer", "text": "Roster spots are limited, so one great player is usually worth more than two good ones. The calculator counts the best piece in full and discounts extra pieces (75%, 55%, 40% and so on), which is the same idea as KeepTradeCut's value adjustment."}}, {"@type": "Question", "name": "What counts as a fair trade?", "acceptedAnswer": {"@type": "Answer", "text": "The calculator calls a trade fair when the two sides are within 5% of each other after the depth discount. Bigger gaps say which side wins and suggest players who would balance it."}}, {"@type": "Question", "name": "Does it work for superflex and TE premium leagues?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Superflex uses DynastyProcess 2QB/superflex values, which lift quarterbacks. TE premium adds 15% to tight end values."}}, {"@type": "Question", "name": "Can I import my Sleeper league?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Enter your Sleeper username, pick a league, and the tool loads your roster, fills your league's starting slots with the highest-scoring players this week and lists your bench. It uses Sleeper's free public API and needs no login or password."}}, {"@type": "Question", "name": "Where does the data come from and how often is it updated?", "acceptedAnswer": {"@type": "Answer", "text": "Player info, injuries, stats, projections and ADP come from the free Sleeper public API. Dynasty values come from DynastyProcess (GPL-3.0). A GitHub Action refreshes the data every morning."}}, {"@type": "Question", "name": "Is this a betting site?", "acceptedAnswer": {"@type": "Answer", "text": "No. This is a free fantasy football tool for season-long leagues. It doesn't take bets or link to sportsbooks. Paid fantasy contests are for adults 21 and older where legal. If you or someone you know has a gambling problem, call or text 1-800-GAMBLER."}}]}]}</script>
 </head>
 <body>
-<header class="site"><div class="wrap"><a class="logo" href="./">Fantasy Tools</a><nav class="site"><a href="#startsit">Start/Sit</a><a href="#trade">Trade Analyzer</a></nav></div></header>
-<main class="wrap">
-  <div class="ad-slot ad-leaderboard" data-ad-slot="top-leaderboard"></div>
-  <h1>Fantasy Football Start/Sit &amp; Dynasty Trade Analyzer</h1>
-  <p class="lede">Pick who to start this week and check whether a dynasty trade is fair. Data: <span id="dataInfo">loading…</span></p>
-  <datalist id="playerList"></datalist>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/><path d="M3.2 12H9l.5-1 2 4.5 2-7 1.5 3.5h4.8"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.2C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.2C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+<symbol id="i-swap" viewBox="0 0 24 24"><path d="m16 3 4 4-4 4M20 7H4M8 21l-4-4 4-4M4 17h16"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-dollar" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2Z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+</svg>
 
-  <section class="card" id="startsit">
-    <h2>Start/Sit comparison</h2>
-    <div class="grid cols-2">
-      <div><label for="fmt">Scoring</label><select id="fmt"><option value="ppr">PPR</option><option value="half">Half PPR</option><option value="std">Standard</option></select></div>
-      <div class="hint" style="align-self:end">Type 2–4 player names. Score = 70% this week's projection + 30% season points per game, reduced for injury status.</div>
-    </div>
-    <div class="grid cols-2" style="margin-top:12px" id="ssInputs"></div>
-    <div id="ssOut" aria-live="polite" style="margin-top:12px"></div>
-  </section>
+<a class="skip" href="#tool">Skip to the calculator</a>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="./" aria-label="Fantasy Tools home"><span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg></span>Fantasy Tools</a>
+  <nav class="topnav" aria-label="Main"><a href="#tool" class="">Start/Sit</a><a href="#trade" class="hide-sm">Trade</a><a href="#league" class="hide-sm">My league</a><a href="#rankings" class="hide-sm">Rankings</a>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button></nav>
+</div></header>
+<main id="main">
+<section class="hero"><div class="wrap">
+  <span class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg>Updated daily · 2026 season</span>
+  <h1>Fantasy football <span class="grad">start/sit &amp; dynasty trade calculator</span></h1>
+  <p class="lede">Compare players to start this week, check if a dynasty trade is fair (players and picks, 1QB or superflex), or import your Sleeper league for a full lineup. Free, fast and updated every day.</p>
+  <div class="chips"><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Sleeper league import</span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Draft picks included</span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Superflex + TE premium</span><span class="chip"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Share to league chat</span></div>
+</div></section>
+<div class="wrap">
+<section class="tool" id="tool" aria-labelledby="ssH">
+ <div class="panel">
+  <h2 id="ssH"><span class="step">1</span>Who should I start?</h2>
+  <input type="hidden" id="fmt" data-state value="ppr">
+  <div class="seg" data-for="fmt" role="group" aria-label="Scoring format"><button type="button" data-v="ppr">PPR</button><button type="button" data-v="half">Half PPR</button><button type="button" data-v="std">Standard</button></div>
+  <div class="ac" style="margin-top:12px"><label for="ssSearch">Add 2 to 4 players</label><input id="ssSearch" type="search" autocomplete="off" placeholder="Search players…" role="combobox" aria-expanded="false" aria-controls="ssList" aria-autocomplete="list" disabled><ul class="ac-list" id="ssList" role="listbox" hidden></ul></div>
+  <div id="ssChips"></div>
+  <p class="hint">Start score = 70% this week's projection + 30% season points per game, reduced for injuries.</p>
+ </div>
+ <div class="sticky"><section class="panel" id="ssOut" aria-live="polite" aria-label="Start/sit result"><div class="empty"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><p>Loading player data…</p></div></section></div>
+</section>
+<section class="tool" id="trade" aria-labelledby="trH">
+ <div class="panel">
+  <h2 id="trH"><span class="step">2</span>Dynasty trade calculator</h2>
+  <div class="fields">
+   <div><span class="label" id="sfL">League</span><input type="hidden" id="sf" data-state value="0"><div class="seg" data-for="sf" role="group" aria-labelledby="sfL"><button type="button" data-v="0">1QB</button><button type="button" data-v="1">Superflex</button></div></div>
+   <div><span class="label" id="tepL">TE premium</span><input type="hidden" id="tep" data-state value="0"><div class="seg" data-for="tep" role="group" aria-labelledby="tepL"><button type="button" data-v="0">Off</button><button type="button" data-v="1">On</button></div></div>
+  </div>
+  <div class="fields" style="margin-top:14px">
+   <div class="ac"><label for="aSearch">Team A gives</label><input id="aSearch" type="search" autocomplete="off" placeholder="Add player or pick…" role="combobox" aria-expanded="false" aria-controls="aList" aria-autocomplete="list" disabled><ul class="ac-list" id="aList" role="listbox" hidden></ul><div id="aChips"></div></div>
+   <div class="ac"><label for="bSearch">Team B gives</label><input id="bSearch" type="search" autocomplete="off" placeholder="Add player or pick…" role="combobox" aria-expanded="false" aria-controls="bList" aria-autocomplete="list" disabled><ul class="ac-list" id="bList" role="listbox" hidden></ul><div id="bChips"></div></div>
+  </div>
+ </div>
+ <div class="sticky"><section class="panel" id="trOut" aria-live="polite" aria-label="Trade result"></section></div>
+</section>
+<section class="tool" id="league" aria-labelledby="lgH">
+ <div class="panel">
+  <h2 id="lgH"><span class="step">3</span>Import my Sleeper league</h2>
+  <form id="lgForm" class="signup" onsubmit="return false"><label class="sr-only" for="sleeperUser">Sleeper username</label><input id="sleeperUser" data-state autocomplete="username" placeholder="Your Sleeper username"><button class="btn" id="lgBtn" type="submit">Load leagues</button></form>
+  <div id="lgPick" style="margin-top:12px"></div>
+  <p class="hint">Uses Sleeper's free public API. No password, nothing stored.</p>
+ </div>
+ <div class="sticky"><section class="panel" id="lgOut" aria-live="polite" aria-label="League lineup"><div class="empty"><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg><p><strong>Your optimal lineup shows up here</strong><br>Enter your Sleeper username to load your roster.</p></div></section></div>
+</section>
+<section class="panel" id="rankings" aria-labelledby="rkH" style="margin-bottom:24px">
+ <h2 id="rkH"><span class="step">4</span>Dynasty rankings</h2>
+ <div class="fields" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr))">
+  <div><label for="rkPos">Position</label><select id="rkPos"><option value="">All</option><option>QB</option><option>RB</option><option>WR</option><option>TE</option><option value="PICK">Picks</option></select></div>
+  <div><label for="rkFind">Find</label><input id="rkFind" type="search" placeholder="Name or team"></div>
+ </div>
+ <div class="table-scroll" style="margin-top:10px"><table><thead><tr><th scope="col">#</th><th scope="col">Player</th><th scope="col">Age</th><th scope="col">PPG</th><th scope="col">Value</th></tr></thead><tbody id="rkBody"></tbody></table></div><p style="text-align:center;margin-top:10px"><button type="button" class="btn ghost" id="rkMore">Show more players</button></p>
+ <p class="hint" id="rkNote"></p>
+</section>
+<section class="panel" aria-labelledby="appsH" style="margin-bottom:24px">
+ <h2 id="appsH">Responsible play</h2>
+ <p class="disclaimer"><strong>21+ only for paid contests. Play responsibly.</strong> Paid fantasy contests are for adults 21 and older (age rules vary by state) and are not legal everywhere. This site doesn't link to sportsbooks. If you or someone you know has a gambling problem, call or text <strong>1-800-GAMBLER</strong>.</p>
+</section>
 
-  <div class="ad-slot ad-inline" data-ad-slot="in-content-1"></div>
+<div class="content">
+<section class="prose" id="how">
+ <h2>How the start/sit tool and trade calculator work</h2>
+ <p class="answer"><strong>Start/sit in one line:</strong> start the player with the higher start score, which is 70% this week's projected fantasy points plus 30% season points per game, reduced if he's Questionable (×0.85), Doubtful (×0.25) or Out (0).</p>
+ <p class="answer"><strong>Trades in one line:</strong> a dynasty trade is fair when both sides are within 5% after extra pieces are discounted, because one star is worth more than two average starters.</p>
+ <h3>Formulas</h3>
+ <div class="formula">Start score   = (0.7 × projection + 0.3 × points per game) × injury factor
+Side value    = best piece × 100% + 2nd × 75% + 3rd × 55% + 4th × 40% + 5th × 30% …
+Verdict       = fair if |A − B| ÷ max(A, B) ≤ 5%; otherwise the bigger side wins
+Superflex     = DynastyProcess 2QB values; TE premium = tight end value × 1.15</div>
+ <h3>Worked example</h3>
+ <p>Team A trades a player worth 8,000. Team B sends two players worth 5,000 and 4,000. The raw totals (8,000 vs 9,000) favor Team B, but after the depth discount Team B's side counts as 5,000 + 0.75 × 4,000 = <strong>8,000</strong>. That's even, so the trade is <strong>fair</strong>. The team getting the single best player usually comes out ahead on roster spots.</p>
+ <h3>Key terms</h3>
+ <ul>
+  <li><strong>Dynasty league:</strong> you keep your whole roster year to year, so age and future picks matter.</li>
+  <li><strong>Superflex:</strong> one lineup slot can be a quarterback, which makes QBs far more valuable.</li>
+  <li><strong>TE premium:</strong> tight ends get extra points per catch.</li>
+  <li><strong>PPR:</strong> one point per reception (Half PPR = 0.5).</li>
+ </ul>
+ <h3>Data sources</h3>
+ <ul class="sources">
+  <li>Player info, injuries, season stats, weekly projections, dynasty ADP and trending adds: <a rel="nofollow noopener" href="https://docs.sleeper.com/">Sleeper public API</a>.</li>
+  <li>Dynasty player and pick values: <a rel="nofollow noopener" href="https://github.com/dynastyprocess/data">DynastyProcess open data</a> (GPL-3.0), values date <span id="dpDate">—</span>.</li>
+  <li>Data file updated <span id="dataDate">—</span>. Refreshed every morning by a GitHub Action.</li>
+ </ul>
+</section>
 
-  <section class="card" id="trade">
-    <h2>Dynasty trade analyzer</h2>
-    <div class="grid cols-2">
-      <div><label for="sf">League type</label><select id="sf"><option value="0">1QB</option><option value="1">Superflex / 2QB</option></select></div>
-      <div><label for="tep">TE premium?</label><select id="tep"><option value="0">No</option><option value="1">Yes</option></select></div>
-    </div>
-    <div class="grid cols-2" style="margin-top:12px">
-      <div><h3>Side A gives</h3><div id="sideA"></div></div>
-      <div><h3>Side B gives</h3><div id="sideB"></div></div>
-    </div>
-    <div id="tradeOut" aria-live="polite" style="margin-top:12px"></div>
-    <p class="hint">Value (0–10,000) comes from dynasty ADP with an age curve by position. Extra pieces in a deal are discounted, because one great player is usually worth more than two good ones.</p>
-  </section>
-
-  <section class="card">
-    <h2>Fantasy apps</h2>
-    <div class="grid cols-2">
-      <!-- REFERRAL SLOT PLACEHOLDER: fantasy-app referral (e.g. DFS / pick'em app). No links until a partner is approved. No sportsbooks. -->
-      <div class="referral-slot" data-referral-slot="fantasy-app-1">Partner offer placeholder</div>
-      <div class="referral-slot" data-referral-slot="fantasy-app-2">Partner offer placeholder</div>
-    </div>
-    <p class="disclaimer" style="margin-top:12px"><strong>21+ only. Play responsibly.</strong> Paid fantasy contests are for adults 21 and older (age rules vary by state) and are not available everywhere. If you or someone you know has a gambling problem, call or text 1-800-GAMBLER.</p>
-  </section>
-
-  <section class="card signup" id="signup">
-    <h2>Weekly start/sit email</h2>
-    <!-- EMAIL SIGNUP PLACEHOLDER: replace with newsletter provider embed. Not connected. -->
-    <form data-signup-placeholder><label class="sr-only" for="email">Email</label><input id="email" type="email" placeholder="you@example.com" required><button type="submit">Sign up</button></form>
-    <p class="hint signup-msg"></p>
-  </section>
-  <section class="card"><h2>About the data</h2><p class="sources">Player info, injury status, season stats, weekly projections and ADP come from the free public <a rel="nofollow noopener" href="https://docs.sleeper.com/">Sleeper API</a>, refreshed daily. Not affiliated with Sleeper or the NFL. For entertainment; no outcome is guaranteed.</p></section>
-  <div class="ad-slot ad-footer" data-ad-slot="footer"></div>
+<section class="prose" id="faq"><h2>Frequently asked questions</h2>
+<details class="faq"><summary>Who should I start this week?</summary><p>Start the player with the higher start score: 70% this week&#x27;s projected points and 30% season points per game, reduced for injury status (Questionable × 0.85, Doubtful × 0.25, Out or IR = 0). Check news before kickoff, since injuries and weather change fast.</p></details>
+<details class="faq"><summary>How does the dynasty trade calculator value players?</summary><p>Player and draft pick values come from DynastyProcess open data, which is built from expert consensus rankings for 1QB and superflex leagues. Players without a DynastyProcess value use Sleeper dynasty ADP with an age curve. Values run from 0 to about 10,000.</p></details>
+<details class="faq"><summary>Why does a 2-for-1 trade look worse than the totals suggest?</summary><p>Roster spots are limited, so one great player is usually worth more than two good ones. The calculator counts the best piece in full and discounts extra pieces (75%, 55%, 40% and so on), which is the same idea as KeepTradeCut&#x27;s value adjustment.</p></details>
+<details class="faq"><summary>What counts as a fair trade?</summary><p>The calculator calls a trade fair when the two sides are within 5% of each other after the depth discount. Bigger gaps say which side wins and suggest players who would balance it.</p></details>
+<details class="faq"><summary>Does it work for superflex and TE premium leagues?</summary><p>Yes. Superflex uses DynastyProcess 2QB/superflex values, which lift quarterbacks. TE premium adds 15% to tight end values.</p></details>
+<details class="faq"><summary>Can I import my Sleeper league?</summary><p>Yes. Enter your Sleeper username, pick a league, and the tool loads your roster, fills your league&#x27;s starting slots with the highest-scoring players this week and lists your bench. It uses Sleeper&#x27;s free public API and needs no login or password.</p></details>
+<details class="faq"><summary>Where does the data come from and how often is it updated?</summary><p>Player info, injuries, stats, projections and ADP come from the free Sleeper public API. Dynasty values come from DynastyProcess (GPL-3.0). A GitHub Action refreshes the data every morning.</p></details>
+<details class="faq"><summary>Is this a betting site?</summary><p>No. This is a free fantasy football tool for season-long leagues. It doesn&#x27;t take bets or link to sportsbooks. Paid fantasy contests are for adults 21 and older where legal. If you or someone you know has a gambling problem, call or text 1-800-GAMBLER.</p></details>
+</section>
+<section class="prose" id="updates"><h2>Get updates</h2><p>Get a short weekly start/sit and dynasty value-movers email during the season.</p>
+<!-- EMAIL SIGNUP PLACEHOLDER: replace this form with a newsletter embed (e.g. beehiiv). Not connected; nothing is stored. -->
+<form class="signup" data-signup-placeholder><label class="sr-only" for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required><button class="btn" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Notify me</button></form>
+<p class="hint signup-msg" role="status"></p></section>
+<section aria-labelledby="more"><h2 id="more">More free tools</h2><div class="related"><a class="rcard" style="--rc:#ea580c" href="https://matt5516.github.io/card-flip-calc/"><b><span class="dot"></span>Card Flip Calc</b><span>Is it worth grading? Profit and break-even by grade for PSA, SGC, BGS and CGC.</span></a>
+<a class="rcard" style="--rc:#0d9488" href="https://matt5516.github.io/open-enrollment-calc/"><b><span class="dot"></span>Open Enrollment Calc</b><span>HSA vs PPO break-even, COBRA cost and marketplace comparison with 2026/2027 IRS limits.</span></a></div></section>
+</div>
+<nav class="crumbs" aria-label="Breadcrumb"><a href="./">Fantasy Tools</a> › <span aria-current="page">Start/sit and dynasty trade analyzer</span></nav>
+</div>
 </main>
-<footer class="site"><div class="wrap">© 2026 Fantasy Tools · Free · 21+ for paid contests · <a href="privacy.html">Privacy</a></div></footer>
-<script src="assets/common.js" defer></script>
-<script src="assets/calc.js" defer></script>
-<script src="assets/app.js" defer></script>
+<footer class="site"><div class="wrap">
+<p>For entertainment. No outcome is guaranteed. 21+ for paid contests; play responsibly, 1-800-GAMBLER. Not affiliated with the NFL, Sleeper or DynastyProcess. Dynasty values © DynastyProcess, GPL-3.0.</p>
+<p>© 2026 Fantasy Tools · Updated <time datetime="2026-10-14">October 14, 2026</time> · <a href="privacy.html">Privacy</a> · <a href="llms.txt">llms.txt</a> · <a href="sitemap.xml">Sitemap</a></p>
+</div></footer>
+<script src="assets/ds.js" defer></script><script src="assets/calc.js" defer></script><script src="assets/app.js" defer></script>
 </body>
 </html>
