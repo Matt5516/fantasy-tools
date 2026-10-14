@@ -154,7 +154,7 @@
     if($('dpDate')) $('dpDate').textContent=d.valuesDate||'—'; if($('dataDate')) $('dataDate').textContent=new Date(d.generated).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
     var ssPool=function(){return d.players;}, all=function(){return ALLITEMS;};
     if($('ssSearch')) combo('ssSearch','ssList','ss',ssPool,4,renderAll); if($('aSearch')){ combo('aSearch','aList','a',all,6,renderAll); combo('bSearch','bList','b',all,6,renderAll); }
-    window.FFDATA=d; document.dispatchEvent(new CustomEvent('ffdata',{detail:{d:d,val:val,tag:tag}}));
+    window.FFDATA=d; window.FFDETAIL={d:d,val:val,tag:tag}; document.dispatchEvent(new CustomEvent('ffdata',{detail:window.FFDETAIL}));
     var P=st.params, ids=function(k){ return (P.get(k)||'').split(',').filter(function(id){return BY[id];}); };
     if(P.has('ss')||P.has('a')||P.has('b')){ sel.ss=ids('ss'); sel.a=ids('a'); sel.b=ids('b'); }
     else { // sensible defaults: two healthy RBs with projections; a 1st-round pick vs a young WR

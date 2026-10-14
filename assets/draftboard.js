@@ -1,6 +1,6 @@
 /* Rookie & startup draft board: ranked by dynasty value, tap to mark drafted (saved in this browser). */
 (function(){ var $=UI.$, KEY='dm-drafted', done=UI.store.get(KEY,{});
-  document.addEventListener('ffdata',function(e){ var d=e.detail.d, val=e.detail.val, tag=e.detail.tag;
+  function go(e){ var d=e.detail.d, val=e.detail.val, tag=e.detail.tag;
     function run(){ var pool=$('dbPool').value, pos=$('dbPos').value, hide=$('dbHide').checked;
       var rows=d.players.filter(function(p){ return (pool==='all'||p.exp===0)&&(!pos||p.pos===pos); }).map(function(p){return {p:p,v:val(p)};}).filter(function(x){return x.v>0;}).sort(function(a,b){return b.v-a.v;}).slice(0,pool==='all'?250:120);
       var left=rows.filter(function(x){return !done[x.p.id];}), shown=hide?left:rows;
@@ -11,5 +11,6 @@
     $('dbOut').addEventListener('change',function(e){ var c=e.target.closest('[data-db]'); if(!c) return; if(c.checked) done[c.dataset.db]=1; else delete done[c.dataset.db]; UI.store.set(KEY,done); run(); });
     ['dbPool','dbPos','dbHide'].forEach(function(id){ $(id).addEventListener('change',run); });
     $('dbReset').addEventListener('click',function(){ done={}; UI.store.set(KEY,done); run(); });
-    if($('sf')) $('sf').addEventListener('change',run); run(); });
+    if($('sf')) $('sf').addEventListener('change',run); run(); }
+  if(window.FFDETAIL) go({detail:window.FFDETAIL}); else document.addEventListener('ffdata',go);
 })();
