@@ -4,7 +4,8 @@
 // Sleeper asks for < 1000 calls/min and that /players/nfl be pulled at most once per day.
 // Note: /players/nfl and /players/nfl/trending are documented (https://docs.sleeper.com).
 // /stats and /projections are public but undocumented; the script degrades gracefully if they fail.
-import { writeFile } from 'node:fs/promises';
+import { writeFile, readFile } from 'node:fs/promises';
+import { WEIGHTS, SOURCE_INFO, buildCurves, positionalRanks, composite, ageFactor, lastN } from './composite.mjs';
 const BASE = 'https://api.sleeper.app/v1';
 const POS = new Set(['QB', 'RB', 'WR', 'TE']);
 async function get(path, optional = false) {
@@ -33,6 +34,7 @@ function parseCSV(t) {
 }
 const STATE_SEASON = (await (await fetch('https://api.sleeper.app/v1/state/nfl')).json()).season;
 const [dpValues, dpIds] = await Promise.all([csv('values.csv'), csv('db_playerids.csv')]);
+const status = {}; // per-source health, published in players.json and on the methodology page
 const fpToSleeper = new Map((dpIds || []).filter(r => r.fantasypros_id && r.sleeper_id && r.sleeper_id !== 'NA').map(r => [r.fantasypros_id, r.sleeper_id]));
 const dpBySleeper = new Map(), picks = [];
 for (const v of dpValues || []) {
@@ -40,6 +42,19 @@ for (const v of dpValues || []) {
   if (v.pos === 'PICK') { const yr = parseInt(v.player, 10); if (yr && yr <= +STATE_SEASON) continue; picks.push({ id: 'pick:' + v.player, n: v.player, pos: 'PICK', v1, v2 }); continue; }
   const sid = fpToSleeper.get(v.fp_id); if (sid) dpBySleeper.set(sid, { v1, v2 });
 }
+// Fantasy Football Calculator dynasty ADP (free REST API, attribution requested). Empty early in a season -> skipped.
+async function ffcAdp() {
+  try { const r = await fetch(`https://fantasyfootballcalculator.com/api/v1/adp/dynasty?teams=12&year=${STATE_SEASON}`); if (!r.ok) throw new Error('FFC ' + r.status);
+    const j = await r.json(); const ps = j.players || []; if (ps.length < 50) throw new Error(`FFC dynasty ADP has only ${ps.length} players (${j.meta?.total_drafts ?? 0} drafts)`); return ps; }
+  catch (e) { console.warn('WARN', e.message); status.ffc = { ok: false, note: e.message }; return null; }
+}
+// nflverse weekly player stats (CC BY 4.0) for production and last-3-games form.
+async function nflverseWeekly() {
+  try { const r = await fetch(`https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_${STATE_SEASON}.csv`); if (!r.ok) throw new Error('nflverse ' + r.status);
+    return parseCSV(await r.text()); }
+  catch (e) { console.warn('WARN', e.message); status.prod = { ok: false, note: e.message }; return null; }
+}
+const [ffc, nfv] = await Promise.all([ffcAdp(), nflverseWeekly()]);
 const [players, stats, proj, projPrev, trend] = await Promise.all([
   get('/players/nfl'),
   get(`/stats/nfl/${stype}/${season}`, true),
@@ -62,12 +77,41 @@ for (const [id, p] of Object.entries(players)) {
     proj: j.pts_ppr != null ? { ppr: r1(j.pts_ppr), half: r1(j.pts_half_ppr ?? j.pts_ppr), std: r1(j.pts_std ?? j.pts_ppr) } : null,
     dadp, trend: trending.get(id) || 0
   };
-  const dv = dpBySleeper.get(id); if (dv) { row.v1 = dv.v1; row.v2 = dv.v2; }
+  const dv = dpBySleeper.get(id); if (dv) { row._dp = dv; }
   // keep the file small: drop deep-bench players with no signal
   if (row.rank > 600 && !row.ppg && !row.proj && !row.dadp && !row.v1) continue;
   out.push(row);
 }
 out.sort((a, b) => a.rank - b.rank);
-const data = { generated: new Date().toISOString(), season, week, seasonType: stype, source: 'Sleeper public API (api.sleeper.app); dynasty values: DynastyProcess (GPL-3.0)', valuesDate: (dpValues && dpValues[0] && dpValues[0].scrape_date) || null, players: out, picks };
+// ---------- composite dynasty values ----------
+const norm = x => (x || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\b(jr|sr|ii|iii|iv|v)\b/g, '').replace(/[^a-z]/g, '');
+const posOf = new Map(out.map(p => [p.id, p.pos])), byName = new Map(out.map(p => [norm(p.n) + '|' + p.pos, p.id]));
+const src = {};
+const dpScores = new Map(out.filter(p => p._dp && p._dp.v1 > 0).map(p => [p.id, { pos: p.pos, s: p._dp.v1 }]));
+if (dpScores.size) { src.dp = positionalRanks(dpScores); status.dp = { ok: true, count: dpScores.size }; } else status.dp = { ok: false, note: 'DynastyProcess values unavailable' };
+const slScores = new Map(out.filter(p => p.dadp).map(p => [p.id, { pos: p.pos, s: p.dadp }]));
+if (slScores.size >= 50) { src.sl = positionalRanks(slScores, false); status.sl = { ok: true, count: slScores.size }; } else status.sl = { ok: false, note: `Sleeper dynasty ADP has ${slScores.size} players` };
+if (ffc) { const m = new Map(); for (const f of ffc) { const id = byName.get(norm(f.name) + '|' + f.position); if (id) m.set(id, { pos: f.position, s: f.adp }); }
+  if (m.size >= 50) { src.ffc = positionalRanks(m, false); status.ffc = { ok: true, count: m.size }; } else status.ffc = { ok: false, note: `matched only ${m.size} FFC players` }; }
+const weekly = new Map(); // sleeper id -> [{week, ppr, half, std}]
+if (nfv) { const g2s = new Map((dpIds || []).filter(r => r.gsis_id && r.gsis_id !== 'NA' && r.sleeper_id && r.sleeper_id !== 'NA').map(r => [r.gsis_id, r.sleeper_id]));
+  for (const r of nfv) { const id = g2s.get(r.player_id); if (!id || !posOf.has(id) || r.season_type !== 'REG') continue; const ppr = +r.fantasy_points_ppr || 0, std = +r.fantasy_points || 0;
+    (weekly.get(id) || weekly.set(id, []).get(id)).push({ week: +r.week, ppr, std, half: (ppr + std) / 2 }); }
+  const prodScores = new Map(); for (const [id, rows] of weekly) { if (rows.length < 3) continue; const p = out.find(x => x.id === id);
+    prodScores.set(id, { pos: p.pos, s: rows.reduce((t, x) => t + x.ppr, 0) / rows.length * ageFactor(p.pos, p.age) }); }
+  if (prodScores.size >= 50) { src.prod = positionalRanks(prodScores); status.prod = { ok: true, count: prodScores.size }; } else status.prod = { ok: false, note: `only ${prodScores.size} players with 3+ games` }; }
+// Value curves: DynastyProcess positional curves (fallback curve if it is down)
+const dpRows = out.filter(p => p._dp).map(p => ({ pos: p.pos, v1: p._dp.v1, v2: p._dp.v2 }));
+const comp = composite(src, posOf, buildCurves(dpRows, 'v1'), buildCurves(dpRows, 'v2'));
+for (const p of out) { const c = comp.get(p.id); delete p._dp;
+  // only publish a composite when an expert or market source has the player (production alone isn't a dynasty value)
+  if (c && (c.cs.dp != null || c.cs.sl != null || c.cs.ffc != null)) Object.assign(p, { v1: c.v1, v2: c.v2, cs: c.cs, sp: c.sp, con: c.con, sig: c.sig });
+  const l3 = weekly.has(p.id) ? lastN(weekly.get(p.id), 3) : null; if (l3) p.l3 = l3; }
+for (const k of Object.keys(SOURCE_INFO)) status[k] = { ...SOURCE_INFO[k], weight: WEIGHTS[k], ...(status[k] || { ok: false, note: 'not fetched' }) };
+// If every value source failed, keep yesterday's values rather than publishing nothing.
+if (!out.some(p => p.v1)) { try { const prev = JSON.parse(await readFile(new URL('../data/players.json', import.meta.url), 'utf8')); const pm = new Map(prev.players.map(p => [p.id, p]));
+  for (const p of out) { const o = pm.get(p.id); if (o && o.v1) Object.assign(p, { v1: o.v1, v2: o.v2, cs: o.cs, sp: o.sp, con: o.con, sig: o.sig }); } console.warn('WARN all value sources failed; kept previous values'); } catch (e) {} }
+const data = { generated: new Date().toISOString(), season, week, seasonType: stype, source: 'Composite of DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse; see sources', sources: status, weights: WEIGHTS, valuesDate: (dpValues && dpValues[0] && dpValues[0].scrape_date) || null, players: out, picks };
 await writeFile(new URL('../data/players.json', import.meta.url), JSON.stringify(data));
+console.log('Sources:', Object.entries(status).map(([k, v]) => `${k}=${v.ok ? 'ok(' + v.count + ')' : 'FAILED(' + v.note + ')'}`).join(' '));
 console.log(`Wrote ${out.length} players, ${picks.length} picks, ${dpBySleeper.size} DP values for ${season} week ${week} (stats: ${!!stats}, projections: ${!!proj}).`);

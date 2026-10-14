@@ -8,21 +8,22 @@ Cost: free, no signup, runs in the browser.
 
 ## Key facts
 - Start score = 0.7 × this week's projected points + 0.3 × season points per game, × injury factor (Questionable 0.85, Doubtful 0.25, Out/IR 0).
-- Dynasty values: DynastyProcess open values (1QB and superflex), 0-10,000 scale; fallback = Sleeper dynasty ADP with a position age curve.
+- Dynasty values: weighted composite on a 0-10,000 scale — DynastyProcess experts 40%, Sleeper dynasty ADP 30%, Fantasy Football Calculator dynasty ADP 15%, nflverse production 15% — with per-source breakdown and a consensus/spread indicator.
 - Trade totals count the best piece fully and discount extra pieces: 100%, 75%, 55%, 40%, 30%, 25%. A trade within 5% is called fair.
 - TE premium adds 15% to tight end value. Draft picks for future years are included.
 - Sleeper league import uses the public Sleeper API (no login) and fills starting slots including FLEX and SUPER_FLEX.
-- Data refreshes daily via GitHub Actions from the Sleeper API and DynastyProcess.
+- Data refreshes daily via GitHub Actions from Sleeper, DynastyProcess, Fantasy Football Calculator and nflverse; a failed source is skipped and the others re-weighted.
 
 ## Tools (one page each)
-- [Start/sit tool](https://matt5516.github.io/fantasy-tools/start-sit/): Free fantasy football start/sit tool. Type two to four players to get a start/sit call from this week’s projections, season points per game and injury status. How it works: Start score = 70% this week’s Sleeper projection + 30% season points per game, reduced for injury status and bye weeks. Data refreshes daily.
-- [Dynasty trade analyzer](https://matt5516.github.io/fantasy-tools/trade-analyzer/): Free dynasty trade analyzer. Add players and rookie picks to each side to see whether the trade is fair, who wins and what would balance it. 1QB or superflex. How it works: Values come from DynastyProcess (updated weekly). Extra pieces are discounted so 2-for-1s aren’t overrated; within 5% is fair.
+- [Start/sit tool](https://matt5516.github.io/fantasy-tools/start-sit/): Free fantasy football start/sit tool. Type two to four players to get a start/sit call from this week’s projections, season points per game and injury status. How it works: Start score blends three signals: 50% this week’s projection (Sleeper/RotoWire), 25% the last three games and 25% season points per game (nflverse, Sleeper), reduced for injuries. Refreshed daily.
+- [Dynasty trade analyzer](https://matt5516.github.io/fantasy-tools/trade-analyzer/): Free dynasty trade analyzer. Add players and rookie picks to each side to see whether the trade is fair, who wins and what would balance it. 1QB or superflex. How it works: Values are a composite of four free sources (expert consensus, two draft markets and on-field production), with a per-source breakdown. Extra pieces are discounted; within 5% is fair.
 - [Sleeper league import](https://matt5516.github.io/fantasy-tools/league-import/): Enter your Sleeper username to get your optimal lineup for this week, power rankings for every team in your league and the best free agents for your roster. How it works: We read your league from Sleeper’s public API, fill every lineup slot with the highest start score, and rank teams by 60% lineup strength + 40% dynasty value.
 - [Waiver wire helper](https://matt5516.github.io/fantasy-tools/waiver-wire/): See the most-added players right now, then load your Sleeper league to find free agents who would beat one of your current starters this week. How it works: Trending adds come from Sleeper (last 24 hours). With your league loaded, we list unrostered players and flag any whose start score beats your weakest starter.
-- [Rookie draft board](https://matt5516.github.io/fantasy-tools/rookie-draft-board/): A free dynasty rookie and startup draft board ranked by trade value. Tick players as they are drafted to always see the best player available. How it works: Players are ranked by DynastyProcess dynasty value (1QB or superflex). Ticks are saved in this browser so you can reload mid-draft.
+- [Rookie draft board](https://matt5516.github.io/fantasy-tools/rookie-draft-board/): A free dynasty rookie and startup draft board ranked by trade value. Tick players as they are drafted to always see the best player available. How it works: Players are ranked by our composite dynasty value (1QB or superflex). Ticks are saved in this browser so you can reload mid-draft.
 
 ## Guides
 - [How dynasty trade values work](https://matt5516.github.io/fantasy-tools/how-dynasty-trade-values-work/): Where dynasty trade values come from, why 2-for-1 trades are discounted, how superflex and TE premium change values, and how to read a trade calculator verdict.
+- [How our values work (sources)](https://matt5516.github.io/fantasy-tools/how-our-values-work/): How DynastyMath builds its composite dynasty values and start/sit scores from free sources: DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse.
 - [Superflex explained](https://matt5516.github.io/fantasy-tools/what-is-superflex/): Superflex lets you start a QB in a flex spot. How it changes player values, draft strategy and dynasty trades, with current superflex rankings.
 - [TE premium explained](https://matt5516.github.io/fantasy-tools/te-premium-explained/): TE premium gives tight ends extra points per reception (often +0.5). How it changes rankings and dynasty trade values, and how to set it in the calculator.
 - [PPR vs half PPR vs standard](https://matt5516.github.io/fantasy-tools/ppr-vs-half-ppr/): How PPR, half-PPR and standard scoring change player values: pass-catching backs and slot receivers gain in PPR, touchdown-dependent players in standard.
@@ -33,10 +34,10 @@ Cost: free, no signup, runs in the browser.
 
 ## FAQ
 ### Who should I start this week?
-Start the player with the higher start score: 70% this week's projected points and 30% season points per game, reduced for injury status (Questionable × 0.85, Doubtful × 0.25, Out or IR = 0). Check news before kickoff, since injuries and weather change fast.
+Start the player with the higher start score: 50% this week's projection (Sleeper/RotoWire), 25% the last three games (nflverse) and 25% season points per game, reduced for injury status (Questionable × 0.85, Doubtful × 0.25, Out or IR = 0). Check news before kickoff, since injuries and weather change fast.
 
 ### How does the dynasty trade calculator value players?
-Player and draft pick values come from DynastyProcess open data, which is built from expert consensus rankings for 1QB and superflex leagues. Players without a DynastyProcess value use Sleeper dynasty ADP with an age curve. Values run from 0 to about 10,000.
+Player values are a composite of four free sources: DynastyProcess expert consensus (40%), Sleeper dynasty ADP (30%), Fantasy Football Calculator dynasty ADP (15%) and nflverse on-field production (15%). Each source is put on the same scale by positional rank and blended; weights re-normalise when a source is unavailable. Draft pick values come from DynastyProcess. The methodology page lists every source and its license.
 
 ### Why does a 2-for-1 trade look worse than the totals suggest?
 Roster spots are limited, so one great player is usually worth more than two good ones. The calculator counts the best piece in full and discounts extra pieces (75%, 55%, 40% and so on), which is the same idea as KeepTradeCut's value adjustment.
@@ -45,13 +46,13 @@ Roster spots are limited, so one great player is usually worth more than two goo
 The calculator calls a trade fair when the two sides are within 5% of each other after the depth discount. Bigger gaps say which side wins and suggest players who would balance it.
 
 ### Does it work for superflex and TE premium leagues?
-Yes. Superflex uses DynastyProcess 2QB/superflex values, which lift quarterbacks. TE premium adds 15% to tight end values.
+Yes. Superflex converts every source with the DynastyProcess superflex value curve, which lifts quarterbacks. TE premium adds 15% to tight end values.
 
 ### Can I import my Sleeper league?
 Yes. Enter your Sleeper username, pick a league, and the tool loads your roster, fills your league's starting slots with the highest-scoring players this week and lists your bench. It uses Sleeper's free public API and needs no login or password.
 
 ### Where does the data come from and how often is it updated?
-Player info, injuries, stats, projections and ADP come from the free Sleeper public API. Dynasty values come from DynastyProcess (GPL-3.0). A GitHub Action refreshes the data every morning.
+Player info, injuries, stats, projections and ADP come from the free Sleeper public API. Dynasty values are a composite of DynastyProcess (GPL-3.0), Sleeper and Fantasy Football Calculator ADP and nflverse stats (CC BY 4.0). A GitHub Action refreshes the data every morning.
 
 ### Is this a betting site?
 No. This is a free fantasy football tool for season-long leagues. It doesn't take bets or link to sportsbooks. Paid fantasy contests are for adults 21 and older where legal. If you or someone you know has a gambling problem, call or text 1-800-GAMBLER.

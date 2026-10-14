@@ -53,7 +53,19 @@ def itemlist(rows, name):
     return {"@type": "ItemList", "name": name, "itemListOrder": "https://schema.org/ItemListOrderDescending", "numberOfItems": len(rows),
             "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": p['n']} for i, p in enumerate(rows)]}
 
-SRC = f'<p class="hint">Values: DynastyProcess open data (GPL-3.0), updated {E(D.get("valuesDate","") or gen)}. Stats and projections: Sleeper public API. Updated {genh}. Values are a starting point, not a guarantee; adjust for your league.</p>'
+SRCS = D.get('sources') or {}
+SRCN = {'dp': ('DynastyProcess', 'https://github.com/dynastyprocess/data'), 'sl': ('Sleeper', 'https://sleeper.com'), 'ffc': ('Fantasy Football Calculator', 'https://fantasyfootballcalculator.com'), 'prod': ('nflverse', 'https://github.com/nflverse/nflverse-data')}
+used = [k for k in ('dp', 'sl', 'ffc', 'prod') if (SRCS.get(k) or {}).get('ok')]
+SRC = (f'<p class="hint">Composite values from ' + ', '.join(f'<a href="{SRCN[k][1]}" rel="noopener">{SRCN[k][0]}</a> ({round(SRCS[k]["weight"]*100)}%)' for k in used)
+       + (' (weights re-normalised over the sources available today)' if len(used) < 4 else '') + f'; expert values from DynastyProcess open data (GPL-3.0); nflverse data CC BY 4.0, changed by us into per-game production ranks. Projections: Sleeper public API. Updated {genh}. <a href="../how-our-values-work/">How the composite works</a>. Values are a starting point, not a guarantee.</p>')
+CON = {'strong': ('good', 'Sources agree'), 'mixed': ('', 'Some disagreement'), 'split': ('warn', 'Sources disagree'), 'single': ('', 'One source')}
+def con_badge(p):
+    c = CON.get(p.get('con') or 'single'); sig = p.get('sig')
+    return f'<span class="badge {c[0]}">{c[1]}</span>' + (f' <span class="badge {"good" if sig=="buy" else "warn"}">{"Buy: market below experts" if sig=="buy" else "Sell: market above experts"}</span>' if sig else '')
+def breakdown(p):
+    cs = p.get('cs') or {}
+    rows = ''.join(f'<tr><td style="text-align:left">{SRCN[k][0]}{" ADP" if k in ("sl","ffc") else " experts" if k=="dp" else " production"}</td><td>{round((SRCS.get(k) or {}).get("weight",0)*100)}%</td><td>{cs[k]:,}</td></tr>' for k in ('dp', 'sl', 'ffc', 'prod') if k in cs)
+    return (f'<h2>Value by source</h2><p>{con_badge(p)} Spread between sources: {p["sp"]}%.</p>' if p.get('sp') is not None else '<h2>Value by source</h2>') + f'<div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Source</th><th scope="col">Weight</th><th scope="col">1QB value</th></tr></thead><tbody>{rows}<tr><th scope="row" style="text-align:left">Composite</th><td></td><td><strong>{p["v1"]:,}</strong></td></tr></tbody></table></div><p class="hint">A big spread means experts, drafters and production disagree. When the draft market values a player well below the experts, that is a possible buy; well above, a possible sell.</p>'
 PLAYER_PAGES = {p['id'] for p in valued[:150]}
 
 # ---- dynasty rankings ----
@@ -140,6 +152,7 @@ for p in valued[:150]:
           f'{nm} dynasty trade value', f'{p["pos"]}, {E(p.get("team") or "free agent")}{", age "+str(p["age"]) if p.get("age") else ""}.',
           f'{nm} is the <strong>#{one_rank[p["id"]]}</strong> dynasty asset in 1QB leagues (value {v1:,}) and <strong>#{sf_rank[p["id"]]}</strong> in superflex (value {v2:,}), and the {p["pos"]}{pr.get(p["id"])} at his position, as of {genh}.' + (f' That is roughly the value of a {E(pk["n"])}.' if pk else ''),
           f'''<div class="stats s3"><div class="stat"><div class="k">1QB value</div><div class="v">{v1:,}</div></div><div class="stat"><div class="k">Superflex value</div><div class="v">{v2:,}</div></div><div class="stat"><div class="k">Position rank</div><div class="v">{p["pos"]}{pr.get(p["id"])}</div></div><div class="stat"><div class="k">Age</div><div class="v">{p.get("age") or "—"}</div></div><div class="stat"><div class="k">PPR PPG ({SEASON})</div><div class="v">{(p.get("ppg") or {}).get("ppr","—")}</div></div><div class="stat"><div class="k">Status</div><div class="v">{E(p.get("inj") or "Active")}</div></div></div>
+{breakdown(p)}
 <h2>Players with similar value</h2><p>Straight-up trades for any of these are roughly fair in 1QB:</p>{table(comps, n=6)}
 <p><a class="btn" href="../?a={p["id"]}&b={comps[0]["id"]}#trade">Compare {nm} vs {E(comps[0]["n"])}</a></p>{SRC}''',
           cta=(f'Trade calculator with {p["n"].split(" ")[-1]}', f'?a={p["id"]}'), changefreq='daily')

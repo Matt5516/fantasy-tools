@@ -36,7 +36,7 @@ h3{font-size:1.08rem;margin:0 0 8px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-weight:600;padding:6px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--muted)}
 /* layout */
-.tool{display:grid;gap:18px;grid-template-columns:1fr;align-items:start;margin:8px 0 28px}
+.tool{display:grid;gap:18px;grid-template-columns:minmax(0,1fr);align-items:start;margin:8px 0 28px}
 @media(min-width:960px){.tool{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr)}.sticky{position:sticky;top:76px}}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}
 .panel h2{font-size:1.15rem;display:flex;align-items:center;gap:8px}
@@ -72,7 +72,7 @@ table{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:
 th{font-size:.75rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:700}
 th,td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}
 tr.best td{background:color-mix(in srgb,var(--good) 9%,transparent)}
-.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.table-scroll{position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .badge{display:inline-block;font-size:.7rem;font-weight:800;padding:2px 7px;border-radius:999px;background:var(--surface-2);color:var(--muted);vertical-align:middle}
 .badge.good{background:var(--good-bg);color:var(--good)}.badge.bad{background:var(--bad-bg);color:var(--bad)}.badge.warn{background:var(--warn-bg);color:var(--warn)}
 .chart{width:100%;height:auto;display:block;margin:6px 0}.chart text{fill:var(--muted);font-size:11px;font-family:var(--font)}
@@ -142,7 +142,7 @@ h1{font-weight:800;letter-spacing:-.035em}h2{letter-spacing:-.02em}
 .page-hero{padding:14px 0 6px}.page-hero h1{font-size:clamp(1.8rem,4.6vw,2.7rem);margin:12px 0 10px}
 .answer-box{display:flex;gap:12px;align-items:flex-start;background:color-mix(in srgb,var(--brand) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--brand) 30%,var(--line));border-left:5px solid var(--brand);border-radius:14px;padding:14px 16px;margin:14px 0}
 .answer-box .icon{flex:none;color:var(--brand);margin-top:3px}.answer-box p{margin:0}
-.page-grid{display:grid;gap:18px;margin:12px 0 20px}@media(min-width:960px){.page-grid{grid-template-columns:minmax(0,1fr) 280px}}
+.page-grid{display:grid;gap:18px;margin:12px 0 20px;grid-template-columns:minmax(0,1fr)}@media(min-width:960px){.page-grid{grid-template-columns:minmax(0,1fr) 280px}}
 .side{display:grid;gap:14px;align-content:start}@media(min-width:960px){.side{position:sticky;top:76px}}
 .cta-card{border-radius:var(--r);padding:18px;color:#fff;background:linear-gradient(135deg,color-mix(in srgb,var(--brand) 80%,#000),color-mix(in srgb,var(--brand-2) 80%,#000))}
 .cta-card b{font-family:var(--display);font-size:1.15rem}.cta-card p{color:#fff;opacity:.95;margin:6px 0 12px}.cta-card .btn{background:#fff;color:#111827}
@@ -150,7 +150,7 @@ h1{font-weight:800;letter-spacing:-.035em}h2{letter-spacing:-.02em}
 .page-body h2{margin-top:22px}.page-body table{font-size:.92rem}
 .foot-grid{display:grid;gap:18px;margin-bottom:14px}@media(min-width:760px){.foot-grid{grid-template-columns:1.2fr 1fr 1fr 1fr}}
 .foot-h{font-size:.95rem;margin:4px 0 8px}.foot-links{list-style:none;padding:0;margin:0}.foot-links li{margin:5px 0}
-.mini{display:grid;gap:8px 14px;grid-template-columns:1fr;background:var(--surface-2);border-radius:14px;padding:16px;margin:12px 0}
+.mini{display:grid;gap:8px 14px;grid-template-columns:minmax(0,1fr);background:var(--surface-2);border-radius:14px;padding:16px;margin:12px 0}
 @media(min-width:600px){.mini:not(.bulk){grid-template-columns:200px 1fr;align-items:center}}
 .mini label{font-weight:600;font-size:.92rem}.mini-out{grid-column:1/-1;display:block;font-size:1.05rem;padding:12px;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
 .row3{display:grid;gap:10px}@media(min-width:600px){.row3{grid-template-columns:repeat(3,1fr)}}.row3 label{display:grid;gap:4px}

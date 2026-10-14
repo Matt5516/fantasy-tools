@@ -1,13 +1,17 @@
 (function(root){
   var INJ = {Out:0, IR:0, PUP:0, Sus:0, Doubtful:0.25, Questionable:0.85};
   function r1(n){return Math.round(n*10)/10;}
-  // Start/sit score: 70% this week's projection + 30% season points per game, discounted by injury status.
+  // Start/sit score: weighted blend of independent signals, re-normalised over those available:
+  // 50% this week's projection (Sleeper / RotoWire), 25% last 3 games (nflverse), 25% season points per game (Sleeper).
+  // A projection is required (no projection = bye or inactive). Then discounted by injury status.
+  var PW = {proj:0.5, l3:0.25, ppg:0.25};
   function startScore(p, fmt){
-    var proj = p.proj ? p.proj[fmt] : null, ppg = p.ppg ? p.ppg[fmt] : null;
-    var base = proj!=null && ppg!=null ? 0.7*proj + 0.3*ppg : (proj!=null ? proj : null);
+    var parts = {proj: p.proj ? p.proj[fmt] : null, l3: p.l3 ? p.l3[fmt] : null, ppg: p.ppg ? p.ppg[fmt] : null};
     var mult = p.inj && INJ.hasOwnProperty(p.inj) ? INJ[p.inj] : 1;
-    if (base===null) return {score:0, base:null, mult:mult, note:'No projection this week (bye or inactive).'};
-    return {score:r1(base*mult), base:r1(base), mult:mult, note: mult<1 ? 'Injury status: '+p.inj+' (×'+mult+')' : ''};
+    if (parts.proj==null) return {score:0, base:null, mult:mult, parts:parts, spread:null, note:'No projection this week (bye or inactive).'};
+    var w=0, t=0, vals=[]; for (var k in PW){ if (parts[k]!=null){ w+=PW[k]; t+=PW[k]*parts[k]; vals.push(parts[k]); } }
+    var base=t/w, hi=Math.max.apply(null,vals), lo=Math.min.apply(null,vals), spread=vals.length>1?r1(hi-lo):null;
+    return {score:r1(base*mult), base:r1(base), mult:mult, parts:parts, spread:spread, note: mult<1 ? 'Injury status: '+p.inj+' (×'+mult+')' : ''};
   }
   function startSit(players, fmt){
     return players.map(function(p){ var s=startScore(p,fmt); return {p:p, s:s}; })
@@ -47,6 +51,6 @@
       .filter(function(x){ return x.after >= target*0.95 && x.after <= target*1.08; }).sort(function(x,y){return x.miss-y.miss;}).slice(0,5);
     return {side:behind, gap:Math.abs(a-b), list:list};
   }
-  var api={balance:balance,startScore:startScore,startSit:startSit,dynastyValue:dynastyValue,sideValue:sideValue,trade:trade};
+  var api={PW:PW,balance:balance,startScore:startScore,startSit:startSit,dynastyValue:dynastyValue,sideValue:sideValue,trade:trade};
   if (typeof module!=='undefined'&&module.exports) module.exports=api; else root.FFCalc=api;
 })(this);
