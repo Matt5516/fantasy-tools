@@ -1,10 +1,11 @@
 {
- "name": "Fantasy Tools",
- "short_name": "FF Tools",
+ "name": "DynastyMath",
+ "short_name": "DynastyMath",
+ "description": "Win the week. Win the trade. Build the dynasty.",
  "start_url": "./",
  "display": "standalone",
  "background_color": "#0b1020",
- "theme_color": "#7c3aed",
+ "theme_color": "#8b5cf6",
  "icons": [
   {
    "src": "favicon.svg",

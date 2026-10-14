@@ -113,7 +113,7 @@
   function renderAll(){ startSit(); trade(); rankings(); history.replaceState(null,'',UI.stateURL({ss:sel.ss.join(','),a:sel.a.join(','),b:sel.b.join(',')})); }
   document.addEventListener('click',function(e){ var s=e.target.closest('[data-share]'), c=e.target.closest('[data-copy]');
     var t=function(k){return k==='ss'?ssText:trText;};
-    if(s) UI.share(location.href,'Fantasy Tools',t(s.dataset.share)); if(c) UI.copy(t(c.dataset.copy)+' '+location.href,'Copied'); });
+    if(s) UI.share(location.href,'DynastyMath',t(s.dataset.share)); if(c) UI.copy(t(c.dataset.copy)+' '+location.href,'Copied'); });
   $('rkPos').addEventListener('change',rankings); $('rkFind').addEventListener('input',UI.debounce(rankings,80));
   var st=UI.readState(); UI.segs(renderAll); UI.syncSegs();
   fetch('data/players.json').then(function(r){ if(!r.ok) throw new Error(); return r.json(); }).then(function(d){
