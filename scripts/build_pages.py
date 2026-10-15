@@ -193,7 +193,7 @@ write('guides', 'Guides', 'All guides', f'All guides | {NAME}', f'Every {NAME} p
       f'{NAME} guides & rankings', 'Rankings refresh daily from open data.', f'{len(allp)} pages, updated {genh}.', body, changefreq='daily')
 PAGES.pop()
 # ---- sitemap: statics + generated + guides + glossary ----
-ent = [('', '1.0', 'daily')] + [(t + '/', '0.9', 'daily') for t in TOOLS] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.6', p.get('changefreq', 'monthly')) for p in statics] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.5', p['changefreq']) for p in PAGES] + [('guides/', '0.5', 'daily'), ('glossary/', '0.4', 'monthly')]
+ent = [('', '1.0', 'daily')] + [(t + '/', '0.9', 'daily') for t in TOOLS] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.6', p.get('changefreq', 'monthly')) for p in statics] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.5', p['changefreq']) for p in PAGES] + [('guides/', '0.5', 'daily'), ('glossary/', '0.4', 'monthly')] + [(f, '0.3', 'yearly') for f in ('privacy.html', 'terms.html', 'about.html', 'contact.html')]
 (ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{URL}{s}</loc><lastmod>{gen}</lastmod><changefreq>{cf}</changefreq><priority>{p}</priority></url>\n' for s, p, cf in ent) + '</urlset>\n')
 # remove stale generated folders (e.g. a player who dropped out of the top 150)
 keep = {p['slug'] for p in allp} | {'guides', 'glossary'} | set(TOOLS) | set(OLDWEEKS)
