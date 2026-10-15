@@ -230,3 +230,22 @@ html.embed .page-hero{padding-top:8px;padding-bottom:4px}html.embed body{padding
 footer.site .promo a{padding:8px;max-width:460px}footer.site .promo img{width:84px}footer.site .promo-t{font-size:.86rem}
 html.embed .promo{display:none!important}
 @media print{.promo{display:none}}
+/* v7 ClockInMath time card (scoped to .tc-* classes) */
+.tc-days{display:grid;gap:10px;margin:8px 0 10px}
+.tcday{padding:10px 12px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.tcd-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}.tcd-h b{font-family:var(--display);font-size:1rem}
+.tcnet{font-weight:800;font-variant-numeric:tabular-nums;color:var(--brand)}
+.tcrow{display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}.tcf label{font-size:.74rem;font-weight:600;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcf input{min-width:0;padding:8px 10px;min-height:44px;background:var(--surface)}
+.tc-split{display:none;margin-top:8px;grid-template-columns:repeat(2,minmax(0,1fr))}.tc-form.split .tc-split{display:grid}
+input[aria-invalid=true]{border-color:var(--bad)!important;background:var(--bad-bg)!important}
+.tcerr{display:none;margin:6px 0 0;font-size:.82rem;color:var(--bad);font-weight:600}
+.tc-wk{margin:14px 0 6px;font-size:1.02rem}
+.tc-table th[scope=row]{text-align:left;font-weight:700;white-space:nowrap}.tc-table td{white-space:nowrap}
+.hint-inline{font-weight:500;color:var(--muted);font-size:.74rem}
+.tc-print{display:none}
+@media print{.tc-form{display:none!important}.tc-print{display:block!important}.tool{display:block}.sticky .panel{border:0;padding:0}
+ .tc-table{font-size:11pt}.tc-table th,.tc-table td{border:1px solid #999;padding:4px 8px}.tc-sign{margin-top:36px}.verdict .vicon{display:none}}
+
+/* ClockInMath: skip layout for below-fold guide copy until scrolled */
+.tc-form ~ .prose,.tool + .prose,details.faq,section.share-embed{content-visibility:auto;contain-intrinsic-size:1px 600px}

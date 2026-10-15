@@ -3,7 +3,7 @@
 > Free fantasy football start/sit tool and dynasty trade calculator with superflex, TE premium and picks. Import your Sleeper league. Updated daily.
 
 URL: https://dynastymath.com/
-Last updated: 2026-10-14
+Last updated: 2026-10-15
 Cost: free, no signup, runs in the browser.
 
 ## Key facts
@@ -61,3 +61,4 @@ No. This is a free fantasy football tool for season-long leagues. It doesn't tak
 - [GradeOrFlip](https://gradeorflip.com/): Is it worth grading? Profit and break-even by grade for PSA, SGC, BGS and CGC.
 - [EnrollMath](https://enrollmath.com/): HSA vs PPO break-even, COBRA cost and marketplace comparison with 2026/2027 IRS limits.
 - [BagOrBulk](https://bagorbulk.com/): Concrete, gravel, mulch and topsoil calculators: yards, tons, bags, and whether bags or bulk costs less.
+- [ClockInMath](https://matt5516.github.io/time-card-calc/): Time card calculator: weekly hours, decimal hours, overtime and gross pay, with a printable timesheet.
