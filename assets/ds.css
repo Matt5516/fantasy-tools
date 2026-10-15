@@ -221,3 +221,12 @@ html.embed .page-hero{padding-top:8px;padding-bottom:4px}html.embed body{padding
 .area{display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr)) 44px;align-items:end;padding:12px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
 .area label{font-size:.85rem;font-weight:600;white-space:nowrap}.area>.shape{grid-column:1/-1}.area input{width:100%;min-width:0}.area .rm{align-self:end;width:44px;height:44px}
 .chart.diagram{max-width:420px;margin:10px auto 0;display:block}.chart.diagram text{font-size:13px;fill:var(--ink)}
+
+/* promo cards (Gumroad companions) */
+.promo{margin:18px 0}.promo a{display:flex;align-items:center;gap:14px;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2);color:var(--ink);text-decoration:none}
+.promo a:hover{border-color:var(--brand)}.promo img{width:120px;height:auto;aspect-ratio:240/135;border-radius:8px;flex:none;background:var(--line)}
+.promo-t{display:flex;flex-direction:column;gap:2px;font-size:.95rem}.promo-t b{color:var(--ink)}.promo-t small{color:var(--muted);font-size:.8rem}
+.promo-t b::after{content:" \2197";color:var(--brand)}
+footer.site .promo a{padding:8px;max-width:460px}footer.site .promo img{width:84px}footer.site .promo-t{font-size:.86rem}
+html.embed .promo{display:none!important}
+@media print{.promo{display:none}}
