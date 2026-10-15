@@ -2,7 +2,7 @@
 
 > Free fantasy football start/sit tool and dynasty trade calculator with superflex, TE premium and picks. Import your Sleeper league. Updated daily.
 
-URL: https://matt5516.github.io/fantasy-tools/
+URL: https://dynastymath.com/
 Last updated: 2026-10-14
 Cost: free, no signup, runs in the browser.
 
@@ -15,22 +15,22 @@ Cost: free, no signup, runs in the browser.
 - Data refreshes daily via GitHub Actions from Sleeper, DynastyProcess, Fantasy Football Calculator and nflverse; a failed source is skipped and the others re-weighted.
 
 ## Tools (one page each)
-- [Start/sit tool](https://matt5516.github.io/fantasy-tools/start-sit/): Free fantasy football start/sit tool. Type two to four players to get a start/sit call from this week’s projections, season points per game and injury status. How it works: Start score blends three signals: 50% this week’s projection (Sleeper/RotoWire), 25% the last three games and 25% season points per game (nflverse, Sleeper), reduced for injuries. Refreshed daily.
-- [Dynasty trade analyzer](https://matt5516.github.io/fantasy-tools/trade-analyzer/): Free dynasty trade analyzer. Add players and rookie picks to each side to see whether the trade is fair, who wins and what would balance it. 1QB or superflex. How it works: Values are a composite of four free sources (expert consensus, two draft markets and on-field production), with a per-source breakdown. Extra pieces are discounted; within 5% is fair.
-- [Sleeper league import](https://matt5516.github.io/fantasy-tools/league-import/): Enter your Sleeper username to get your optimal lineup for this week, power rankings for every team in your league and the best free agents for your roster. How it works: We read your league from Sleeper’s public API, fill every lineup slot with the highest start score, and rank teams by 60% lineup strength + 40% dynasty value.
-- [Waiver wire helper](https://matt5516.github.io/fantasy-tools/waiver-wire/): See the most-added players right now, then load your Sleeper league to find free agents who would beat one of your current starters this week. How it works: Trending adds come from Sleeper (last 24 hours). With your league loaded, we list unrostered players and flag any whose start score beats your weakest starter.
-- [Rookie draft board](https://matt5516.github.io/fantasy-tools/rookie-draft-board/): A free dynasty rookie and startup draft board ranked by trade value. Tick players as they are drafted to always see the best player available. How it works: Players are ranked by our composite dynasty value (1QB or superflex). Ticks are saved in this browser so you can reload mid-draft.
+- [Start/sit tool](https://dynastymath.com/start-sit/): Free fantasy football start/sit tool. Type two to four players to get a start/sit call from this week’s projections, season points per game and injury status. How it works: Start score blends three signals: 50% this week’s projection (Sleeper/RotoWire), 25% the last three games and 25% season points per game (nflverse, Sleeper), reduced for injuries. Refreshed daily.
+- [Dynasty trade analyzer](https://dynastymath.com/trade-analyzer/): Free dynasty trade analyzer. Add players and rookie picks to each side to see whether the trade is fair, who wins and what would balance it. 1QB or superflex. How it works: Values are a composite of four free sources (expert consensus, two draft markets and on-field production), with a per-source breakdown. Extra pieces are discounted; within 5% is fair.
+- [Sleeper league import](https://dynastymath.com/league-import/): Enter your Sleeper username to get your optimal lineup for this week, power rankings for every team in your league and the best free agents for your roster. How it works: We read your league from Sleeper’s public API, fill every lineup slot with the highest start score, and rank teams by 60% lineup strength + 40% dynasty value.
+- [Waiver wire helper](https://dynastymath.com/waiver-wire/): See the most-added players right now, then load your Sleeper league to find free agents who would beat one of your current starters this week. How it works: Trending adds come from Sleeper (last 24 hours). With your league loaded, we list unrostered players and flag any whose start score beats your weakest starter.
+- [Rookie draft board](https://dynastymath.com/rookie-draft-board/): A free dynasty rookie and startup draft board ranked by trade value. Tick players as they are drafted to always see the best player available. How it works: Players are ranked by our composite dynasty value (1QB or superflex). Ticks are saved in this browser so you can reload mid-draft.
 
 ## Guides
-- [How dynasty trade values work](https://matt5516.github.io/fantasy-tools/how-dynasty-trade-values-work/): Where dynasty trade values come from, why 2-for-1 trades are discounted, how superflex and TE premium change values, and how to read a trade calculator verdict.
-- [How our values work (sources)](https://matt5516.github.io/fantasy-tools/how-our-values-work/): How DynastyMath builds its composite dynasty values and start/sit scores from free sources: DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse.
-- [Superflex explained](https://matt5516.github.io/fantasy-tools/what-is-superflex/): Superflex lets you start a QB in a flex spot. How it changes player values, draft strategy and dynasty trades, with current superflex rankings.
-- [TE premium explained](https://matt5516.github.io/fantasy-tools/te-premium-explained/): TE premium gives tight ends extra points per reception (often +0.5). How it changes rankings and dynasty trade values, and how to set it in the calculator.
-- [PPR vs half PPR vs standard](https://matt5516.github.io/fantasy-tools/ppr-vs-half-ppr/): How PPR, half-PPR and standard scoring change player values: pass-catching backs and slot receivers gain in PPR, touchdown-dependent players in standard.
-- [How to make start/sit decisions](https://matt5516.github.io/fantasy-tools/how-to-decide-start-sit/): A simple 5-factor process for start/sit calls: projections, recent usage, injuries, matchup and game script, plus when to trust the floor vs the ceiling.
-- [Import your Sleeper league](https://matt5516.github.io/fantasy-tools/sleeper-league-import/): Enter your Sleeper username to load your leagues and roster and get start/sit calls for every slot, including flex and superflex. Free, no login.
-- [Trade calculators compared](https://matt5516.github.io/fantasy-tools/dynasty-trade-calculators-compared/): Free dynasty trade calculators side by side: where values come from, picks, superflex, TE premium, league import, share links and ads.
-- [Responsible play](https://matt5516.github.io/fantasy-tools/responsible-play/): Fantasy football should stay fun. Paid contests are 21+ in most states. Help is available at 1-800-GAMBLER.
+- [How dynasty trade values work](https://dynastymath.com/how-dynasty-trade-values-work/): Where dynasty trade values come from, why 2-for-1 trades are discounted, how superflex and TE premium change values, and how to read a trade calculator verdict.
+- [How our values work (sources)](https://dynastymath.com/how-our-values-work/): How DynastyMath builds its composite dynasty values and start/sit scores from free sources: DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse.
+- [Superflex explained](https://dynastymath.com/what-is-superflex/): Superflex lets you start a QB in a flex spot. How it changes player values, draft strategy and dynasty trades, with current superflex rankings.
+- [TE premium explained](https://dynastymath.com/te-premium-explained/): TE premium gives tight ends extra points per reception (often +0.5). How it changes rankings and dynasty trade values, and how to set it in the calculator.
+- [PPR vs half PPR vs standard](https://dynastymath.com/ppr-vs-half-ppr/): How PPR, half-PPR and standard scoring change player values: pass-catching backs and slot receivers gain in PPR, touchdown-dependent players in standard.
+- [How to make start/sit decisions](https://dynastymath.com/how-to-decide-start-sit/): A simple 5-factor process for start/sit calls: projections, recent usage, injuries, matchup and game script, plus when to trust the floor vs the ceiling.
+- [Import your Sleeper league](https://dynastymath.com/sleeper-league-import/): Enter your Sleeper username to load your leagues and roster and get start/sit calls for every slot, including flex and superflex. Free, no login.
+- [Trade calculators compared](https://dynastymath.com/dynasty-trade-calculators-compared/): Free dynasty trade calculators side by side: where values come from, picks, superflex, TE premium, league import, share links and ads.
+- [Responsible play](https://dynastymath.com/responsible-play/): Fantasy football should stay fun. Paid contests are 21+ in most states. Help is available at 1-800-GAMBLER.
 
 ## FAQ
 ### Who should I start this week?
@@ -58,6 +58,6 @@ Player info, injuries, stats, projections and ADP come from the free Sleeper pub
 No. This is a free fantasy football tool for season-long leagues. It doesn't take bets or link to sportsbooks. Paid fantasy contests are for adults 21 and older where legal. If you or someone you know has a gambling problem, call or text 1-800-GAMBLER.
 
 ## Related tools
-- [GradeOrFlip](https://matt5516.github.io/card-flip-calc/): Is it worth grading? Profit and break-even by grade for PSA, SGC, BGS and CGC.
-- [EnrollMath](https://matt5516.github.io/open-enrollment-calc/): HSA vs PPO break-even, COBRA cost and marketplace comparison with 2026/2027 IRS limits.
-- [BagOrBulk](https://matt5516.github.io/material-calc/): Concrete, gravel, mulch and topsoil calculators: yards, tons, bags, and whether bags or bulk costs less.
+- [GradeOrFlip](https://gradeorflip.com/): Is it worth grading? Profit and break-even by grade for PSA, SGC, BGS and CGC.
+- [EnrollMath](https://enrollmath.com/): HSA vs PPO break-even, COBRA cost and marketplace comparison with 2026/2027 IRS limits.
+- [BagOrBulk](https://bagorbulk.com/): Concrete, gravel, mulch and topsoil calculators: yards, tons, bags, and whether bags or bulk costs less.
