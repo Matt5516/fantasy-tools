@@ -249,3 +249,21 @@ input[aria-invalid=true]{border-color:var(--bad)!important;background:var(--bad-
 
 /* ClockInMath: skip layout for below-fold guide copy until scrolled */
 .tc-form ~ .prose,.tool + .prose,details.faq,section.share-embed{content-visibility:auto;contain-intrinsic-size:1px 600px}
+
+/* CoatMath (scoped to .cm-* classes) */
+.cm-rows{display:grid;gap:10px;margin:8px 0 10px}
+.cm-row{display:grid;gap:8px;grid-template-columns:repeat(6,minmax(0,1fr)) 44px;align-items:end;padding:12px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.cm-row>div{grid-column:span 2;min-width:0}.cm-row>div.s3{grid-column:span 3}
+@media(min-width:560px){.cm-row>div{grid-column:span 1}.cm-row>div.s3{grid-column:span 2}}
+.cm-row label{display:block;font-size:.8rem;font-weight:600;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm-row input,.cm-row select{width:100%;min-width:0}.cm-row .rm{align-self:end;width:44px;height:44px}
+.cm-row .cm-t{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;font-family:var(--display);font-weight:700}
+.cm-row .cm-t span{font-size:.85rem;color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+.cm-tog{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.cm-tog .label{display:block;font-size:.85rem;font-weight:600;margin-bottom:4px}
+.cm-big{font-family:var(--display);font-size:1.5rem;font-weight:800;line-height:1.2}
+.cm-tbl{width:100%;border-collapse:collapse;font-size:.92rem;font-variant-numeric:tabular-nums}.cm-tbl th,.cm-tbl td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}.cm-tbl td.r,.cm-tbl th.r{text-align:right}.cm-tbl tfoot td{font-weight:800}
+.cm-alt{margin:10px 0;padding:10px 12px;border-radius:12px;border:1px dashed var(--line);font-size:.92rem}
+.cm-link{display:inline-flex;margin-top:8px}
+.chart.cm-dia{max-width:460px;margin:10px auto 0}.chart.cm-dia text{font-size:11px;fill:var(--ink)}
+[hidden]{display:none!important}
+@media print{.cm-form{display:none!important}}
