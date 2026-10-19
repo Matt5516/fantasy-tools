@@ -206,13 +206,89 @@ if inj:
           f'{len(inj)} fantasy-relevant players carry an injury designation as of {genh}, including {", ".join(E(p["n"])+" ("+E(p["inj"])+")" for p in inj[:3])}.',
           '<div class="table-scroll"><table><thead><tr><th scope="col">Player</th><th scope="col">Team</th><th scope="col">Status</th><th scope="col">PPR PPG</th></tr></thead><tbody>' + ''.join(f'<tr><td>{tag(p["pos"])} {E(p["n"])}</td><td>{p.get("team") or "FA"}</td><td>{E(p["inj"])}</td><td>{(p.get("ppg") or {}).get("ppr","—")}</td></tr>' for p in inj[:80]) + '</tbody></table></div><p class="hint">Source: Sleeper public API. Statuses can change after this page updates.</p>',
           cta=('Check a start/sit', ''))
-tr = sorted([p for p in players if (p.get('trend') or 0) > 0], key=lambda p: -p['trend'])[:40]
+def adds24(p): return p.get('t24') or p.get('trend') or 0  # t24 = Sleeper trending adds, 24h lookback
+tr = sorted([p for p in players if adds24(p) > 0], key=lambda p: -adds24(p))[:40]
 if tr:
     write('waiver-wire-trending', 'Weekly start/sit', 'Trending waiver adds', f'Week {WEEK} Waiver Wire: Most Added Players in Fantasy Football ({SEASON})',
           f'The most-added players on Sleeper over the last 24 hours, with position, team and PPG. Updated {genh}.',
           f'Week {WEEK} waiver wire: trending adds', 'Who fantasy managers are adding right now, from Sleeper’s public trending data.',
-          f'The most-added player right now is <strong>{E(tr[0]["n"])}</strong> ({tr[0]["pos"]}, {tr[0].get("team") or "FA"}), added in {tr[0]["trend"]:,} Sleeper leagues in the last day.',
-          '<div class="table-scroll"><table><thead><tr><th scope="col">#</th><th scope="col">Player</th><th scope="col">Adds (24h)</th><th scope="col">PPR PPG</th></tr></thead><tbody>' + ''.join(f'<tr><td>{i+1}</td><td>{tag(p["pos"])} {E(p["n"])} <span class="hint" style="display:inline">{p.get("team") or "FA"}</span></td><td>{p["trend"]:,}</td><td>{(p.get("ppg") or {}).get("ppr","—")}</td></tr>' for i, p in enumerate(tr)) + '</tbody></table></div>')
+          f'The most-added player right now is <strong>{E(tr[0]["n"])}</strong> ({tr[0]["pos"]}, {tr[0].get("team") or "FA"}), added in {adds24(tr[0]):,} Sleeper leagues in the last 24 hours.',
+          '<div class="table-scroll"><table><thead><tr><th scope="col">#</th><th scope="col">Player</th><th scope="col">Adds (24h)</th><th scope="col">PPR PPG</th></tr></thead><tbody>' + ''.join(f'<tr><td>{i+1}</td><td>{tag(p["pos"])} {E(p["n"])} <span class="hint" style="display:inline">{p.get("team") or "FA"}</span></td><td>{adds24(p):,}</td><td>{(p.get("ppg") or {}).get("ppr","—")}</td></tr>' for i, p in enumerate(tr)) + '</tbody></table></div>' + f'<p>Looking for pickups grouped by position with Week {WEEK} projections? See the <a href="../week-{WEEK}-waiver-wire/">Week {WEEK} waiver wire</a>.</p>')
+
+# ---- weekly waiver wire (targets "week N waiver wire"; built only from Sleeper trending adds + Sleeper projections + our values) ----
+FIRST_WAIVER_WEEK = 7   # first week this page family was published; older weeks redirect to the current one
+WAIVER_SLUG = f'week-{WEEK}-waiver-wire' if WEEK else None
+WV = []
+if WEEK:
+    WPOS = [('QB', 'Quarterbacks', 8), ('RB', 'Running backs', 14), ('WR', 'Wide receivers', 14), ('TE', 'Tight ends', 10)]
+    allproj = {pos: ssrows([pos], 10 ** 6) for pos, _, _ in WPOS}
+    def w_rank(p):
+        lst = allproj[p['pos']]
+        for i, q in enumerate(lst):
+            if q['id'] == p['id']: return i + 1, len(lst)
+        return None, len(lst)
+    def pace(p):
+        t24, t72 = p.get('t24'), p.get('t72')
+        if not t24 or not t72: return None
+        r = t24 / (t72 / 3)   # today's adds vs the average day of the last three
+        return ('Rising', r) if r >= 1.25 else (('Cooling', r) if r <= 0.75 else ('Steady', r))
+    def w_note(p):
+        bits = []; pj = p.get('proj'); rk, of = w_rank(p)
+        if pj and rk and not p.get('inj') in ('Out', 'IR', 'PUP', 'Sus'): bits.append(f'Projected {pj["ppr"]} PPR in Week {WEEK}, {p["pos"]}{rk} of {of} projected {p["pos"]}s')
+        elif p.get('inj') in ('Out', 'IR', 'PUP', 'Sus'): bits.append(f'Listed {p["inj"]}, so no Week {WEEK} start call')
+        else: bits.append(f'No Week {WEEK} projection on Sleeper (bye, inactive or no role yet)')
+        if p.get('inj') and p['inj'] not in ('Out', 'IR', 'PUP', 'Sus'): bits.append(f'status {p["inj"]}')
+        g, l3, l3g = ppg_of(p), (p.get('l3') or {}).get('ppr'), (p.get('l3') or {}).get('g', 3)
+        if g is not None and p.get('gp'): bits.append(f'{g} PPR/game over {p["gp"]} game' + ('' if p['gp'] == 1 else 's') + (f', {l3} over the last {l3g}' if l3 is not None and l3g > 1 else ''))
+        elif p.get('exp') == 0: bits.append('rookie with no games on the board yet')
+        if (p.get('v1') or 0) >= 100: bits.append(f'dynasty value {p["v1"]:,} ({p["pos"]}{pr[p["id"]]})' if p['id'] in pr else f'dynasty value {p["v1"]:,}')
+        return '; '.join(bits) + '.'
+    wsec = ''; wtop = {}
+    for pos, lab, n in WPOS:
+        rows = sorted([p for p in players if p['pos'] == pos and (p.get('t24') or 0) > 0], key=lambda p: -p['t24'])[:n]
+        if not rows: continue
+        wtop[pos] = rows; WV.extend(rows)
+        def wname(p):
+            if p['id'] in SS: return f'<a href="../{SS[p["id"]]["slug"]}/">{E(p["n"])}</a>'
+            if p['id'] in PLAYER_PAGES: return f'<a href="../{vslug(p)}/">{E(p["n"])}</a>'
+            return E(p['n'])
+        def wrow(p):
+            pc = pace(p); pj = p.get('proj'); p3 = p.get('p3') or {}
+            t72s = '{:,} · {}'.format(p['t72'], pc[0]) if pc else '—'
+            return (f'<tr><td style="text-align:left">{wname(p)} <span class="hint" style="display:inline">{E(p.get("team") or "FA")}</span></td><td>{p["t24"]:,}</td>'
+                    f'<td>{t72s}</td><td><b>{pj["ppr"] if pj else "—"}</b></td><td>{p3["ppr"] if p3.get("n") else "—"}</td><td style="text-align:left">{E(w_note(p))}</td></tr>')
+        wsec += (f'<h2>Week {WEEK} waiver wire: {lab.lower()}</h2><div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Player</th><th scope="col">Adds (24h)</th><th scope="col">Adds (72h) · pace</th><th scope="col">Wk {WEEK} proj (PPR)</th><th scope="col">Next 3 wks (PPR)</th><th scope="col" style="text-align:left">What the data says</th></tr></thead><tbody>'
+                 + ''.join(wrow(p) for p in rows) + '</tbody></table></div>')
+    wall = sorted(WV, key=lambda p: -p['t24'])
+    if wall:
+        t3 = wall[:3]
+        def best(pos): return wtop[pos][0] if pos in wtop else None
+        ans = (f'The most-added fantasy players heading into Week {WEEK} are <strong>{E(t3[0]["n"])}</strong> ({t3[0]["pos"]}, {E(t3[0].get("team") or "FA")}; {t3[0]["t24"]:,} adds in 24 hours), '
+               f'{E(t3[1]["n"])} ({t3[1]["pos"]}) and {E(t3[2]["n"])} ({t3[2]["pos"]}). Counts are Sleeper leagues that added the player in the last 24 hours, as of {genh}.')
+        faqs = [(f'Who is the most added player on the Week {WEEK} waiver wire?', f'{t3[0]["n"]} ({t3[0]["pos"]}, {t3[0].get("team") or "FA"}) leads Sleeper trending adds with {t3[0]["t24"]:,} adds in the last 24 hours as of {genh}.')]
+        for pos, lab, _ in WPOS:
+            b = best(pos)
+            if b: faqs.append((f'Who is the top trending {pos} on the Week {WEEK} waiver wire?', f'By Sleeper adds in the last 24 hours, {b["n"]} ({b.get("team") or "FA"}) is the top trending {pos} with {b["t24"]:,} adds' + (f' and a Week {WEEK} projection of {b["proj"]["ppr"]} PPR points.' if b.get('proj') else f'; Sleeper has no Week {WEEK} projection for him.')))
+        faqs.append((f'Where do the Week {WEEK} waiver wire numbers come from?', 'Add counts are Sleeper’s public trending-adds data (24-hour and 72-hour windows) and projections are Sleeper’s public weekly projections. Nothing here is an injury report or a beat-writer opinion; check news before you spend a claim or FAAB.'))
+        faqs.append(('When do waiver claims run?', 'Waiver timing is a league setting (many Sleeper leagues process claims early Wednesday morning). Check your league’s waiver settings for the exact day and time and whether it uses FAAB or priority.'))
+        body = (f'<p>Trending adds show where the crowd is moving, not who is available in <em>your</em> league or who will produce. The pace column compares the last 24 hours of adds with the average day of the last 72 hours: <strong>Rising</strong> means today’s adds are at least 25% above that average, <strong>Cooling</strong> at least 25% below. '
+                f'“Next 3 wks” adds Sleeper’s projections for Weeks {WEEK} to {WEEK + 2}; bye weeks and weeks without a projection count as nothing, so a short total can just mean a bye. Quarterbacks, running backs, wide receivers and tight ends only (no kickers or defenses).</p>'
+                + wsec +
+                f'<h2>How to use this list</h2><ul><li>Filter to players actually available in your league, then compare them with your bench in the <a href="../start-sit/">start/sit tool</a>.</li>'
+                f'<li>A high add count with no Week {WEEK} projection often means a stash or a handcuff, not a starter. Check the <a href="../injury-report/">injury report</a> first.</li>'
+                f'<li>Thinking long term? Dynasty value is shown where we have one; the <a href="../trade-analyzer/">trade analyzer</a> prices players and picks together.</li>'
+                f'<li>Want the whole trending list or who your league has not rostered? See <a href="../waiver-wire-trending/">trending adds</a> and the <a href="../waiver-wire/">waiver wire tool</a>.</li></ul>'
+                f'<p>Related: <a href="../week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong></a> · <a href="../start-sit-flex/">Week {WEEK} flex rankings</a> · <a href="../start-or-sit-players/">start or sit by player</a>.</p>'
+                f'<p class="hint">Data from Sleeper’s public API, updated {genh}. This page is rebuilt every morning and is not betting or fantasy advice; counts and projections change quickly.</p>'
+                + faq_html(faqs))
+        write(WAIVER_SLUG, 'Weekly start/sit', f'Week {WEEK} waiver wire', f'Week {WEEK} Waiver Wire Pickups (Fantasy Football {SEASON})',
+              f'Week {WEEK} fantasy football waiver wire pickups by position: Sleeper trending adds, Week {WEEK} projections and next-3-week outlook. Updated {genh}.',
+              f'Week {WEEK} waiver wire pickups', f'Trending adds grouped by position, with projections and a data-driven note for each player.', ans, body,
+              cta=('Compare two players', ''), cta_text='Found a pickup? Compare him with your starter.', featured=True, ld_extra=[faq_ld(faqs), itemlist(wall[:40], f'Week {WEEK} waiver wire trending adds')])
+        for w in range(FIRST_WAIVER_WEEK, WEEK):
+            d = ROOT / f'week-{w}-waiver-wire'; d.mkdir(exist_ok=True); OLDWEEKS.append(d.name)
+            (d / 'index.html').write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Week {w} waiver wire has moved to Week {WEEK}</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{URL}{WAIVER_SLUG}/"><meta http-equiv="refresh" content="0; url=../{WAIVER_SLUG}/"></head><body><p><a href="../{WAIVER_SLUG}/">Week {WEEK} waiver wire</a></p></body></html>')
+            (d / '.generated').write_text('')
 # ---- player value pages (top 250) ----
 SSPOS_LABEL = {'QB': 'QB', 'RB': 'RB', 'WR': 'WR', 'TE': 'TE'}
 def source_line(p):
@@ -436,7 +512,7 @@ _lf = ROOT / 'llms.txt'
 if _lf.exists():
     _base = re.sub(r'\n## Data pages \(updated daily\).*', '', _lf.read_text(), flags=re.S).rstrip('\n')
     _fam = [('dynasty-rankings', 'Dynasty rankings 1QB'), ('dynasty-rankings-superflex', 'Superflex rankings'), ('dynasty-trade-value-chart', 'Trade value chart'), ('rookie-draft-pick-values', 'Rookie pick values'),
-            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet'), ('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds')]
+            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet'), ('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds'), (f'week-{WEEK}-waiver-wire', f'Week {WEEK} waiver wire pickups')]
     _have = {p['slug'] for p in PAGES}
     _txt = f'\n\n## Data pages (updated daily)\nData as of {genh}. Each player has a dynasty value page at {URL}dynasty-value-<player-name>/ and, in season, a start-or-sit page at {URL}start-or-sit-<player-name>/.\n' + ''.join(f'- [{n}]({URL}{sl}/)\n' for sl, n in _fam if sl in _have)
     _txt += '\n### Top player value pages\n' + ''.join(f'- [{q["n"]} dynasty value]({URL}{vslug(q)}/): #{one_rank[q["id"]]} 1QB, {q["v1"]:,}\n' for q in valued[:50])
@@ -447,13 +523,15 @@ for d in ROOT.iterdir():
     if d.is_dir() and (d / '.generated').exists() and d.name not in keep: shutil.rmtree(d)
 (ROOT / 'data' / 'pages.json').write_text(json.dumps([{k: p[k] for k in ('slug', 'section', 'nav')} for p in PAGES]))
 print(f'fantasy data pages: {len(PAGES)} generated + {len(statics)} static + guides/glossary; total URLs in sitemap {len(ent)}')
-# ---- link this week's cheat sheet from the hub and start/sit pages (idempotent; refreshed daily) ----
+# ---- link this week's pages from the hub, start/sit and waiver pages (idempotent; refreshed daily) ----
 if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
-    for rel, pre in [('index.html', ''), ('start-sit/index.html', '../'), ('waiver-wire/index.html', '../')]:
+    def _wk(pre):
+        w = f'<a href="{pre}week-{WEEK}-waiver-wire/"><strong>Week {WEEK} waiver wire</strong> (trending adds by position) →</a>' if (ROOT / WAIVER_SLUG).exists() else ''
+        return f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a>' + (' · ' + w if w else '') + '</p><!--/wk-->'
+    for rel, pre in [('index.html', ''), ('start-sit/index.html', '../'), ('waiver-wire/index.html', '../'), ('waiver-wire-trending/index.html', '../'), ('trade-analyzer/index.html', '../')]:
         f = ROOT / rel
         if not f.exists(): continue
         h = re.sub(r'<!--wk-->.*?<!--/wk-->', '', f.read_text(), flags=re.S)
-        lk = f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a></p><!--/wk-->'
-        if rel == 'index.html': h = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + lk, h, count=1, flags=re.S); f.write_text(h); continue
-        h = h.replace('<main id="main"><div class="wrap">', f'<main id="main"><div class="wrap"><!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a></p><!--/wk-->', 1)
+        if rel == 'index.html': h = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + _wk(pre), h, count=1, flags=re.S); f.write_text(h); continue
+        h = h.replace('<main id="main"><div class="wrap">', '<main id="main"><div class="wrap">' + _wk(pre), 1)
         f.write_text(h)

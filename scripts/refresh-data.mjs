@@ -17,7 +17,18 @@ async function get(path, optional = false) {
 }
 const r1 = n => Math.round(n * 10) / 10;
 const state = await get('/state/nfl');
-const season = state.season, week = Math.max(1, state.week || 1), stype = state.season_type === 'post' ? 'post' : 'regular';
+const season = state.season, stateWeek = Math.max(1, state.week || 1), stype = state.season_type === 'post' ? 'post' : 'regular';
+// Target week = the week people are searching for. Sleeper flips its week on Tuesday, but "week N+1 waiver wire" and start/sit demand
+// starts Monday (after Sunday's games), so on Mondays (UTC) we look one week ahead, and never behind the calendar
+// (week 2 starts the Tuesday after season_start_date's week; the flip can lag the daily run). Falls back to Sleeper's week if
+// the next week has no projections yet.
+function calendarWeek() {
+  const s = state.season_start_date ? new Date(state.season_start_date + 'T00:00:00Z') : null; if (!s || isNaN(s)) return 1;
+  const tue = new Date(s); tue.setUTCDate(tue.getUTCDate() - ((tue.getUTCDay() + 5) % 7)); // Tuesday on or before the start date
+  return 1 + Math.max(0, Math.floor((Date.now() - tue.getTime()) / (7 * 864e5)));
+}
+let week = stateWeek;
+if (stype === 'regular') week = Math.min(18, Math.max(stateWeek, calendarWeek(), stateWeek + (new Date().getUTCDay() === 1 ? 1 : 0)));
 // DynastyProcess open dynasty values (GPL-3.0, https://github.com/dynastyprocess/data). Attribution shown on the site.
 const DP = 'https://raw.githubusercontent.com/dynastyprocess/data/master/files/';
 async function csv(name) {
@@ -55,13 +66,19 @@ async function nflverseWeekly() {
   catch (e) { console.warn('WARN', e.message); status.prod = { ok: false, note: e.message }; return null; }
 }
 const [ffc, nfv] = await Promise.all([ffcAdp(), nflverseWeekly()]);
-const [players, stats, proj, projPrev, trend] = await Promise.all([
+if (week > stateWeek) { const probe = await get(`/projections/nfl/${stype}/${season}/${week}`, true); if (Object.values(probe || {}).filter(j => j && j.pts_ppr > 5).length < 100) { console.warn(`WARN week ${week} projections not published; using Sleeper's week ${stateWeek}`); week = stateWeek; } }
+const [players, stats, proj, projPrev, trend, trend24, trend72, projN1, projN2] = await Promise.all([
   get('/players/nfl'),
   get(`/stats/nfl/${stype}/${season}`, true),
   get(`/projections/nfl/${stype}/${season}/${week}`, true),
   week > 1 ? get(`/projections/nfl/${stype}/${season}/${week - 1}`, true) : null,
-  get('/players/nfl/trending/add?lookback_hours=48&limit=50', true)
+  get('/players/nfl/trending/add?lookback_hours=48&limit=50', true),
+  get('/players/nfl/trending/add?lookback_hours=24&limit=200', true),
+  get('/players/nfl/trending/add?lookback_hours=72&limit=200', true),
+  week < 18 ? get(`/projections/nfl/${stype}/${season}/${week + 1}`, true) : null,
+  week < 17 ? get(`/projections/nfl/${stype}/${season}/${week + 2}`, true) : null
 ]);
+const t24 = new Map((trend24 || []).map(t => [t.player_id, t.count])), t72 = new Map((trend72 || []).map(t => [t.player_id, t.count]));
 const trending = new Map((trend || []).map(t => [t.player_id, t.count]));
 const out = [];
 for (const [id, p] of Object.entries(players)) {
@@ -77,9 +94,13 @@ for (const [id, p] of Object.entries(players)) {
     proj: j.pts_ppr != null ? { ppr: r1(j.pts_ppr), half: r1(j.pts_half_ppr ?? j.pts_ppr), std: r1(j.pts_std ?? j.pts_ppr) } : null,
     dadp, trend: trending.get(id) || 0
   };
+  if (t24.get(id)) { row.t24 = t24.get(id); row.t72 = t72.get(id) || null; }
+  // Sleeper's own projections for this week and the next two (undocumented endpoint). Sum shown on the waiver page; weeks without a projection (bye) add nothing.
+  const fut = [j, projN1?.[id], projN2?.[id]].map(x => (x && x.pts_ppr > 0 ? x.pts_ppr : null));
+  if (row.t24 || fut.some(v => v != null)) row.p3 = { ppr: r1(fut.reduce((a, v) => a + (v || 0), 0)), n: fut.filter(v => v != null).length, next: projN1?.[id]?.pts_ppr > 0 ? r1(projN1[id].pts_ppr) : null };
   const dv = dpBySleeper.get(id); if (dv) { row._dp = dv; }
   // keep the file small: drop deep-bench players with no signal
-  if (row.rank > 600 && !row.ppg && !row.proj && !row.dadp && !row.v1) continue;
+  if (row.rank > 600 && !row.ppg && !row.proj && !row.dadp && !row.v1 && !row.t24) continue;
   out.push(row);
 }
 out.sort((a, b) => a.rank - b.rank);
@@ -111,7 +132,7 @@ for (const k of Object.keys(SOURCE_INFO)) status[k] = { ...SOURCE_INFO[k], weigh
 // If every value source failed, keep yesterday's values rather than publishing nothing.
 if (!out.some(p => p.v1)) { try { const prev = JSON.parse(await readFile(new URL('../data/players.json', import.meta.url), 'utf8')); const pm = new Map(prev.players.map(p => [p.id, p]));
   for (const p of out) { const o = pm.get(p.id); if (o && o.v1) Object.assign(p, { v1: o.v1, v2: o.v2, cs: o.cs, sp: o.sp, con: o.con, sig: o.sig }); } console.warn('WARN all value sources failed; kept previous values'); } catch (e) {} }
-const data = { generated: new Date().toISOString(), season, week, seasonType: stype, source: 'Composite of DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse; see sources', sources: status, weights: WEIGHTS, valuesDate: (dpValues && dpValues[0] && dpValues[0].scrape_date) || null, players: out, picks };
+const data = { generated: new Date().toISOString(), season, week, stateWeek, seasonType: stype, source: 'Composite of DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse; see sources', sources: status, weights: WEIGHTS, valuesDate: (dpValues && dpValues[0] && dpValues[0].scrape_date) || null, players: out, picks };
 await writeFile(new URL('../data/players.json', import.meta.url), JSON.stringify(data));
 console.log('Sources:', Object.entries(status).map(([k, v]) => `${k}=${v.ok ? 'ok(' + v.count + ')' : 'FAILED(' + v.note + ')'}`).join(' '));
 console.log(`Wrote ${out.length} players, ${picks.length} picks, ${dpBySleeper.size} DP values for ${season} week ${week} (stats: ${!!stats}, projections: ${!!proj}).`);
