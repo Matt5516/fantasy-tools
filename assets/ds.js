@@ -77,7 +77,7 @@
 })();
 /* Feedback: thumbs + "what should we add?" + optional email. Opens a prefilled GitHub issue (public, labelled "feedback")
    on this site's repo, or an email to the owner. Nothing is sent until the visitor submits it in GitHub or their mail app. */
-(function(){ var d=document, repo=d.documentElement.getAttribute('data-repo'), MAIL='matt63sorensen@yahoo.com'; if(!repo) return;
+(function(){ var d=document, repo=d.documentElement.getAttribute('data-repo'), MAIL='mathtools@mail.grokbot.com'; if(!repo) return;
   function init(){ if(d.getElementById('fbBtn')) return;
     var b=d.createElement('button'); b.type='button'; b.id='fbBtn'; b.className='fb-btn'; b.innerHTML='<span aria-hidden="true">💬</span>Feedback'; d.body.appendChild(b);
     var dl=d.createElement('dialog'); dl.className='fb'; dl.setAttribute('aria-labelledby','fbH');
