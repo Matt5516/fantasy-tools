@@ -138,7 +138,7 @@ def build(root, S, gen, genh):
         more = ('<h2>More from the blog</h2><ul>' + ''.join(f'<li><a href="../blog/{x["slug"]}/">{E(x["title"])}</a></li>' for x in others) + '</ul>') if others else ''
         note = f'<p class="hint">The numbers in this article are a snapshot from {fmt_date(asof)}. Player pages and tools linked here update daily, so live values may differ from the figures above. Fantasy football is for fun; this is data, not betting or fantasy advice.</p>'
         crumbs = [{'@type': 'ListItem', 'position': 1, 'name': name, 'item': url}, {'@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': url + 'blog/'}, {'@type': 'ListItem', 'position': 3, 'name': a['title'], 'item': u}]
-        post = {'@type': 'BlogPosting', 'headline': a['title'][:110], 'description': a['description'], 'url': u, 'mainEntityOfPage': u, 'datePublished': a['date'], 'dateModified': a.get('updated') or a['date'],
+        post = {'@type': ['BlogPosting', 'Article'], 'headline': a['title'][:110], 'description': a['description'], 'url': u, 'mainEntityOfPage': u, 'datePublished': a['date'], 'dateModified': a.get('updated') or a['date'],
                 'author': author, 'publisher': org, 'image': url + 'og.png', 'inLanguage': 'en-US', 'wordCount': words, 'articleSection': 'Fantasy football', 'isPartOf': {'@type': 'Blog', 'name': f'{name} blog', 'url': url + 'blog/'}}
         if a.get('tags'): post['keywords'] = a['tags']
         ld = [post, {'@type': 'BreadcrumbList', 'itemListElement': crumbs}]
