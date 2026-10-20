@@ -2,7 +2,9 @@
 """Generate DynastyMath data pages (weekly start/sit, dynasty rankings, pick values, player value pages,
 injury report, trending adds), the guides hub and sitemap.xml from data/players.json.
 Uses scripts/shell.json (page template written by the main build). Runs daily in GitHub Actions after refresh-data.mjs."""
-import json, html, pathlib, re, datetime, shutil, math
+import json, html, pathlib, re, datetime, shutil, math, sys
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import blog as BLOG
 E = html.escape
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 S = json.loads((ROOT / 'scripts' / 'shell.json').read_text())
@@ -22,6 +24,28 @@ for pos in ['QB', 'RB', 'WR', 'TE']:
     for i, p in enumerate([q for q in valued if q['pos'] == pos]): pr[p['id']] = i + 1
 sf_sorted = sorted(valued, key=lambda p: -(p.get('v2') or p['v1']))
 sf_rank = {p['id']: i + 1 for i, p in enumerate(sf_sorted)}; one_rank = {p['id']: i + 1 for i, p in enumerate(valued)}
+# ---- daily value history (data/history.json: {"days": {date: {player id: [1QB, SF]}}}); one snapshot appended per build day ----
+HIST_F = ROOT / 'data' / 'history.json'
+try: HIST = json.loads(HIST_F.read_text()).get('days', {}) if HIST_F.exists() else {}
+except Exception: HIST = {}
+_snap = {p['id']: [p['v1'], p.get('v2') or p['v1']] for p in players if p.get('v1') and p.get('cs')}
+if _snap and re.fullmatch(r'\d{4}-\d{2}-\d{2}', gen):
+    HIST[gen] = _snap
+    HIST = {d: HIST[d] for d in sorted(HIST)[-400:]}
+    HIST_F.write_text(json.dumps({'days': HIST}, separators=(',', ':')))
+def hist_base():
+    """Oldest snapshot within the last 7 days (else the newest older one): the baseline for 'change since' columns."""
+    ds = sorted(d for d in HIST if d < gen)
+    if not ds: return None
+    lo = (datetime.date.fromisoformat(gen) - datetime.timedelta(days=7)).isoformat()
+    return next((d for d in ds if d >= lo), ds[-1])
+BASE_D = hist_base() if re.fullmatch(r'\d{4}-\d{2}-\d{2}', gen) else None
+def fmt_d(d): return datetime.date.fromisoformat(d).strftime('%b %-d')
+def vchg(p):
+    """(delta, pct) of the 1QB composite value since the baseline snapshot, or None."""
+    b = (HIST.get(BASE_D) or {}).get(p['id']) if BASE_D else None
+    if not b or not p.get('v1'): return None
+    return p['v1'] - b[0], round((p['v1'] - b[0]) / b[0] * 100, 1)
 PAGES = []
 TOOLS = S.get('tools', []); LM = S.get('linkmap', {})
 LINK_RE = re.compile(r'href="((?:\.\./)*|\./)?(\?[^"#]*)?#(tool|cobra|market|trade|league|rankings)"')
@@ -128,7 +152,7 @@ write('dynasty-rankings', 'Dynasty rankings', f'Dynasty rankings {SEASON}', f'Dy
       f'Top 150 dynasty fantasy football rankings for 1QB leagues with trade values, ages and points per game. Updated {genh}.',
       f'Dynasty rankings {SEASON} (1QB)', 'The top 150 players by open dynasty trade value for single-QB leagues, refreshed every day.',
       f'The top dynasty asset in 1QB leagues right now is <strong>{E(valued[0]["n"])}</strong> ({valued[0]["pos"]}, {valued[0].get("team") or "FA"}), followed by {E(valued[1]["n"])} and {E(valued[2]["n"])}. Rankings are by DynastyProcess value, updated {genh}.',
-      table(valued, n=150) + SRC + '<p>Superflex league? See <a href="../dynasty-rankings-superflex/">superflex rankings</a>. By position: <a href="../dynasty-qb-rankings/">QB</a> · <a href="../dynasty-rb-rankings/">RB</a> · <a href="../dynasty-wr-rankings/">WR</a> · <a href="../dynasty-te-rankings/">TE</a>.</p>',
+      table(valued, n=150) + SRC + '<p>Trade targets: <a href="../dynasty-buy-low-sell-high/">buy-low/sell-high</a> · <a href="../dynasty-value-risers-fallers/">risers and fallers</a> · <a href="../dynasty-rookie-rankings/">rookie rankings</a>. Superflex league? See <a href="../dynasty-rankings-superflex/">superflex rankings</a>. By position: <a href="../dynasty-qb-rankings/">QB</a> · <a href="../dynasty-rb-rankings/">RB</a> · <a href="../dynasty-wr-rankings/">WR</a> · <a href="../dynasty-te-rankings/">TE</a>.</p>',
       ld_extra=[itemlist(valued[:150], 'Dynasty rankings 1QB')], featured=True)
 write('dynasty-rankings-superflex', 'Dynasty rankings', f'Superflex rankings {SEASON}', f'Superflex Dynasty Rankings {SEASON}: Top 150 SF Values',
       f'Top 150 superflex dynasty rankings with SF trade values, ages and PPG, updated {genh}. Quarterbacks move way up in 2QB formats.',
@@ -155,7 +179,7 @@ write('rookie-draft-pick-values', 'Dynasty rankings', 'Rookie pick values', f'Dy
       f'What dynasty rookie draft picks are worth in trades, in 1QB and superflex, with a comparable player for each pick. Updated {genh}.',
       'Dynasty rookie draft pick values', 'Future picks valued on the same scale as players, so you can trade picks for players with confidence.',
       (f'A {E(picks[0]["n"])} is worth about {picks[0]["v1"]:,} in 1QB ({(picks[0].get("v2") or picks[0]["v1"]):,} superflex), similar to {E(eq[0][1]["n"])}.' if picks else 'Pick values load with the next data refresh.'),
-      '<div class="table-scroll"><table><thead><tr><th scope="col">Pick</th><th scope="col">1QB value</th><th scope="col">SF value</th><th scope="col">Similar player (1QB)</th></tr></thead><tbody>' + ''.join(f'<tr><td>{tag("PICK")} {E(pk["n"])}</td><td>{pk["v1"]:,}</td><td>{(pk.get("v2") or pk["v1"]):,}</td><td>{E(n["n"])} ({n["pos"]})</td></tr>' for pk, n in eq) + '</tbody></table></div>' + SRC + '<p>Add picks to either side in the <a href="../#trade">trade calculator</a>.</p>', featured=True)
+      '<div class="table-scroll"><table><thead><tr><th scope="col">Pick</th><th scope="col">1QB value</th><th scope="col">SF value</th><th scope="col">Similar player (1QB)</th></tr></thead><tbody>' + ''.join(f'<tr><td>{tag("PICK")} {E(pk["n"])}</td><td>{pk["v1"]:,}</td><td>{(pk.get("v2") or pk["v1"]):,}</td><td>{E(n["n"])} ({n["pos"]})</td></tr>' for pk, n in eq) + '</tbody></table></div>' + SRC + '<p>Add picks to either side in the <a href="../#trade">trade calculator</a>. Current rookies and what they are worth: <a href="../dynasty-rookie-rankings/">dynasty rookie rankings</a>.</p>', featured=True)
 chart_rows = valued[:60]
 write('dynasty-trade-value-chart', 'Dynasty rankings', 'Trade value chart', f'Dynasty Trade Value Chart {SEASON} (Updated Daily): 1QB & Superflex',
       f'Dynasty fantasy football trade value chart with 1QB and superflex values for the top players and picks, updated {genh}.',
@@ -174,7 +198,7 @@ if WEEK:
               f'Week {WEEK} fantasy football {lab} rankings with PPR projections, injury status and start/sit calls. Updated {genh}.',
               f'Week {WEEK} {lab} start/sit rankings', f'Every {lab} ranked by Week {WEEK} PPR projection, with injury status and a plain start/sit call.',
               f'Top Week {WEEK} {lab} plays: <strong>{E(rows[0]["n"])}</strong> ({rows[0]["proj"]["ppr"]} projected PPR), {E(rows[1]["n"])} and {E(rows[2]["n"])}. Players ruled out are excluded.',
-              body + f'<p class="hint">Projections from Sleeper’s public API, updated {genh}. Injury statuses change late in the week; check before kickoff.</p><p>Deciding between two players? Use the <a href="../#tool">start/sit tool</a>. Other positions: ' + ' · '.join(f'<a href="../start-sit-{k}/">{l}</a>' for k, l in [('qb', 'QB'), ('rb', 'RB'), ('wr', 'WR'), ('te', 'TE'), ('flex', 'Flex')] if k != key) + '</p>',
+              body + f'<p class="hint">Projections from Sleeper’s public API, updated {genh}. Injury statuses change late in the week; check before kickoff.</p><p>Deciding between two players? Use the <a href="../#tool">start/sit tool</a>. Season-long view: <a href="../' + ('rest-of-season-rankings' if key == 'flex' else f'rest-of-season-{key}-rankings') + '/">rest of season rankings</a>. Other positions: ' + ' · '.join(f'<a href="../start-sit-{k}/">{l}</a>' for k, l in [('qb', 'QB'), ('rb', 'RB'), ('wr', 'WR'), ('te', 'TE'), ('flex', 'Flex')] if k != key) + '</p>',
               cta=('Compare two players', ''), cta_text='Who should I start? Compare up to 4 players.', featured=key in ('flex', 'rb'), ld_extra=[itemlist(rows, f'Week {WEEK} {lab} rankings')])
 # ---- weekly cheat sheet (targets "week N start sit" searches); older week URLs redirect here ----
 OLDWEEKS = []
@@ -277,6 +301,7 @@ if WEEK:
                 f'<h2>How to use this list</h2><ul><li>Filter to players actually available in your league, then compare them with your bench in the <a href="../start-sit/">start/sit tool</a>.</li>'
                 f'<li>A high add count with no Week {WEEK} projection often means a stash or a handcuff, not a starter. Check the <a href="../injury-report/">injury report</a> first.</li>'
                 f'<li>Thinking long term? Dynasty value is shown where we have one; the <a href="../trade-analyzer/">trade analyzer</a> prices players and picks together.</li>'
+                f'<li>Playing for the whole season? See the <a href="../rest-of-season-rankings/">rest of season rankings</a>.</li>'
                 f'<li>Want the whole trending list or who your league has not rostered? See <a href="../waiver-wire-trending/">trending adds</a> and the <a href="../waiver-wire/">waiver wire tool</a>.</li></ul>'
                 f'<p>Related: <a href="../week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong></a> · <a href="../start-sit-flex/">Week {WEEK} flex rankings</a> · <a href="../start-or-sit-players/">start or sit by player</a>.</p>'
                 f'<p class="hint">Data from Sleeper’s public API, updated {genh}. This page is rebuilt every morning and is not betting or fantasy advice; counts and projections change quickly.</p>'
@@ -289,6 +314,156 @@ if WEEK:
             d = ROOT / f'week-{w}-waiver-wire'; d.mkdir(exist_ok=True); OLDWEEKS.append(d.name)
             (d / 'index.html').write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Week {w} waiver wire has moved to Week {WEEK}</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{URL}{WAIVER_SLUG}/"><meta http-equiv="refresh" content="0; url=../{WAIVER_SLUG}/"></head><body><p><a href="../{WAIVER_SLUG}/">Week {WEEK} waiver wire</a></p></body></html>')
             (d / '.generated').write_text('')
+# ---- rest-of-season (ROS) rankings: Sleeper's projections for the next three weeks + actual production (redraft, PPR) ----
+def plink(p, pre='../'):
+    if p['id'] in SS: return f'<a href="{pre}{SS[p["id"]]["slug"]}/">{E(p["n"])}</a>'
+    if p['id'] in PLAYER_PAGES: return f'<a href="{pre}{vslug(p)}/">{E(p["n"])}</a>'
+    return E(p['n'])
+ROS_OUT = ('Out', 'IR', 'PUP', 'Sus')
+def ros_parts(p):
+    j = p.get('p3') or {}
+    return (j['ppr'] / j['n'] if j.get('n') else None), (p.get('l3') or {}).get('ppr'), ppg_of(p)
+def ros_score(p):
+    """40% average projected PPR over the next (up to) 3 weeks, 30% last-3-games PPG, 30% season PPG; re-weighted over what exists. None = not ranked."""
+    a, l3, g = ros_parts(p)
+    if a is None or g is None or p.get('inj') in ROS_OUT: return None
+    parts = [(0.4, a), (0.3, l3), (0.3, g)]; w = sum(x for x, v in parts if v is not None)
+    return round(sum(x * v for x, v in parts if v is not None) / w, 1)
+ROS_BY = {}; ROS_PR = {}
+if WEEK:
+    for pos in ('QB', 'RB', 'WR', 'TE'):
+        lst = sorted([(ros_score(p), p) for p in players if p['pos'] == pos and ros_score(p) is not None], key=lambda t: (-t[0], t[1]['n']))
+        ROS_BY[pos] = lst
+        for i, (s, p) in enumerate(lst): ROS_PR[p['id']] = i + 1
+ROS_LIM = {'QB': 24, 'RB': 40, 'WR': 48, 'TE': 20}
+def ros_table(items):
+    out = f'<div class="table-scroll"><table><thead><tr><th scope="col">#</th><th scope="col" style="text-align:left">Player</th><th scope="col">Pos rank</th><th scope="col">Wk {WEEK} proj</th><th scope="col">Next 3 wks avg</th><th scope="col">Last 3 games</th><th scope="col">Season PPG</th><th scope="col">ROS score</th><th scope="col">Status</th></tr></thead><tbody>'
+    for i, (s, p) in enumerate(items):
+        a, l3, g = ros_parts(p); pj = (p.get('proj') or {}).get('ppr')
+        out += f'<tr><td>{i+1}</td><td style="text-align:left">{tag(p["pos"])} {plink(p)} <span class="hint" style="display:inline">{E(p.get("team") or "FA")}</span></td><td>{p["pos"]}{ROS_PR[p["id"]]}</td><td>{fmtn(pj)}</td><td>{round(a, 1)}</td><td>{fmtn(l3)}</td><td>{fmtn(g)}</td><td><b>{s}</b></td><td>{E(p.get("inj") or "Active")}</td></tr>'
+    return out + '</tbody></table></div>'
+ROS_METHOD = (f'<h2>How the rest-of-season score works</h2><p>The ROS score is a PPR points-per-game number: <strong>40%</strong> the average of Sleeper’s projections for Weeks {WEEK} to {WEEK + 2} (weeks with no projection, such as a bye, are skipped rather than counted as zero), <strong>30%</strong> the average of the last three games (nflverse), and <strong>30%</strong> season points per game. '
+              'Players listed Out, IR, PUP or suspended are left off. It is a short-horizon, production-and-projection ranking: it does <em>not</em> use strength of schedule, depth-chart news or playoff schedules, and a player needs at least one game this season to be ranked.</p>')
+def ros_faq(pos, lab, rows):
+    t = rows[0]
+    qas = [(f'Who is the top rest of season {lab} in {SEASON}?', f'By our ROS score, {t[1]["n"]} ({t[1].get("team") or "FA"}) is the top {pos} at {t[0]} PPR points per game, followed by {rows[1][1]["n"]} ({rows[1][0]}) and {rows[2][1]["n"]} ({rows[2][0]}), as of {genh}.'),
+           ('How are these rest of season rankings calculated?', f'The score blends Sleeper’s projections for the next three weeks (40%), the last three games (30%) and season points per game (30%) in PPR. Players who are Out, on IR or suspended are excluded. Strength of schedule is not included.'),
+           ('Are the ROS rankings for PPR, half PPR or standard?', 'They use full PPR points. For half PPR or standard, the order near the top barely changes, but pass-catching backs and slot receivers slip a little; the weekly start/sit pages list half-PPR projections too.'),
+           ('How often do the rest of season rankings update?', f'Every day. The data on this page is as of {genh} and the projections look at Weeks {WEEK} to {WEEK + 2}.')]
+    return qas
+if WEEK and all(ROS_BY.get(k) and len(ROS_BY[k]) >= 5 for k in ('QB', 'RB', 'WR', 'TE')):
+    ROS_LINKS = ' · '.join(f'<a href="../rest-of-season-{k.lower()}-rankings/">ROS {k} rankings</a>' for k in ('QB', 'RB', 'WR', 'TE'))
+    for pos, lab in [('QB', 'quarterback'), ('RB', 'running back'), ('WR', 'wide receiver'), ('TE', 'tight end')]:
+        rows = ROS_BY[pos][:ROS_LIM[pos]]; faqs = ros_faq(pos, lab, rows)
+        write(f'rest-of-season-{pos.lower()}-rankings', 'Rest of season', f'ROS {pos} rankings', f'Rest of Season {pos} Rankings ({SEASON}): Fantasy {lab.title()}s, Week {WEEK}',
+              f'Rest of season fantasy football {pos} rankings for Week {WEEK} on: Sleeper projections, last 3 games and season PPG blended into one PPR score. Updated {genh}.',
+              f'Rest of season {pos} rankings (Week {WEEK})', f'The top {len(rows)} {lab}s for the rest of the {SEASON} fantasy season, ranked by projections and production.',
+              f'The top rest-of-season {pos} is <strong>{E(rows[0][1]["n"])}</strong> ({E(rows[0][1].get("team") or "FA")}) at {rows[0][0]} PPR points per game, ahead of {E(rows[1][1]["n"])} ({rows[1][0]}) and {E(rows[2][1]["n"])} ({rows[2][0]}). As of {genh}.',
+              ros_table(rows) + ROS_METHOD + f'<p class="hint">Projections: Sleeper public API. Production: nflverse (CC BY 4.0). Updated {genh}. Not betting or fantasy advice; injuries and roles change fast.</p>' + faq_html(faqs)
+              + f'<p>Other positions: <a href="../rest-of-season-rankings/">all positions</a> · ' + ' · '.join(f'<a href="../rest-of-season-{k.lower()}-rankings/">{k}</a>' for k in ('QB', 'RB', 'WR', 'TE') if k != pos) + f'. Starting someone this week? See the <a href="../start-sit-{pos.lower()}/">Week {WEEK} {pos} start/sit rankings</a>, the <a href="../week-{WEEK}-waiver-wire/">Week {WEEK} waiver wire</a> or <a href="../dynasty-{pos.lower()}-rankings/">dynasty {pos} rankings</a>.</p>',
+              cta=('Compare two players', ''), cta_text='Stuck between two players? Compare up to 4.', ld_extra=[faq_ld(faqs), itemlist([p for s, p in rows], f'Rest of season {pos} rankings')], featured=pos in ('RB', 'WR'))
+    flex = sorted([t for k in ('RB', 'WR', 'TE') for t in ROS_BY[k]], key=lambda t: (-t[0], t[1]['n']))[:80]
+    faqs = [(f'Who is the top rest of season player in fantasy football {SEASON}?', f'Among running backs, wide receivers and tight ends, {flex[0][1]["n"]} ({flex[0][1]["pos"]}, {flex[0][1].get("team") or "FA"}) has the highest ROS score at {flex[0][0]} PPR points per game, then {flex[1][1]["n"]} ({flex[1][0]}) and {flex[2][1]["n"]} ({flex[2][0]}), as of {genh}.'),
+            ('Why are quarterbacks not in the overall list?', 'Quarterbacks score more raw points than other positions but you start only one (or two in superflex), so ranking them on the same scale as RB, WR and TE would mislead. Use the QB page for the position-only order.')] + ros_faq('RB', 'running back', ROS_BY['RB'])[1:]
+    write('rest-of-season-rankings', 'Rest of season', 'Rest of season rankings', f'Rest of Season Fantasy Football Rankings ({SEASON}): Week {WEEK} On',
+          f'Rest of season fantasy football rankings for Week {WEEK} on: top RB, WR and TE by ROS score, with QB, RB, WR and TE pages. Updated {genh}.',
+          f'Rest of season fantasy rankings (Week {WEEK})', 'Top running backs, wide receivers and tight ends for the rest of the season, from projections and production, refreshed daily.',
+          f'The top rest-of-season fantasy player (RB/WR/TE, PPR) is <strong>{E(flex[0][1]["n"])}</strong> at {flex[0][0]} points per game, then {E(flex[1][1]["n"])} ({flex[1][0]}) and {E(flex[2][1]["n"])} ({flex[2][0]}). Quarterbacks have their own page. As of {genh}.',
+          ros_table(flex) + ROS_METHOD + f'<p>By position: {ROS_LINKS}. Week {WEEK} specifics: <a href="../week-{WEEK}-start-sit/">start/sit cheat sheet</a> and <a href="../week-{WEEK}-waiver-wire/">waiver wire</a>. Dynasty league? See <a href="../dynasty-rankings/">dynasty rankings</a> and <a href="../dynasty-buy-low-sell-high/">buy-low/sell-high targets</a>.</p><p class="hint">Projections: Sleeper public API. Production: nflverse (CC BY 4.0). Updated {genh}.</p>' + faq_html(faqs),
+          cta=('Compare two players', ''), cta_text='Stuck between two players? Compare up to 4.', ld_extra=[faq_ld(faqs), itemlist([p for s, p in flex], 'Rest of season rankings (RB, WR, TE)')], featured=True)
+
+# ---- dynasty buy-low / sell-high: expert consensus vs the draft market, plus movers from the daily value history ----
+def mkt_val(p):
+    m = [x for x in ((p.get('cs') or {}).get('sl'), (p.get('cs') or {}).get('ffc')) if x is not None]
+    return round(sum(m) / len(m)) if m else None
+def vlink(p, pre='../'): return f'<a href="{pre}{vslug(p)}/">{E(p["n"])}</a>' if p['id'] in PLAYER_PAGES else E(p['n'])
+def chg_cell(p):
+    c = vchg(p)
+    if not c: return '—'
+    return f'{c[0]:+,} ({c[1]:+.1f}%)'
+buys_all = sorted([p for p in valued if p.get('sig') == 'buy'], key=lambda p: -p['v1']); sells_all = sorted([p for p in valued if p.get('sig') == 'sell'], key=lambda p: -p['v1'])
+def sig_table(rows):
+    out = '<div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Player</th><th scope="col">Age</th><th scope="col">Experts</th><th scope="col">Draft market</th><th scope="col">Market vs experts</th><th scope="col">Composite (1QB)</th>' + (f'<th scope="col">Since {fmt_d(BASE_D)}</th>' if BASE_D else '') + '<th scope="col">PPR PPG</th><th scope="col">Status</th></tr></thead><tbody>'
+    for p in rows:
+        dp, mk = (p.get('cs') or {}).get('dp'), mkt_val(p)
+        out += f'<tr><td style="text-align:left">{tag(p["pos"])} {vlink(p)} <span class="hint" style="display:inline">{E(p.get("team") or "FA")}</span></td><td>{p.get("age") or "—"}</td><td>{fmtn(dp)}</td><td>{fmtn(mk)}</td><td>{round((mk - dp) / dp * 100):+d}%</td><td><b>{p["v1"]:,}</b></td>' + (f'<td>{chg_cell(p)}</td>' if BASE_D else '') + f'<td>{fmtn(ppg_of(p))}</td><td>{E(p.get("inj") or "Active")}</td></tr>'
+    return out + '</tbody></table></div>'
+if buys_all and sells_all:
+    buys, sells = buys_all[:15], sells_all[:15]
+    swaps = []
+    for s in sells[:8]:
+        cand = sorted([b for b in buys_all if trade_calc([s['v1']], [b['v1']])['fair']], key=lambda b: abs(b['v1'] - s['v1']))[:2]
+        if cand: swaps.append((s, cand))
+    swap_html = ''
+    if swaps:
+        swap_html = '<h2>Sell-high for buy-low swaps that are fair on paper</h2><p>Straight swaps where the value gap is inside the calculator’s 5% fair range (1QB values). “On paper” means values only; your roster needs, scoring and the other manager’s view still matter.</p><div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Sell (market above experts)</th><th scope="col" style="text-align:left">Buy (market below experts)</th><th scope="col">Values</th><th scope="col">Gap</th></tr></thead><tbody>' + ''.join(
+            f'<tr><td style="text-align:left">{tag(s["pos"])} {vlink(s)}</td><td style="text-align:left">{tag(b["pos"])} {vlink(b)}</td><td>{s["v1"]:,} vs {b["v1"]:,}</td><td>{abs(trade_calc([s["v1"]], [b["v1"]])["pct"])}%</td></tr>' for s, cs_ in swaps for b in cs_) + '</tbody></table></div>'
+    nb, ns = len(buys_all), len(sells_all)
+    faqs = [('What is a dynasty buy-low or sell-high target?', 'A buy-low target is a player whose price in the draft market is well below what expert rankings say he is worth; a sell-high is the reverse. Here, “market” is Sleeper (and Fantasy Football Calculator when available) dynasty ADP and “experts” is the DynastyProcess consensus, and a flag needs a gap of at least 35% with a composite value of 1,000 or more.'),
+            (f'Which dynasty players are the best buy-low targets right now?', f'By composite value, the top flagged buys as of {genh} are ' + ', '.join(f'{b["n"]} ({b["v1"]:,})' for b in buys[:5]) + '.'),
+            (f'Which dynasty players are the best sell-high candidates right now?', f'By composite value, the top flagged sells as of {genh} are ' + ', '.join(f'{s["n"]} ({s["v1"]:,})' for s in sells[:5]) + '.'),
+            ('Does a buy or sell flag mean I should make the trade?', 'No. It is a prompt to look closer. The market can be right and the experts wrong, and age, role, injuries and your own roster and scoring settings are not part of the flag.'),
+            ('When is the fantasy trade deadline?', 'It is a league setting chosen by your commissioner, so check your league’s rules; many leagues close trades in the middle of the season. These tables update daily, so you can re-check before your deadline.')]
+    write('dynasty-buy-low-sell-high', 'Dynasty movers', 'Dynasty buy-low/sell-high', f'Dynasty Buy Low & Sell High Trade Targets ({SEASON}): Updated Daily',
+          f'Dynasty buy-low and sell-high trade targets from the gap between expert rankings and the draft market, plus value changes. Updated {genh}.',
+          f'Dynasty buy-low and sell-high trade targets ({SEASON})', 'Where the draft market and the experts disagree most, ranked by composite trade value, rebuilt every morning.',
+          f'{nb} players are flagged as possible buys and {ns} as possible sells as of {genh}. The most valuable buy is <strong>{E(buys[0]["n"])}</strong> ({buys[0]["v1"]:,}) and the most valuable sell is <strong>{E(sells[0]["n"])}</strong> ({sells[0]["v1"]:,}).',
+          f'<h2>Buy low: market below the experts</h2>{sig_table(buys)}<h2>Sell high: market above the experts</h2>{sig_table(sells)}{swap_html}'
+          + '<h2>How to read this</h2><ul><li><strong>Experts</strong> is the DynastyProcess expert-consensus value; <strong>Draft market</strong> is dynasty ADP (real drafts) converted to the same 0–10,000 scale by positional rank. See <a href="../how-our-values-work/">how our values work</a>.</li><li><strong>Market vs experts</strong> is the gap; the flag needs 35% or more.</li>'
+          + (f'<li><strong>Since {fmt_d(BASE_D)}</strong> is the change in composite value since our {fmt_d(BASE_D)} snapshot (see <a href="../dynasty-value-risers-fallers/">risers and fallers</a>).</li>' if BASE_D else '')
+          + '<li>Price any deal in the <a href="../trade-analyzer/">dynasty trade analyzer</a>, which discounts 2-for-1 packages.</li></ul>' + SRC + faq_html(faqs),
+          ld_extra=[faq_ld(faqs)], featured=True)
+if BASE_D:
+    mv = [(p, *vchg(p)) for p in valued if vchg(p) and max(p['v1'], HIST[BASE_D][p['id']][0]) >= 1000]
+    if len(mv) >= 20:
+        up = sorted(mv, key=lambda t: -t[1])[:15]; dn = sorted(mv, key=lambda t: t[1])[:15]
+        def mv_table(rows):
+            return '<div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Player</th><th scope="col">Age</th><th scope="col">' + f'{fmt_d(BASE_D)}' + '</th><th scope="col">Now</th><th scope="col">Change</th><th scope="col">%</th><th scope="col">Pos rank now</th></tr></thead><tbody>' + ''.join(
+                f'<tr><td style="text-align:left">{tag(p["pos"])} {vlink(p)} <span class="hint" style="display:inline">{E(p.get("team") or "FA")}</span></td><td>{p.get("age") or "—"}</td><td>{HIST[BASE_D][p["id"]][0]:,}</td><td><b>{p["v1"]:,}</b></td><td>{d:+,}</td><td>{pc:+.1f}%</td><td>{p["pos"]}{pr.get(p["id"], "—")}</td></tr>' for p, d, pc in rows) + '</tbody></table></div>'
+        bypos = ''
+        for pos in ('QB', 'RB', 'WR', 'TE'):
+            xs = [t for t in mv if t[0]['pos'] == pos]
+            if xs:
+                u, f = max(xs, key=lambda t: t[1]), min(xs, key=lambda t: t[1])
+                bypos += f'<tr><th scope="row" style="text-align:left">{pos}</th><td style="text-align:left">{vlink(u[0])} ({u[1]:+,})</td><td style="text-align:left">{vlink(f[0])} ({f[1]:+,})</td></tr>'
+        days = (datetime.date.fromisoformat(gen) - datetime.date.fromisoformat(BASE_D)).days
+        big = sum(1 for t in mv if abs(t[2]) >= 10)
+        faqs = [('Who gained the most dynasty value this week?', f'Since {fmt_d(BASE_D)}, the biggest 1QB composite value gains were ' + ', '.join(f'{p["n"]} ({d:+,})' for p, d, pc in up[:4]) + f', as of {genh}.'),
+                ('Who lost the most dynasty value this week?', f'Since {fmt_d(BASE_D)}, the biggest losses were ' + ', '.join(f'{p["n"]} ({d:+,})' for p, d, pc in dn[:4]) + f', as of {genh}.'),
+                ('Why did a player’s dynasty value change?', 'The composite blends expert consensus (updated weekly), dynasty ADP from Sleeper (changes daily) and nflverse production (changes after each game). We show how much the number moved, not why; news, role changes and injuries are the usual drivers, but this page does not attribute causes.'),
+                ('How far back does the comparison go?', f'It compares today with our {fmt_d(BASE_D)} snapshot ({days} day{"s" if days != 1 else ""} ago). Once a full week of history exists the baseline stays seven days back.')]
+        write('dynasty-value-risers-fallers', 'Dynasty movers', 'Dynasty risers & fallers', f'Dynasty Value Risers & Fallers ({SEASON}): Biggest Movers',
+              f'Dynasty value risers and fallers over the last {days} days from our daily value history: biggest gains and drops in 1QB trade value. Updated {genh}.',
+              f'Dynasty value risers and fallers ({SEASON})', f'Who gained and lost the most trade value since {fmt_d(BASE_D)}, from the daily snapshots of our composite values.',
+              f'Since {fmt_d(BASE_D)}, <strong>{E(up[0][0]["n"])}</strong> gained the most 1QB dynasty value ({up[0][1]:+,}, now {up[0][0]["v1"]:,}) and <strong>{E(dn[0][0]["n"])}</strong> lost the most ({dn[0][1]:+,}, now {dn[0][0]["v1"]:,}). {big} players with a value of 1,000 or more moved 10% or more.',
+              f'<h2>Biggest risers</h2>{mv_table(up)}<h2>Biggest fallers</h2>{mv_table(dn)}<h2>Biggest mover at each position</h2><div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Position</th><th scope="col" style="text-align:left">Riser</th><th scope="col" style="text-align:left">Faller</th></tr></thead><tbody>{bypos}</tbody></table></div>'
+              + f'<p class="hint">Only players with a composite value of 1,000 or more at either date are compared. Values are on a 0–10,000 scale; changes are in value points. Expert consensus updates about weekly while ADP moves daily, so some moves are one input catching up. Comparing with the daily snapshot from {fmt_d(BASE_D)}.</p><p>Looking for trade targets? See <a href="../dynasty-buy-low-sell-high/">dynasty buy-low and sell-high targets</a>, the <a href="../dynasty-trade-value-chart/">trade value chart</a> and <a href="../dynasty-rookie-rankings/">dynasty rookie rankings</a>.</p>' + SRC + faq_html(faqs),
+              ld_extra=[faq_ld(faqs)], featured=True)
+
+# ---- dynasty rookie rankings: the current rookie class by composite value, plus next year's pick values ----
+rooks = [p for p in valued if p.get('exp') == 0]
+if len(rooks) >= 10:
+    top_r = rooks[:40]
+    def rk_table(rows):
+        out = '<div class="table-scroll"><table><thead><tr><th scope="col">#</th><th scope="col" style="text-align:left">Player</th><th scope="col">Pos rank (all)</th><th scope="col">Age</th><th scope="col">1QB</th><th scope="col">SF</th>' + (f'<th scope="col">Since {fmt_d(BASE_D)}</th>' if BASE_D else '') + '<th scope="col">Games</th><th scope="col">PPR PPG</th><th scope="col">Status</th></tr></thead><tbody>'
+        for i, p in enumerate(rows):
+            out += f'<tr><td>{i+1}</td><td style="text-align:left">{tag(p["pos"])} {plink(p)} <span class="hint" style="display:inline">{E(p.get("team") or "FA")}</span></td><td>{p["pos"]}{pr.get(p["id"], "—")}</td><td>{p.get("age") or "—"}</td><td><b>{p["v1"]:,}</b></td><td>{(p.get("v2") or p["v1"]):,}</td>' + (f'<td>{chg_cell(p)}</td>' if BASE_D else '') + f'<td>{p.get("gp") or 0}</td><td>{fmtn(ppg_of(p))}</td><td>{E(p.get("inj") or "Active")}</td></tr>'
+        return out + '</tbody></table></div>'
+    nxt = [pk for pk in picks if pk['n'][:4] == str(int(SEASON) + 1)] if picks else []
+    pick_html = ('<h2>What next year’s rookie picks are worth</h2><p>Draft picks sit on the same scale as players, so you can see what a pick costs against a current rookie.</p><div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Pick</th><th scope="col">1QB value</th><th scope="col">SF value</th><th scope="col" style="text-align:left">Closest rookie (1QB)</th></tr></thead><tbody>' + ''.join(
+        f'<tr><td style="text-align:left">{tag("PICK")} {E(pk["n"])}</td><td>{pk["v1"]:,}</td><td>{(pk.get("v2") or pk["v1"]):,}</td><td style="text-align:left">{vlink(n)}</td></tr>' for pk in nxt for n in [min(rooks, key=lambda q: abs(q['v1'] - pk['v1']))]) + '</tbody></table></div><p><a href="../rookie-draft-pick-values/">All rookie pick values</a>.</p>') if nxt else ''
+    posb = ''.join(f'<li>{pos}: ' + ', '.join(f'{vlink(q)} ({q["v1"]:,})' for q in [r for r in rooks if r['pos'] == pos][:3]) + '</li>' for pos in ('QB', 'RB', 'WR', 'TE') if [r for r in rooks if r['pos'] == pos])
+    faqs = [(f'Who is the top {SEASON} rookie in dynasty right now?', f'{rooks[0]["n"]} ({rooks[0]["pos"]}, {rooks[0].get("team") or "FA"}) has the highest composite dynasty value among {SEASON} rookies at {rooks[0]["v1"]:,} in 1QB leagues and {(rooks[0].get("v2") or rooks[0]["v1"]):,} in superflex, followed by {rooks[1]["n"]} ({rooks[1]["v1"]:,}) and {rooks[2]["n"]} ({rooks[2]["v1"]:,}), as of {genh}.'),
+            ('How are these dynasty rookie rankings made?', 'They are ordered by our composite dynasty value (expert consensus, Sleeper and Fantasy Football Calculator ADP, and nflverse production), limited to players in their first NFL season. Pre-draft grades and college scouting are not part of the number.'),
+            ('Is there a 2027 rookie class ranking?', f'Not yet; there is no pro data to value that class honestly. What does exist is the market price of {int(SEASON) + 1} rookie picks, shown below, which is how most dynasty leagues trade that class today.'),
+            ('Can I use this for a startup or rookie draft?', 'Yes. The rookie draft board tool uses the same values and lets you tick players off as they are drafted.')]
+    write('dynasty-rookie-rankings', 'Dynasty rankings', f'Dynasty rookie rankings {SEASON}', f'Dynasty Rookie Rankings {SEASON}: Class Values & Production',
+          f'Dynasty rookie rankings for the {SEASON} class by trade value in 1QB and superflex, with games, PPG and value changes. Updated {genh}.',
+          f'Dynasty rookie rankings {SEASON}', f'Every first-year player ranked by composite dynasty value, with this season’s production so far.',
+          f'The top {SEASON} rookie in dynasty is <strong>{E(rooks[0]["n"])}</strong> ({rooks[0]["pos"]}, {E(rooks[0].get("team") or "FA")}, value {rooks[0]["v1"]:,}), then {E(rooks[1]["n"])} ({rooks[1]["v1"]:,}) and {E(rooks[2]["n"])} ({rooks[2]["v1"]:,}). {len(rooks)} rookies carry a value, as of {genh}.',
+          rk_table(top_r) + f'<h2>Top rookies by position</h2><ul>{posb}</ul>' + pick_html + '<p>Drafting? Use the <a href="../rookie-draft-board/">rookie draft board</a>. Trading? Price it in the <a href="../trade-analyzer/">dynasty trade analyzer</a>. See also <a href="../dynasty-value-risers-fallers/">value risers and fallers</a>.</p>' + SRC + faq_html(faqs),
+          ld_extra=[faq_ld(faqs), itemlist(top_r, f'Dynasty rookie rankings {SEASON}')], featured=True)
+
 # ---- player value pages (top 250) ----
 SSPOS_LABEL = {'QB': 'QB', 'RB': 'RB', 'WR': 'WR', 'TE': 'TE'}
 def source_line(p):
@@ -485,9 +660,11 @@ if SSPAGES:
           f'Week {WEEK} start or sit: every player', 'Pick a player to see this week’s projection, positional rank, injury status and call.',
           f'{len(SSPAGES)} players have a Week {WEEK} start-or-sit page; the highest projection is <strong>{E(top["n"])}</strong> at {top["proj"]["ppr"]} PPR points. Data, not betting advice.',
           sb + f'<p class="hint">Projections from Sleeper’s public API, updated {genh}. Players ruled out and players without a projection (bye or inactive) have no page. Also see the <a href="../week-{WEEK}-start-sit/">Week {WEEK} cheat sheet</a>.</p>', cta=('Compare two players', ''), cta_text='Who should I start? Compare up to 4 players.', featured=True)
+# ---- blog (content/blog/*.md -> blog/) ----
+ARTS = BLOG.build(ROOT, S, gen, genh)
 # ---- hub ----
 statics = S['statics']; allp = statics + PAGES
-order = S['sections'] + [s for s in ['Dynasty rankings', 'Weekly start/sit', 'Player values', 'Player comparisons', 'Start or sit'] if s not in S['sections']]
+order = S['sections'] + [s for s in ['Dynasty rankings', 'Dynasty movers', 'Rest of season', 'Weekly start/sit', 'Player values', 'Player comparisons', 'Start or sit'] if s not in S['sections']]
 body = ''
 for sec in order:
     ps = [p for p in allp if p['section'] == sec]
@@ -499,26 +676,29 @@ for sec in order:
         body += f'<h2>{E(sec)}</h2><p class="hint">Top {N_VALUE_PAGES} players by dynasty value (<a href="../dynasty-player-values/">table view</a>).</p><ul class="cols">' + ''.join(f'<li><a href="../{p["slug"]}/">{E(p["nav"].replace(" dynasty value",""))}</a></li>' for p in ps) + '</ul>'
     else:
         body += f'<h2>{E(sec)}</h2><div class="guide-grid">' + ''.join(f'<a class="gcard" href="../{p["slug"]}/"><b>{E(p["nav"])}</b><span>{E(p["desc"][:120])}</span></a>' for p in ps) + '</div>'
+if ARTS: body = f'<h2>Latest articles</h2>{BLOG.cards(ARTS, "../", 6)}<p><a href="../blog/">All articles →</a></p>' + body
 PAGES_BEFORE = len(PAGES)
 write('guides', 'Guides', 'All guides', f'All guides | {NAME}', f'Every {NAME} page: weekly start/sit rankings, dynasty rankings, trade value chart, pick values, player values and guides.',
       f'{NAME} guides & rankings', 'Rankings refresh daily from open data.', f'{len(allp)} pages, updated {genh}.', body, changefreq='daily')
 PAGES.pop()
 # ---- sitemap: statics + generated + guides + glossary ----
-ent = [('', '1.0', 'daily')] + [(t + '/', '0.9', 'daily') for t in TOOLS] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.6', p.get('changefreq', 'monthly')) for p in statics] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.5', p['changefreq']) for p in PAGES] + [('guides/', '0.5', 'daily'), ('glossary/', '0.4', 'monthly')] + [(f, '0.3', 'yearly') for f in ('privacy.html', 'terms.html', 'about.html', 'contact.html')]
-LMS = S.get('lastmod', {}); DATA = {p['slug'] + '/' for p in PAGES} | {'', 'guides/'}  # static pages keep their real last-changed date (from the main build)
-(ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{URL}{s}</loc><lastmod>{gen if s in DATA else LMS.get(s, gen)}</lastmod><changefreq>{cf}</changefreq><priority>{p}</priority></url>\n' for s, p, cf in ent) + '</urlset>\n')
+ent = [('', '1.0', 'daily')] + [(t + '/', '0.9', 'daily') for t in TOOLS] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.6', p.get('changefreq', 'monthly')) for p in statics] + [(p['slug'] + '/', '0.7' if p.get('featured') else '0.5', p['changefreq']) for p in PAGES] + ([('blog/', '0.7', 'daily')] + [(f'blog/{a["slug"]}/', '0.6', 'monthly') for a in ARTS] if ARTS else []) + [('guides/', '0.5', 'daily'), ('glossary/', '0.4', 'monthly')] + [(f, '0.3', 'yearly') for f in ('privacy.html', 'terms.html', 'about.html', 'contact.html')]
+LMS = S.get('lastmod', {}); DATA = {p['slug'] + '/' for p in PAGES} | {'', 'guides/', 'blog/'}  # static pages keep their real last-changed date (from the main build)
+ALM = {f'blog/{a["slug"]}/': (a.get('updated') or a['date']) for a in ARTS}
+(ROOT / 'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'  <url><loc>{URL}{s}</loc><lastmod>{ALM[s] if s in ALM else (gen if s in DATA else LMS.get(s, gen))}</lastmod><changefreq>{cf}</changefreq><priority>{p}</priority></url>\n' for s, p, cf in ent) + '</urlset>\n')
 # ---- llms.txt: append the data-page families (idempotent: replaces the previous block) ----
 _lf = ROOT / 'llms.txt'
 if _lf.exists():
     _base = re.sub(r'\n## Data pages \(updated daily\).*', '', _lf.read_text(), flags=re.S).rstrip('\n')
     _fam = [('dynasty-rankings', 'Dynasty rankings 1QB'), ('dynasty-rankings-superflex', 'Superflex rankings'), ('dynasty-trade-value-chart', 'Trade value chart'), ('rookie-draft-pick-values', 'Rookie pick values'),
-            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet'), ('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds'), (f'week-{WEEK}-waiver-wire', f'Week {WEEK} waiver wire pickups')]
+            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet'), ('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds'), ('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high targets'), ('dynasty-value-risers-fallers', 'Dynasty value risers and fallers'), ('dynasty-rookie-rankings', 'Dynasty rookie rankings'), (f'week-{WEEK}-waiver-wire', f'Week {WEEK} waiver wire pickups')]
     _have = {p['slug'] for p in PAGES}
     _txt = f'\n\n## Data pages (updated daily)\nData as of {genh}. Each player has a dynasty value page at {URL}dynasty-value-<player-name>/ and, in season, a start-or-sit page at {URL}start-or-sit-<player-name>/.\n' + ''.join(f'- [{n}]({URL}{sl}/)\n' for sl, n in _fam if sl in _have)
     _txt += '\n### Top player value pages\n' + ''.join(f'- [{q["n"]} dynasty value]({URL}{vslug(q)}/): #{one_rank[q["id"]]} 1QB, {q["v1"]:,}\n' for q in valued[:50])
+    if ARTS: _txt += '\n## Blog (data-driven articles by DynastyMath Staff)\n' + f'- [Blog index]({URL}blog/) · [RSS feed]({URL}blog/feed.xml)\n' + ''.join(f'- [{a["title"]}]({URL}blog/{a["slug"]}/): {a["description"]} (published {a["date"]}, numbers as of {a.get("data_as_of") or a["date"]})\n' for a in ARTS)
     _lf.write_text(_base + _txt)
 # remove stale generated folders (e.g. a player who dropped out of the top 150)
-keep = {p['slug'] for p in allp} | {'guides', 'glossary'} | set(TOOLS) | set(OLDWEEKS)
+keep = {p['slug'] for p in allp} | {'guides', 'glossary', 'blog'} | set(TOOLS) | set(OLDWEEKS)
 for d in ROOT.iterdir():
     if d.is_dir() and (d / '.generated').exists() and d.name not in keep: shutil.rmtree(d)
 (ROOT / 'data' / 'pages.json').write_text(json.dumps([{k: p[k] for k in ('slug', 'section', 'nav')} for p in PAGES]))
@@ -527,7 +707,8 @@ print(f'fantasy data pages: {len(PAGES)} generated + {len(statics)} static + gui
 if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
     def _wk(pre):
         w = f'<a href="{pre}week-{WEEK}-waiver-wire/"><strong>Week {WEEK} waiver wire</strong> (trending adds by position) →</a>' if (ROOT / WAIVER_SLUG).exists() else ''
-        return f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a>' + (' · ' + w if w else '') + '</p><!--/wk-->'
+        ex = ' · '.join(f'<a href="{pre}{s}/">{l}</a>' for s, l in [('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high'), ('dynasty-rookie-rankings', 'Rookie rankings')] if (ROOT / s).exists())
+        return f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a>' + (' · ' + w if w else '') + '</p>' + (f'<p class="hint" style="margin:6px 0 0">{ex}</p>' if ex else '') + '<!--/wk-->'
     for rel, pre in [('index.html', ''), ('start-sit/index.html', '../'), ('waiver-wire/index.html', '../'), ('waiver-wire-trending/index.html', '../'), ('trade-analyzer/index.html', '../')]:
         f = ROOT / rel
         if not f.exists(): continue
@@ -535,3 +716,19 @@ if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
         if rel == 'index.html': h = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + _wk(pre), h, count=1, flags=re.S); f.write_text(h); continue
         h = h.replace('<main id="main"><div class="wrap">', '<main id="main"><div class="wrap">' + _wk(pre), 1)
         f.write_text(h)
+# ---- blog entry points on every page: nav + footer links, and a "Latest articles" block on the home page (idempotent) ----
+if ARTS:
+    NAV_RE = re.compile(r'(<a href="((?:\.\./)*|/)guides/" class="hide-sm">Guides</a>)(?!<a href="[^"]*blog/")')
+    FOOT_RE = re.compile(r'(?<!>Blog</a></li>)(<li><a href="((?:\.\./)*|/)guides/">All guides →</a></li>)')
+    for f in list(ROOT.glob('*.html')) + list(ROOT.glob('*/index.html')) + list(ROOT.glob('blog/*/index.html')):
+        h = f.read_text(); o = h
+        h = NAV_RE.sub(lambda m: m.group(1) + f'<a href="{m.group(2)}blog/" class="hide-sm">Blog</a>', h)
+        h = FOOT_RE.sub(lambda m: f'<li><a href="{m.group(2)}blog/">Blog</a></li>' + m.group(1), h)
+        h = re.sub(r'(<li><a href="[^"]*blog/">Blog</a></li>)+', lambda m: m.group(0)[:m.group(0).index('</li>') + 5], h)
+        if f.name == 'index.html' and f.parent == ROOT:
+            h = re.sub(r'<!--blog-->.*?<!--/blog-->', '', h, flags=re.S)
+            h = re.sub(r'<link rel="alternate" type="application/rss\+xml"[^>]*>', '', h)
+            h = h.replace('<link rel="alternate" type="text/plain"', f'<link rel="alternate" type="application/rss+xml" title="{NAME} blog" href="blog/feed.xml"><link rel="alternate" type="text/plain"', 1)
+            blk = f'<!--blog--><section aria-labelledby="blh"><div class="sec-head"><h2 id="blh">Latest articles</h2><a href="blog/">All articles →</a></div>{BLOG.cards(ARTS, "", 3)}</section><!--/blog-->'
+            h = h.replace('<section class="prose" id="how">', blk + '<section class="prose" id="how">', 1)
+        if h != o: f.write_text(h)
