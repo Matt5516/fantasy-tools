@@ -53,8 +53,6 @@
     debounce: function(fn,ms){ var h; return function(){ clearTimeout(h); h=setTimeout(fn,ms||60); }; }
   };
   d.addEventListener('click',function(e){ if(e.target.closest('#themeBtn')) setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
-  // Email signup placeholder (no provider connected yet)
-  d.addEventListener('submit',function(e){ var f=e.target; if(f.matches('form[data-signup-placeholder]')){ e.preventDefault(); var m=f.parentNode.querySelector('.signup-msg'); if(m) m.textContent='Thanks. Nothing was stored, and the list is not open yet.'; } });
 
   // ---- v4 shared components ----
   // Preset chips: <div class="presets" data-target="inputId"><button data-v="25">$25</button>…</div> sets the input and fires input
