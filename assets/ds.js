@@ -54,7 +54,7 @@
   };
   d.addEventListener('click',function(e){ if(e.target.closest('#themeBtn')) setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); });
   // Email signup placeholder (no provider connected yet)
-  d.addEventListener('submit',function(e){ var f=e.target; if(f.matches('form[data-signup-placeholder]')){ e.preventDefault(); var m=f.parentNode.querySelector('.signup-msg'); if(m) m.textContent='Thanks! The email list opens soon. We have not stored your address.'; } });
+  d.addEventListener('submit',function(e){ var f=e.target; if(f.matches('form[data-signup-placeholder]')){ e.preventDefault(); var m=f.parentNode.querySelector('.signup-msg'); if(m) m.textContent='Thanks. Nothing was stored, and the list is not open yet.'; } });
 
   // ---- v4 shared components ----
   // Preset chips: <div class="presets" data-target="inputId"><button data-v="25">$25</button>…</div> sets the input and fires input
@@ -82,14 +82,14 @@
     var b=d.createElement('button'); b.type='button'; b.id='fbBtn'; b.className='fb-btn'; b.innerHTML='<span aria-hidden="true">💬</span>Feedback'; d.body.appendChild(b);
     var dl=d.createElement('dialog'); dl.className='fb'; dl.setAttribute('aria-labelledby','fbH');
     dl.innerHTML='<form method="dialog" id="fbForm"><h2 id="fbH">Was this useful?</h2><div class="fb-thumbs" role="group" aria-label="Was this useful?"><button type="button" data-r="yes" aria-pressed="false">👍 Yes</button><button type="button" data-r="no" aria-pressed="false">👎 Not really</button></div>'+
-      '<label for="fbText">What should we add or fix?</label><textarea id="fbText" rows="3" maxlength="1500" placeholder="e.g. add SGC crossover pricing"></textarea>'+
+      '<label for="fbText">What is missing or wrong?</label><textarea id="fbText" rows="3" maxlength="1500" placeholder="e.g. add SGC crossover pricing"></textarea>'+
       '<label for="fbEmail" style="margin-top:8px;display:block">Your email <span class="hint" style="display:inline">(optional, only if you want a reply)</span></label><input id="fbEmail" type="email" autocomplete="email" placeholder="you@example.com">'+
       '<p class="fb-url">Page: <span id="fbUrl"></span></p>'+
       '<div class="actions"><button type="button" class="btn sm" id="fbGh">Send via GitHub</button><button type="button" class="btn ghost sm" id="fbMail">Send by email</button><button type="submit" class="btn ghost sm" value="cancel">Close</button></div>'+
       '<p class="hint" style="margin-top:8px">GitHub issues are public and need a free GitHub login; your email is never put in a GitHub issue. No GitHub? Use “Send by email”.</p></form>';
     d.body.appendChild(dl); var rate='';
     function msg(){ var t=d.getElementById('fbText').value.trim(); return {t:t, title:'[feedback] '+(rate==='yes'?'👍 ':rate==='no'?'👎 ':'')+(t.slice(0,60)||d.title.split('|')[0].trim()),
-      body:'**Page:** '+location.href+'\n**Useful:** '+(rate||'not answered')+'\n\n**What should we add or fix?**\n'+(t||'(nothing written)')+'\n\n---\nSent from the feedback button.'}; }
+      body:'**Page:** '+location.href+'\n**Useful:** '+(rate||'not answered')+'\n\n**What is missing or wrong?**\n'+(t||'(nothing written)')+'\n\n---\nSent from the feedback form.'}; }
     b.addEventListener('click',function(){ d.getElementById('fbUrl').textContent=location.href; if(dl.showModal) dl.showModal(); else dl.setAttribute('open',''); });
     dl.addEventListener('click',function(e){ var r=e.target.closest('[data-r]'); if(r){ rate=r.dataset.r; dl.querySelectorAll('[data-r]').forEach(function(x){ x.setAttribute('aria-pressed',String(x===r)); }); } });
     d.getElementById('fbGh').addEventListener('click',function(){ var m=msg(); window.open('https://github.com/Matt5516/'+repo+'/issues/new?template=feedback.md&labels=feedback&title='+encodeURIComponent(m.title)+'&body='+encodeURIComponent(m.body),'_blank','noopener'); dl.close&&dl.close(); });

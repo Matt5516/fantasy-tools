@@ -40,10 +40,10 @@
   function startSit(){ if(!$('ssOut')) return;
     chips('ssChips','ss',renderAll,false);
     var out=$('ssOut'), fmt=$('fmt').value, ps=sel.ss.map(function(id){return BY[id];}).filter(Boolean);
-    if(ps.length<2){ out.innerHTML='<div class="empty">'+UI.icon('users')+'<p><strong>Add at least two players</strong><br>Search above, e.g. two running backs you\'re torn between.</p></div>'; ssText=''; return; }
+    if(ps.length<2){ out.innerHTML='<div class="empty">'+UI.icon('users')+'<p><strong>Add two players to get a call</strong><br>Search above. Try two RBs you\'re torn between.</p></div>'; ssText=''; return; }
     var r=FFCalc.startSit(ps,fmt), top=r[0], gap=r[1]?top.s.score-r[1].s.score:0;
     var conf=gap>=4?'High':gap>=1.5?'Medium':'Low';
-    var h='<h2>'+UI.icon('trophy')+'Start/sit call</h2><div class="verdict good"><span class="vicon">'+UI.icon('check')+'</span><div><strong class="big">Start '+UI.esc(top.p.n)+'</strong><span>'+conf+' confidence: '+gap.toFixed(1)+' point edge in '+({ppr:'PPR',half:'Half PPR',std:'standard'})[fmt]+' scoring.</span></div></div>';
+    var h='<h2>'+UI.icon('trophy')+'Start/sit call</h2><div class="verdict good"><span class="vicon">'+UI.icon('check')+'</span><div><strong class="big">Start '+UI.esc(top.p.n)+'</strong><span>'+conf+' confidence. '+gap.toFixed(1)+' point edge in '+({ppr:'PPR',half:'Half PPR',std:'standard'})[fmt]+' scoring.</span></div></div>';
     var mx=Math.max.apply(null,r.map(function(x){return x.s.score;}))||1;
     h+='<div style="margin-top:14px">'+r.map(function(x,i){ var p=x.p; return '<div style="margin:10px 0"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span>'+tag(p)+' <strong>'+UI.esc(p.n)+'</strong> <span class="hint" style="display:inline">'+p.team+'</span></span><span class="badge '+(i===0?'good':'')+'">'+(i===0?'START':'SIT')+' · '+x.s.score+'</span></div><div class="bar" style="margin-top:6px"><i style="width:'+Math.max(2,x.s.score/mx*100)+'%"></i></div>'+
       '<div class="hint">Projection '+(p.proj?p.proj[fmt]:'—')+' · last 3 games '+(p.l3?p.l3[fmt]:'—')+' · season PPG '+(p.ppg?p.ppg[fmt]:'—')+(p.gp?' ('+p.gp+' games)':'')+(x.s.spread!=null&&x.s.spread>=6?' · <strong>sources disagree by '+x.s.spread+' pts</strong>':'')+(p.trend?' · trending +'+p.trend.toLocaleString()+' adds':'')+(x.s.note?' · '+UI.esc(x.s.note):'')+'</div></div>'; }).join('')+'</div>';
@@ -57,21 +57,21 @@
   function breakdown(list){ var keys=['dp','sl','ffc','prod'].filter(function(k){ return list.some(function(p){ return p.cs&&p.cs[k]!=null; }); }); if(!keys.length) return '';
     return '<details class="adv" style="margin-top:14px"><summary>Where the values come from</summary><div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Player</th>'+keys.map(function(k){return '<th scope="col">'+SRCN[k]+'</th>';}).join('')+'<th scope="col">Composite</th><th scope="col">Consensus</th></tr></thead><tbody>'+
       list.filter(function(p){return p.pos!=='PICK';}).map(function(p){ return '<tr><td style="text-align:left">'+UI.esc(p.n)+'</td>'+keys.map(function(k){ return '<td>'+(p.cs&&p.cs[k]!=null?p.cs[k].toLocaleString():'—')+'</td>'; }).join('')+'<td><strong>'+(p.v1||0).toLocaleString()+'</strong></td><td>'+conBadge(p)+'</td></tr>'; }).join('')+
-      '</tbody></table></div><p class="hint">1QB scale. Each source is converted to the same 0–10,000 scale by positional rank, then blended (experts 40%, Sleeper ADP 30%, FFC ADP 15%, production 15%, re-weighted when a source is missing). Picks use DynastyProcess only. <a href="'+UI.root()+'how-our-values-work/">Methodology</a></p></details>'; }
+      '</tbody></table></div><p class="hint">1QB scale, 0–10,000. Blend: experts 40%, Sleeper ADP 30%, FFC ADP 15%, production 15% (re-weighted if a source is missing). Picks use DynastyProcess only. <a href="'+UI.root()+'how-our-values-work/">How we value players</a></p></details>'; }
   // ---------- Trade ----------
   function trade(){ if(!$('trOut')) return;
     chips('aChips','a',renderAll,true); chips('bChips','b',renderAll,true);
     var out=$('trOut'), A=sel.a.map(function(id){return BY[id];}).filter(Boolean), B=sel.b.map(function(id){return BY[id];}).filter(Boolean);
-    if(!A.length||!B.length){ out.innerHTML='<div class="empty">'+UI.icon('swap')+'<p><strong>Add at least one player or pick to each side</strong><br>Example: a 2027 1st for a young receiver.</p></div>'; trText=''; return; }
+    if(!A.length||!B.length){ out.innerHTML='<div class="empty">'+UI.icon('swap')+'<p><strong>Add a player or pick to each side</strong><br>Try a 2027 1st for a young receiver.</p></div>'; trText=''; return; }
     var va=A.map(val), vb=B.map(val), r=FFCalc.trade(va,vb), fair=r.verdict==='Fair trade';
     var share=r.a/(r.a+r.b||1)*100;
-    var h='<h2>'+UI.icon('swap')+'Trade verdict</h2><div class="verdict '+(fair?'good':'warn')+'"><span class="vicon">'+UI.icon(fair?'check':'alert')+'</span><div><strong class="big">'+(fair?'Fair trade':(r.a>r.b?'You overpay':'You win this trade'))+'</strong><span>'+(fair?'The sides are within 5%.':(r.a>r.b?'The other side wins by ':'You come out ahead by ')+Math.abs(r.gapPct)+'%.')+'</span></div></div>';
+    var h='<h2>'+UI.icon('swap')+'Trade verdict</h2><div class="verdict '+(fair?'good':'warn')+'"><span class="vicon">'+UI.icon(fair?'check':'alert')+'</span><div><strong class="big">'+(fair?'Fair trade':(r.a>r.b?'You overpay':'You win this trade'))+'</strong><span>'+(fair?'Within 5%. Call it even.':(r.a>r.b?'They win by ':'You win by ')+Math.abs(r.gapPct)+'%.')+'</span></div></div>';
     h+='<div class="stats">'+'<div class="stat"><div class="k">You give</div><div class="v">'+r.a.toLocaleString()+'</div></div><div class="stat"><div class="k">You get</div><div class="v">'+r.b.toLocaleString()+'</div></div></div>';
     h+='<div class="bar" style="height:14px" role="img" aria-label="You give '+Math.round(share)+'% of total value"><i style="width:'+share+'%"></i></div><div class="legend" style="justify-content:space-between;margin-top:4px"><span>You give '+Math.round(share)+'%</span><span>You get '+Math.round(100-share)+'%</span></div>';
     var bal=FFCalc.balance(va,vb,ALLITEMS.map(function(p){return {p:p,v:val(p)};}).filter(function(x){return x.v>200;}),Object.assign({},...sel.a.concat(sel.b).map(function(id){var o={};o[id]=1;return o;})));
     if(bal.side){ h+='<h3 style="margin-top:16px">To balance it, '+(bal.side==='A'?'you':'the other side')+' could add</h3>'+(bal.list.length?bal.list.map(function(x){return '<div class="pchip">'+tag(x.p)+'<span><strong>'+UI.esc(x.p.n)+'</strong> <span class="hint" style="display:inline">'+(x.p.team||'')+'</span></span><span class="badge" style="margin-left:auto">'+x.v.toLocaleString()+'</span><button type="button" class="btn ghost sm" data-add="'+bal.side.toLowerCase()+'" data-id="'+UI.esc(x.p.id)+'">Add</button></div>';}).join(''):'<p class="hint">No single player closes the gap. Try adding a pick or a second piece.</p>'); }
     h+=breakdown(A.concat(B));
-    h+='<div class="actions"><button type="button" class="btn sm" data-share="tr">'+UI.icon('share')+'Share trade</button><button type="button" class="btn ghost sm" data-copy="tr">'+UI.icon('copy')+'Copy</button></div>';
+    h+='<div class="actions"><button type="button" class="btn sm" data-share="tr">'+UI.icon('share')+'Share this trade</button><button type="button" class="btn ghost sm" data-copy="tr">'+UI.icon('copy')+'Copy</button></div>';
     out.innerHTML=h;
     trText='Dynasty trade ('+(opt().superflex?'SF':'1QB')+(opt().tePremium?', TEP':'')+'): I give '+A.map(function(p){return p.n;}).join(' + ')+' ('+r.a.toLocaleString()+') for '+B.map(function(p){return p.n;}).join(' + ')+' ('+r.b.toLocaleString()+'): '+(fair?'fair':(r.a>r.b?'I overpay by ':'I win by ')+Math.abs(r.gapPct)+'%')+'.';
   }
@@ -81,7 +81,7 @@
   function rankings(){ if(!$('rkBody')) return; clearTimeout(rkTimer); rkTimer=setTimeout(rankingsNow, rkLimit===40&&!rkDone?250:0); }
   var rkDone=false; function rankingsNow(){ rkDone=true;
     var pos=$('rkPos').value, q=norm($('rkFind').value||''), rows=ALLITEMS.filter(function(p){ return (!pos||p.pos===pos) && (!q||p._s.indexOf(q)>=0); }).map(function(p){return {p:p,v:val(p)};}).filter(function(x){return x.v>0;}).sort(function(a,b){return b.v-a.v;}).slice(0,200); var total=rows.length; rows=rows.slice(0,rkLimit); $('rkMore').hidden=total<=rkLimit;
-    $('rkBody').innerHTML=rows.length?rows.map(function(x,i){ var p=x.p; return '<tr><td>'+(i+1)+'</td><td>'+tag(p)+' '+UI.esc(p.n)+(p.team?' <span class="hint" style="display:inline">'+p.team+'</span>':'')+'</td><td>'+(p.age||'—')+'</td><td>'+(p.ppg?p.ppg.ppr:'—')+'</td><td><strong>'+x.v.toLocaleString()+'</strong></td></tr>'; }).join(''):'<tr><td colspan="5"><div class="empty">No players match.</div></td></tr>';
+    $('rkBody').innerHTML=rows.length?rows.map(function(x,i){ var p=x.p; return '<tr><td>'+(i+1)+'</td><td>'+tag(p)+' '+UI.esc(p.n)+(p.team?' <span class="hint" style="display:inline">'+p.team+'</span>':'')+'</td><td>'+(p.age||'—')+'</td><td>'+(p.ppg?p.ppg.ppr:'—')+'</td><td><strong>'+x.v.toLocaleString()+'</strong></td></tr>'; }).join(''):'<tr><td colspan="5"><div class="empty">No players match. Clear the filters.</div></td></tr>';
     $('rkNote').textContent='Top '+rows.length+' by '+(opt().superflex?'superflex':'1QB')+(opt().tePremium?' + TE premium':'')+' value. PPG is PPR points per game this season.';
   }
   // ---------- Sleeper league import ----------
@@ -123,7 +123,7 @@
       if(me){ lineupHtml='<div class="verdict good"><span class="vicon">'+UI.icon('check')+'</span><div><strong class="big">Optimal lineup: '+me.L.total.toFixed(1)+' pts</strong><span>Week '+D.week+', '+({ppr:'PPR',half:'Half PPR',std:'standard'})[fmt]+' scoring. Kickers and defenses aren\'t scored.</span></div></div>'+
         '<div class="table-scroll" style="margin-top:12px"><table><thead><tr><th scope="col">Slot</th><th scope="col" style="text-align:left">Player</th><th scope="col">Score</th></tr></thead><tbody>'+me.L.lineup.map(function(l){return row(l.slot,l.x);}).join('')+'</tbody></table></div>'+
         '<h3 style="margin-top:14px">Bench</h3><div class="table-scroll"><table><tbody>'+me.L.bench.map(function(x){return row('BN',x);}).join('')+'</tbody></table></div>'; }
-      else lineupHtml='<div class="alert">'+UI.icon('info')+'<div>No roster for you in this league. Power rankings and waivers still work.</div></div>';
+      else lineupHtml='<div class="alert">'+UI.icon('info')+'<div>You have no roster in this league. Power rankings and waivers still work.</div></div>';
       // power rankings: 60% this week's lineup strength, 40% dynasty value (each scaled to the league max)
       var mxL=Math.max.apply(null,teams.map(function(t){return t.L.total;}))||1, mxD=Math.max.apply(null,teams.map(function(t){return t.dyn;}))||1;
       teams.forEach(function(t){ t.pow=Math.round((0.6*t.L.total/mxL+0.4*t.dyn/mxD)*100); }); teams.sort(function(a,b){return b.pow-a.pow;});
@@ -131,12 +131,12 @@
       // waiver helper: unrostered players, by start score this week and adds trend
       var worst={}; if(me) me.L.lineup.forEach(function(l){ if(l.x&&(!worst[l.x.p.pos]||l.x.s.score<worst[l.x.p.pos])) worst[l.x.p.pos]=l.x.s.score; });
       var fa=D.players.filter(function(p){return !rostered[p.id]&&p.team;}).map(function(p){return {p:p,s:FFCalc.startScore(p,fmt),v:dv(p)};}).sort(function(a,b){return (b.s.score+b.v/1000)-(a.s.score+a.v/1000);}).slice(0,15);
-      var waHtml='<div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Free agent</th><th scope="col">Start score</th><th scope="col">Dynasty value</th><th scope="col">Adds (24h)</th><th scope="col">Upgrade?</th></tr></thead><tbody>'+fa.map(function(x){ var up=worst[x.p.pos]!=null&&x.s.score>worst[x.p.pos]; return '<tr><td style="text-align:left">'+tag(x.p)+' '+UI.esc(x.p.n)+' <span class="hint" style="display:inline">'+(x.p.team||'')+'</span></td><td>'+x.s.score+'</td><td>'+x.v.toLocaleString()+'</td><td>'+(x.p.trend?'+'+x.p.trend.toLocaleString():'—')+'</td><td>'+(up?'<span class="badge good">Beats a starter</span>':'')+'</td></tr>'; }).join('')+'</tbody></table></div><p class="hint">Players on no roster in this league, best first. “Beats a starter” = higher start score than your weakest starter at that position.</p>';
+      var waHtml='<div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">Free agent</th><th scope="col">Start score</th><th scope="col">Dynasty value</th><th scope="col">Adds (24h)</th><th scope="col">Upgrade?</th></tr></thead><tbody>'+fa.map(function(x){ var up=worst[x.p.pos]!=null&&x.s.score>worst[x.p.pos]; return '<tr><td style="text-align:left">'+tag(x.p)+' '+UI.esc(x.p.n)+' <span class="hint" style="display:inline">'+(x.p.team||'')+'</span></td><td>'+x.s.score+'</td><td>'+x.v.toLocaleString()+'</td><td>'+(x.p.trend?'+'+x.p.trend.toLocaleString():'—')+'</td><td>'+(up?'<span class="badge good">Beats a starter</span>':'')+'</td></tr>'; }).join('')+'</tbody></table></div><p class="hint">Free agents in your league, best first. “Beats a starter” means a higher start score than your weakest starter at that position.</p>';
       var tabs=[['lineup','My lineup',lineupHtml],['power','Power rankings',prHtml],['waiver','Waiver helper',waHtml]], first=document.documentElement.getAttribute('data-panel')||'lineup';
       tabs.sort(function(a,b){ return (b[0]===first)-(a[0]===first); });
       h+=tabs.map(function(t){ return '<details class="adv lg-panel"'+(t[0]===tabs[0][0]?' open':'')+' id="lg-'+t[0]+'"><summary>'+t[1]+'</summary>'+t[2]+'</details>'; }).join('');
       out.innerHTML=h;
-    }).catch(function(){ out.innerHTML='<div class="alert err">'+UI.icon('alert')+'<div>Couldn\'t load this league from Sleeper. Try again.</div></div>'; });
+    }).catch(function(){ out.innerHTML='<div class="alert err">'+UI.icon('alert')+'<div>Sleeper wouldn\'t load this league. Try again.</div></div>'; });
   }
   if($('lgForm')) $('lgForm').addEventListener('submit',loadLeagues);
   // ---------- Glue ----------
@@ -163,5 +163,5 @@
       if(wr&&pk){ sel.a=[wr.id]; sel.b=[pk.id]; } }
     if(P.has('sleeperUser')&&$('lgForm')) loadLeagues();
     renderAll();
-  }).catch(function(){ ['ssOut','trOut','dbOut'].forEach(function(id){ if($(id)) $(id).innerHTML='<div class="alert err">'+UI.icon('alert')+'<div>Player data didn\'t load. Check your connection and refresh.</div></div>'; }); });
+  }).catch(function(){ ['ssOut','trOut','dbOut'].forEach(function(id){ if($(id)) $(id).innerHTML='<div class="alert err">'+UI.icon('alert')+'<div>Player data didn\'t load. Check your connection, then refresh.</div></div>'; }); });
 })();

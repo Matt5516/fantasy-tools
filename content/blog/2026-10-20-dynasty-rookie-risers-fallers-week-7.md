@@ -3,15 +3,15 @@ title: 2026 Dynasty Rookie Risers and Fallers After Week 6
 slug: dynasty-rookie-risers-fallers-2026-week-7
 date: 2026-10-20
 data_as_of: 2026-10-20
-description: Which 2026 dynasty rookies gained and lost the most trade value since Oct 14, with games, PPG, injuries and what a 2027 first costs against them.
+description: See which 2026 dynasty rookies gained and lost the most trade value since Oct 14, plus their games, PPG, injuries and what a 2027 first costs.
 tags: dynasty rookies, rookie rankings, risers and fallers, rookie picks
-cta_label: Open the rookie draft board
+cta_label: Rank your rookies
 cta_href: /rookie-draft-board/
-cta_text: Rank rookies and picks by dynasty value and tick players off live.
+cta_text: Rank rookies and picks by dynasty value, then tick players off as they go.
 answer: As of Oct 20, 2026, Germie Bernard is the biggest 2026 dynasty rookie riser, up 863 points (182.1%) since Oct 14 to 1,337, and Jadarian Price is the biggest faller among rookies valued at 1,000 or more, down 313 points (18.0%) to 1,425. The top rookie by value is still Carnell Tate at 4,354, ahead of Jeremiyah Love (4,147).
 ---
 
-Six weeks into the season, the 2026 rookie class has sorted itself into a handful of real assets and a long tail. 84 first-year players carry a DynastyMath composite value today, and since Oct 14 49 of them have gained value and 21 have lost it. Below are the top ten, the biggest risers and fallers, and what the 2027 and 2028 rookie picks cost in comparison. All numbers are from our own data, dated Oct 20, 2026, and values use our 0 to 10,000 composite scale. The live version of the class lives on the [dynasty rookie rankings](/dynasty-rookie-rankings/) page.
+Six weeks in, the 2026 rookie class has split into a handful of real assets and a long tail. 84 first-year players carry a dynasty value today. Since Oct 14, 49 have gained value and 21 have lost it. Here are the top ten, the biggest risers and fallers, and what 2027 and 2028 rookie picks cost against them. Values as of Oct 20, 2026, on a 0 to 10,000 scale. For the full class, see the [dynasty rookie rankings](/dynasty-rookie-rankings/).
 
 ## The top ten rookies by value
 
@@ -28,11 +28,11 @@ Six weeks into the season, the 2026 rookie class has sorted itself into a handfu
 | [Kenyon Sadiq](/dynasty-value-kenyon-sadiq/) (NYJ) | TE14 / 21 | **1,100** | 810 | +16 (+1.5%) | 6 | 6.9 | Active |
 | [Omar Cooper](/dynasty-value-omar-cooper/) (NYJ) | WR47 / 22 | **1,084** | 802 | +497 (+84.7%) | 2 | 13.2 | Active |
 
-[Carnell Tate](/dynasty-value-carnell-tate/) leads at 4,354 with 11.2 PPR points per game over 6 games and 14 over his last three. [Jeremiyah Love](/dynasty-value-jeremiyah-love/) is second at 4,147, but his sources disagree sharply: the experts value him at 7,846 and the Sleeper draft market at 330, and he is listed Out. [Jordyn Tyson](/dynasty-value-jordyn-tyson/) (3,258) has played 0 games and is listed IR, so his value rests on the expert consensus alone (3,258); there is no ADP or production signal behind it yet. Quarterbacks look different by format: [Fernando Mendoza](/dynasty-value-fernando-mendoza/) is 895 in 1QB leagues but 3,182 in superflex.
+[Carnell Tate](/dynasty-value-carnell-tate/) leads at 4,354 with 11.2 PPR points per game over 6 games and 14 over his last three. [Jeremiyah Love](/dynasty-value-jeremiyah-love/) is second at 4,147, but his sources disagree sharply: the experts value him at 7,846 and the Sleeper draft market at 330, and he is listed Out. [Jordyn Tyson](/dynasty-value-jordyn-tyson/) (3,258) has played 0 games and is listed IR, so his value rests on the expert consensus alone (3,258); there is no ADP or production signal behind it yet. Quarterbacks change by format: [Fernando Mendoza](/dynasty-value-fernando-mendoza/) is 895 in 1QB leagues but 3,182 in superflex.
 
 ## The risers
 
-**Germie Bernard (PIT, WR40).** Up 863 points since Oct 14, from 474 to 1,337. He has 8.9 PPR points per game and 14.4 over his last three, and the sources are far apart: experts at 158, the draft market at 2,060 and production at 3,036. Our data flags him as a possible sell, because the market is well above the experts. A 182.1% jump in six days shows how fast a rookie's number can move.
+**Germie Bernard (PIT, WR40).** Up 863 points since Oct 14, from 474 to 1,337. He has 8.9 PPR points per game and 14.4 over his last three, and the sources are far apart: experts at 158, the draft market at 2,060 and production at 3,036. That makes him a possible sell: the market is well above the experts. A 182.1% jump in six days shows how fast a rookie's number can move.
 
 **Omar Cooper (NYJ).** Up 497 (84.7%) to 1,084. He has played only 2 games, scoring 13.2 PPR points per game, so treat the production as a very small sample.
 
@@ -46,11 +46,11 @@ Among rookies valued at 1,000 or more on either date, the biggest drops are:
 - [Makai Lemon](/dynasty-value-makai-lemon/): -167 (-10.8%), now 1,379, status Questionable
 - [Jordyn Tyson](/dynasty-value-jordyn-tyson/): -157 (-4.6%), now 3,258, status IR
 
-Two of the three are injury cases: Jadarian Price is listed IR and Jordyn Tyson is listed IR. Our data records the status but not the timeline, and we do not claim that the injury is why a value moved. Makai Lemon (PHI) is a different case: healthy apart from a questionable tag, scoring 5 PPG, with the experts at 2,687 and the market at 265. That gap makes him a possible buy by our flags, but a rookie scoring 5 points a game has a lot to prove.
+Two of the three are injury cases: Jadarian Price is listed IR and Jordyn Tyson is listed IR. The status is listed. The timeline isn't, so don't assume the injury is why a value moved. Makai Lemon (PHI) is a different case: healthy apart from a questionable tag, scoring 5 PPG, with the experts at 2,687 and the market at 265. That gap makes him a possible buy, but a rookie scoring 5 points a game has a lot to prove.
 
 ## What the rookie picks cost
 
-Picks sit on the same scale as players, so you can see which rookies a pick buys.
+Picks sit on the same scale as players, so you can see which rookie a pick buys.
 
 | Pick | 1QB | Superflex | Closest 2026 rookie (1QB) |
 |---|---|---|---|
@@ -60,7 +60,7 @@ Picks sit on the same scale as players, so you can see which rookies a pick buys
 | 2027 Early 2nd | 429 | 531 | [Chris Bell](/dynasty-value-chris-bell/) (412) |
 | 2028 1st | 1,508 | 1,729 | [KC Concepcion](/dynasty-value-kc-concepcion/) (1,550) |
 
-A 2027 Early 1st at 4,127 is worth about Jeremiyah Love's 4,147. A 2027 Mid 1st at 1,864 is worth less than Denzel Boston (2,287), and even a 2027 Late 1st (871) is below Germie Bernard (1,337). Early 2027 picks are the expensive ones; the price falls off steeply after that.
+A 2027 Early 1st at 4,127 is worth about Jeremiyah Love's 4,147. A 2027 Mid 1st at 1,864 is worth less than Denzel Boston (2,287), and even a 2027 Late 1st (871) is below Germie Bernard (1,337). Early 2027 picks are the pricey ones. The cost drops off fast after that.
 
 ## Three ways to use this before your deadline
 
@@ -68,7 +68,7 @@ A 2027 Early 1st at 4,127 is worth about Jeremiyah Love's 4,147. A 2027 Mid 1st 
 2. **Be careful with one-source values.** A rookie valued only by the expert consensus, like Jordyn Tyson, has no market or production signal to confirm the price.
 3. **Price picks against players.** If the [trade analyzer](/trade-analyzer/) says a 2027 mid 1st buys a current rookie plus a bench piece, decide whether you prefer a known role over a draft slot.
 
-For all rookies and their live values, see the [rookie rankings](/dynasty-rookie-rankings/); for the whole player pool, [risers and fallers](/dynasty-value-risers-fallers/) and [buy-low and sell-high targets](/dynasty-buy-low-sell-high/) update every morning.
+For all rookies and their live values, see the [rookie rankings](/dynasty-rookie-rankings/); for every player, check [risers and fallers](/dynasty-value-risers-fallers/) and [buy-low and sell-high targets](/dynasty-buy-low-sell-high/), fresh every morning.
 
 ## Frequently asked questions
 
@@ -86,4 +86,4 @@ On Oct 20, 2026 an early 2027 first is 4,127 in 1QB (4,581 superflex), a mid fir
 
 ### Are rookie values final?
 
-No. These are a snapshot from Oct 20, 2026 and rookies move more than veterans on small samples. Live values are on the player pages linked above.
+No. These are Oct 20, 2026 values, and rookies move more than veterans on small samples. Today's values are on the player pages linked above.

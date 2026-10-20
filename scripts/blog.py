@@ -111,7 +111,7 @@ def build(root, S, gen, genh):
     if not arts: return []
     org = S['org']; author = {'@type': 'Organization', 'name': AUTHOR, 'url': url + 'about.html'}
     rss_link = f'<link rel="alternate" type="application/rss+xml" title="{name} blog" href="__PRE__blog/feed.xml">'
-    def page(slug, depth, title, desc, h1, lede, answer, body, ld, eyebrow, crumb_nav, cta=('Open the trade calculator', 'trade-analyzer/', ''), cta_text='Check any trade with players and picks.'):
+    def page(slug, depth, title, desc, h1, lede, answer, body, ld, eyebrow, crumb_nav, cta=('Check your trade', 'trade-analyzer/', ''), cta_text='Check any trade with players and picks.'):
         t = tpl
         t = t.replace('<a href="../guides/">Guides</a> › <span aria-current="page">__NAV__</span>', '<a href="../blog/">Blog</a> › <span aria-current="page">__NAV__</span>')
         t = re.sub(r'__SECTION__ · Updated <time datetime="__UPD__">__UPDH__</time>', eyebrow, t)
@@ -136,7 +136,7 @@ def build(root, S, gen, genh):
         by = f'<p class="hint"><strong>By {AUTHOR}</strong> · Published <time datetime="{a["date"]}">{fmt_date(a["date"])}</time>' + (f' · Updated <time datetime="{a["updated"]}">{fmt_date(a["updated"])}</time>' if a.get('updated') and a['updated'] != a['date'] else '') + f' · Numbers as of {fmt_date(asof)} · {max(1, round(words / 220))} min read</p>'
         others = [x for x in arts if x['slug'] != a['slug']][:3]
         more = ('<h2>More from the blog</h2><ul>' + ''.join(f'<li><a href="../blog/{x["slug"]}/">{E(x["title"])}</a></li>' for x in others) + '</ul>') if others else ''
-        note = f'<p class="hint">The numbers in this article are a snapshot from {fmt_date(asof)}. Player pages and tools linked here update daily, so live values may differ from the figures above. Fantasy football is for fun; this is data, not betting or fantasy advice.</p>'
+        note = f'<p class="hint">Numbers as of {fmt_date(asof)}. Live values move daily, so check the linked pages for today’s. Fantasy football is for fun. This is data, not betting advice.</p>'
         crumbs = [{'@type': 'ListItem', 'position': 1, 'name': name, 'item': url}, {'@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': url + 'blog/'}, {'@type': 'ListItem', 'position': 3, 'name': a['title'], 'item': u}]
         post = {'@type': ['BlogPosting', 'Article'], 'headline': a['title'][:110], 'description': a['description'], 'url': u, 'mainEntityOfPage': u, 'datePublished': a['date'], 'dateModified': a.get('updated') or a['date'],
                 'author': author, 'publisher': org, 'image': url + 'og.png', 'inLanguage': 'en-US', 'wordCount': words, 'articleSection': 'Fantasy football', 'isPartOf': {'@type': 'Blog', 'name': f'{name} blog', 'url': url + 'blog/'}}
@@ -144,24 +144,24 @@ def build(root, S, gen, genh):
         ld = [post, {'@type': 'BreadcrumbList', 'itemListElement': crumbs}]
         if faqs: ld.append({'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': ans}} for q, ans in faqs]})
         cta_href = a.get('cta_href') or '/trade-analyzer/'
-        cta = (a.get('cta_label') or 'Open the trade calculator', cta_href.lstrip('/'), '')
+        cta = (a.get('cta_label') or 'Check your trade', cta_href.lstrip('/'), '')
         page(slug, 2, a['title'], a['description'], a['title'], r.inline(a['lede']) if a.get('lede') else E(a['description']), r.inline(a['answer']),
-             by + body + more + note, ld, f'Blog · <time datetime="{a["date"]}">{fmt_date(a["date"])}</time>', a['title'][:48], cta=cta, cta_text=a.get('cta_text') or 'Price any deal with players and picks, 1QB or superflex.')
+             by + body + more + note, ld, f'Blog · <time datetime="{a["date"]}">{fmt_date(a["date"])}</time>', a['title'][:48], cta=cta, cta_text=a.get('cta_text') or 'Price any deal, players and picks, 1QB or superflex.')
         made.append(slug)
     # index
-    blog_ld = [{'@type': 'Blog', 'name': f'{name} blog', 'url': url + 'blog/', 'description': 'Data-driven dynasty and redraft fantasy football articles from DynastyMath Staff.', 'publisher': org,
+    blog_ld = [{'@type': 'Blog', 'name': f'{name} blog', 'url': url + 'blog/', 'description': 'Dynasty and redraft fantasy football articles: trade targets, rookie risers and start/sit calls.', 'publisher': org,
                 'blogPost': [{'@type': 'BlogPosting', 'headline': a['title'][:110], 'url': url + 'blog/' + a['slug'] + '/', 'datePublished': a['date'], 'author': author} for a in arts]},
                {'@type': 'BreadcrumbList', 'itemListElement': [{'@type': 'ListItem', 'position': 1, 'name': name, 'item': url}, {'@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': url + 'blog/'}]}]
-    ib = '<p>Short, number-first articles built only from the same open data as our tools: dynasty trade targets, rookie movers and weekly fantasy football decisions. Every article states the date its numbers are from. Subscribe with the <a href="feed.xml">RSS feed</a>.</p>' + cards(arts, '../') + \
-         '<h2>Tools behind the numbers</h2><ul><li><a href="../trade-analyzer/">Dynasty trade analyzer</a></li><li><a href="../dynasty-buy-low-sell-high/">Dynasty buy-low and sell-high targets</a></li><li><a href="../rest-of-season-rankings/">Rest of season rankings</a></li><li><a href="../start-sit/">Start/sit tool</a></li></ul>'
-    page('blog', 1, f'Fantasy Football Blog: Dynasty & Redraft Articles | {name}', f'Data-driven dynasty and redraft fantasy football articles from {AUTHOR}: trade targets, rookie movers and weekly decisions, with the numbers.', f'{name} blog', 'Dynasty and redraft fantasy football articles, built from open data and dated.',
-         f'{len(arts)} article{"s" if len(arts) != 1 else ""} so far, newest first. Each one quotes its numbers and says what date they are from.', ib, blog_ld, f'Blog · Latest {fmt_date(arts[0]["date"], False)}', 'Blog')
+    ib = '<p>Number-first reads on dynasty trade targets, rookie movers and weekly lineup calls. Every article shows the date of its numbers. Follow along with the <a href="feed.xml">RSS feed</a>.</p>' + cards(arts, '../') + \
+         '<h2>Run your own numbers</h2><ul><li><a href="../trade-analyzer/">Dynasty trade analyzer</a></li><li><a href="../dynasty-buy-low-sell-high/">Dynasty buy-low and sell-high targets</a></li><li><a href="../rest-of-season-rankings/">Rest of season rankings</a></li><li><a href="../start-sit/">Start/sit tool</a></li></ul>'
+    page('blog', 1, f'Fantasy Football Blog: Dynasty & Redraft | {name}', f'Dynasty and redraft fantasy football articles: trade targets, rookie risers and start/sit calls, with fresh numbers every day. From {AUTHOR}.', f'{name} blog', 'Trade targets, rookie risers and start/sit calls, with the numbers.',
+         'Dynasty trade targets, rookie risers, and start/sit calls, updated with fresh values every day.', ib, blog_ld, f'Blog · Latest {fmt_date(arts[0]["date"], False)}', 'Blog')
     # RSS 2.0
     def rfc(d): return datetime.datetime.fromisoformat(d + 'T12:00:00+00:00').strftime('%a, %d %b %Y %H:%M:%S +0000')
     items = ''.join(f'<item><title>{E(a["title"])}</title><link>{url}blog/{a["slug"]}/</link><guid isPermaLink="true">{url}blog/{a["slug"]}/</guid><pubDate>{rfc(a["date"])}</pubDate><dc:creator>{AUTHOR}</dc:creator>'
                     + ''.join(f'<category>{E(t.strip())}</category>' for t in (a.get('tags') or '').split(',') if t.strip()) + f'<description>{E(a["description"])}</description></item>' for a in arts)
     feed = ('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/"><channel>'
-            f'<title>{name} blog</title><link>{url}blog/</link><description>Data-driven dynasty and redraft fantasy football articles from {AUTHOR}.</description><language>en-us</language>'
+            f'<title>{name} blog</title><link>{url}blog/</link><description>Dynasty and redraft fantasy football articles: trade targets, rookie risers and start/sit calls.</description><language>en-us</language>'
             f'<atom:link href="{url}blog/feed.xml" rel="self" type="application/rss+xml"/><lastBuildDate>{rfc(arts[0].get("updated") or arts[0]["date"])}</lastBuildDate><generator>DynastyMath build_pages.py</generator>' + items + '</channel></rss>\n')
     (root / 'blog' / 'feed.xml').write_text(feed)
     # stale article folders

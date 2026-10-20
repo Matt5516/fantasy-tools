@@ -8,7 +8,7 @@
   function startScore(p, fmt){
     var parts = {proj: p.proj ? p.proj[fmt] : null, l3: p.l3 ? p.l3[fmt] : null, ppg: p.ppg ? p.ppg[fmt] : null};
     var mult = p.inj && INJ.hasOwnProperty(p.inj) ? INJ[p.inj] : 1;
-    if (parts.proj==null) return {score:0, base:null, mult:mult, parts:parts, spread:null, note:'No projection this week (bye or inactive).'};
+    if (parts.proj==null) return {score:0, base:null, mult:mult, parts:parts, spread:null, note:'No projection this week. Bye or inactive.'};
     var w=0, t=0, vals=[]; for (var k in PW){ if (parts[k]!=null){ w+=PW[k]; t+=PW[k]*parts[k]; vals.push(parts[k]); } }
     var base=t/w, hi=Math.max.apply(null,vals), lo=Math.min.apply(null,vals), spread=vals.length>1?r1(hi-lo):null;
     return {score:r1(base*mult), base:r1(base), mult:mult, parts:parts, spread:spread, note: mult<1 ? 'Injury status: '+p.inj+' (×'+mult+')' : ''};
