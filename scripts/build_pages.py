@@ -372,6 +372,95 @@ if WEEK and all(ROS_BY.get(k) and len(ROS_BY[k]) >= 5 for k in ('QB', 'RB', 'WR'
           ros_table(flex) + ROS_METHOD + f'<p>By position: {ROS_LINKS}. Week {WEEK} specifics: <a href="../week-{WEEK}-start-sit/">start/sit cheat sheet</a> and <a href="../week-{WEEK}-waiver-wire/">waiver wire</a>. Dynasty league? See <a href="../dynasty-rankings/">dynasty rankings</a> and <a href="../dynasty-buy-low-sell-high/">buy-low/sell-high targets</a>.</p><p class="hint">Projections: Sleeper public API. Production: nflverse (CC BY 4.0). Updated {genh}.</p>' + faq_html(faqs),
           cta=('Compare two players', ''), cta_text='Stuck between two players? Compare up to 4.', ld_extra=[faq_ld(faqs), itemlist([p for s, p in flex], 'Rest of season rankings (RB, WR, TE)')], featured=True)
 
+# ---- weekly position rankings (targets "week N rb rankings", "week N flex rankings", "week N kicker rankings", "week N defense streamers") ----
+# Rolls with the same WEEK as week-N-start-sit; older weeks become redirect stubs. Data: Sleeper weekly projections (data/players.json: players, kd, opp).
+import rankings as RK
+FIRST_RANK_WEEK = 7
+RK_KEYS = ['qb', 'rb', 'wr', 'te', 'flex', 'kicker', 'defense']
+OPP = D.get('opp') or None
+KD = D.get('kd') or []
+RK_SLUGS = {}
+def _rk_pool(key):
+    if key == 'kicker': return [k for k in KD if k['pos'] == 'K']
+    if key == 'defense': return [k for k in KD if k['pos'] == 'DEF']
+    return [p for p in players if p['pos'] in (('RB', 'WR', 'TE') if key == 'flex' else (key.upper(),))]
+RK_N = {'qb': 24, 'rb': 40, 'wr': 50, 'te': 24, 'flex': 60, 'kicker': 24, 'defense': 32}
+RK_NAME = {'qb': ('QB', 'quarterbacks'), 'rb': ('RB', 'running backs'), 'wr': ('WR', 'wide receivers'), 'te': ('TE', 'tight ends'), 'flex': ('Flex', 'flex plays (RB, WR and TE)'), 'kicker': ('Kicker', 'kickers'), 'defense': ('Defense', 'team defenses')}
+RK_ROS = {'qb': 'rest-of-season-qb-rankings', 'rb': 'rest-of-season-rb-rankings', 'wr': 'rest-of-season-wr-rankings', 'te': 'rest-of-season-te-rankings', 'flex': 'rest-of-season-rankings'}
+def _rk_title(key):
+    return {'flex': f'Week {WEEK} Flex Rankings (PPR) {SEASON}: Best RB, WR, TE Plays', 'kicker': f'Week {WEEK} Kicker Rankings {SEASON}: Fantasy Football K Projections',
+            'defense': f'Week {WEEK} Defense Rankings {SEASON}: D/ST Streamers and Projections'}.get(key, f'Week {WEEK} {RK_NAME[key][0]} Rankings (PPR) {SEASON}: Fantasy Football Projections')
+BYE_TEAMS = sorted({p['team'] for p in players if p.get('team')} - set(OPP)) if OPP else []
+def rk_block(pre, current=None):
+    """Links to this week's position rankings (home, start/sit, ROS, guides and the rankings pages themselves)."""
+    return ' · '.join(f'<a href="{pre}{RK_SLUGS[k]}/">{RK_NAME[k][0]}</a>' for k in RK_KEYS if k in RK_SLUGS and k != current)
+if WEEK:
+    for key in RK_KEYS:
+        lab, longlab = RK_NAME[key]; kd_page = key in ('kicker', 'defense')
+        rows = RK.rank_rows(_rk_pool(key))[:RK_N[key]]
+        if len(rows) < (8 if kd_page else 12): continue
+        slug = f'week-{WEEK}-{key}-rankings'; RK_SLUGS[key] = slug
+        vals = [p['proj']['ppr'] for p in rows]; brk = RK.tier_breaks(vals); tn = RK.tier_numbers(len(rows), brk); groups = RK.tier_groups(len(rows), brk)
+        word = {'qb': 'QBs', 'rb': 'RBs', 'wr': 'WRs', 'te': 'TEs', 'flex': 'flex plays', 'kicker': 'kickers', 'defense': 'defenses'}[key]
+        def nm(p): return ss_link(p) if (not kd_page and p['id'] in SS) else E(p['n'])
+        head = '<th scope="col">#</th><th scope="col" style="text-align:left">Player</th>' + ('<th scope="col">Pos</th>' if key == 'flex' else '') + '<th scope="col">Team</th>' + ('<th scope="col">Opp</th>' if OPP else '')
+        if key == 'defense': head += '<th scope="col">Proj pts</th><th scope="col">Pts allowed</th><th scope="col">Sacks</th><th scope="col">Takeaways</th>'
+        elif key == 'kicker': head += '<th scope="col">Proj pts</th><th scope="col">FG made</th><th scope="col">XP made</th>'
+        else: head += '<th scope="col">PPR</th><th scope="col">Half</th><th scope="col">Std</th>'
+        head += '<th scope="col">Tier</th>'
+        trs = ''
+        for i, p in enumerate(rows):
+            pj = p['proj']; x = p.get('x') or {}
+            cells = f'<td>{i+1}</td><td style="text-align:left">{nm(p)}</td>' + (f'<td>{tag(p["pos"])}</td>' if key == 'flex' else '') + f'<td>{E(p.get("team") or "FA")}</td>' + (f'<td>{E(RK.opp_label(OPP, p.get("team")))}</td>' if OPP else '')
+            if key == 'defense': cells += f'<td><b>{RK.fmt_pts(pj["ppr"])}</b></td><td>{RK.fmt_pts(x.get("pa"))}</td><td>{RK.fmt_pts(x.get("sk"))}</td><td>{RK.fmt_pts(x.get("to"))}</td>'
+            elif key == 'kicker': cells += f'<td><b>{RK.fmt_pts(pj["ppr"])}</b></td><td>{RK.fmt_pts(x.get("fgm"))}</td><td>{RK.fmt_pts(x.get("xpm"))}</td>'
+            else: cells += f'<td><b>{RK.fmt_pts(pj["ppr"])}</b></td><td>{RK.fmt_pts(pj.get("half"))}</td><td>{RK.fmt_pts(pj.get("std"))}</td>'
+            trs += f'<tr>{cells}<td>{tn[i]}</td></tr>'
+        table_html = f'<div class="table-scroll"><table><thead><tr>{head}</tr></thead><tbody>{trs}</tbody></table></div>'
+        tier_li = ''
+        for t, (a, b) in enumerate(groups):
+            shown = ', '.join(nm(p) for p in rows[a:min(b, a + 8)]) + (f' and {b - a - 8} more' if b - a > 8 else '')
+            rng = RK.fmt_pts(vals[a]) if b - a == 1 else f'{RK.fmt_pts(vals[a])} to {RK.fmt_pts(vals[b - 1])}'
+            tier_li += f'<li><strong>Tier {t + 1}</strong> ({rng}): {shown}</li>'
+        top3 = rows[:3]; t1 = rows[0]
+        ans = f'Top 3 {word} in Week {WEEK}: <strong>{E(t1["n"])}</strong> ({RK.fmt_pts(vals[0])} projected points), {E(rows[1]["n"])} ({RK.fmt_pts(vals[1])}) and {E(rows[2]["n"])} ({RK.fmt_pts(vals[2])}).'
+        if key == 'defense':
+            soft = min(rows, key=lambda p: ((p.get('x') or {}).get('pa', 99), p['n'])); ans += f' Lowest projected points allowed: {E(soft["n"])} ({RK.fmt_pts(soft["x"]["pa"])}).'
+        elif not kd_page: ans += ' Points are PPR; half-PPR and standard are in the table.'
+        qas = [(f'Who are the top {word} in Week {WEEK}?', f'{RK.top_names(top3)} are the top three {word} in Week {WEEK}, projected for {", ".join(RK.fmt_pts(v) for v in vals[:3])} points in that order (as of {genh}).')]
+        if kd_page:
+            qas.append((f'How are Week {WEEK} {word} ranked?', 'By projected fantasy points in Sleeper’s standard weekly projections. ' + ('Defense points come from projected sacks, takeaways and points allowed.' if key == 'defense' else 'Kicker points come from projected field goals and extra points.') + ' Scoring for K and D/ST is the same in PPR, half-PPR and standard.'))
+        else:
+            pj0 = t1['proj']; qas.append((f'How many points is {t1["n"]} projected for in Week {WEEK}?', f'{RK.fmt_pts(pj0["ppr"])} in PPR, {RK.fmt_pts(pj0.get("half"))} in half PPR and {RK.fmt_pts(pj0.get("std"))} in standard' + (f', {RK.opp_words(RK.opp_label(OPP, t1.get("team")))}' if OPP and t1.get('team') else '') + '.'))
+            qas.append((f'Are these Week {WEEK} {lab} rankings for PPR?', 'The order is by PPR projection. Half-PPR and standard projections sit next to it; pass-catchers move down a little in those formats and the top of the list barely changes.'))
+        if key == 'defense':
+            qas.append((f'Who is the best streaming defense in Week {WEEK}?', f'On projected points allowed, {soft["n"]} ({RK.opp_words(RK.opp_label(OPP, soft.get("team")))}) has the softest projection at {RK.fmt_pts(soft["x"]["pa"])} points allowed, and it ranks #{rows.index(soft) + 1} of {len(rows)} defenses on total projected points. Check which defenses are free in your league first.'))
+        if BYE_TEAMS: qas.append((f'Which teams are on a bye in Week {WEEK}?', f'{", ".join(BYE_TEAMS)} {"is" if len(BYE_TEAMS) == 1 else "are"} on a bye in Week {WEEK}, so their players are not ranked.'))
+        qas.append((f'When do the Week {WEEK} {lab} rankings update?', f'Every day, and again on Tuesday when the next week opens. Injury statuses change late in the week, so check before kickoff. Data as of {genh}.'))
+        others = rk_block('../', key)
+        links = [f'<a href="../start-sit/">start/sit tool</a>', f'<a href="../week-{WEEK}-start-sit/">Week {WEEK} start/sit cheat sheet</a>']
+        if (ROOT / WAIVER_SLUG).exists(): links.append(f'<a href="../{WAIVER_SLUG}/">Week {WEEK} waiver wire</a>')
+        if key in RK_ROS: links.append(f'<a href="../{RK_ROS[key]}/">rest of season {lab if key != "flex" else "RB, WR and TE"} rankings</a>')
+        if key in SSPOS: links.append(f'<a href="../start-sit-{key}/">Week {WEEK} {lab} start/sit rankings</a>')
+        links.append('<a href="../start-or-sit-players/">start or sit by player</a>')
+        body = (f'<h2>Week {WEEK} {lab} tiers</h2><ul>{tier_li}</ul><p class="hint">Tiers break at the big drops in projected points.</p>'
+                f'<h2>Week {WEEK} {lab} rankings</h2>{table_html}'
+                + (f'<p class="hint">Byes: {", ".join(BYE_TEAMS)}. Opp: @ means away.</p>' if BYE_TEAMS else '')
+                + f'<p class="hint">Projections from Sleeper’s public API, updated {genh}. Players ruled out are left off; injury statuses change late in the week. Data, not betting advice.</p>'
+                + faq_html(qas)
+                + f'<h2>More Week {WEEK} tools</h2><p>Deciding between two players? Use the ' + ' · '.join(links) + f'.</p><p>Other positions: {others}.</p>')
+        write(slug, 'Weekly rankings', f'Week {WEEK} {lab} rankings', _rk_title(key),
+              fit([f'Week {WEEK} {lab} rankings: projected points' + ('' if kd_page else ' in PPR, half PPR and standard') + f', opponent and tiers for every {({'flex': 'flex play', 'kicker': 'kicker', 'defense': 'defense'}).get(key, lab)}. Updated {genh}.', f'Week {WEEK} {lab} rankings with projected points, opponent and tiers. Updated {genh}.'], 70, 155),
+              f'Week {WEEK} {lab} rankings', f'{len(rows)} {longlab} ranked by projected points, with matchups and tiers.', ans, body,
+              cta=('Compare two players', ''), cta_text='Who should I start? Compare up to 4 players.', featured=key in ('rb', 'flex'), ld_extra=[faq_ld(qas), itemlist(rows, f'Week {WEEK} {lab} rankings')])
+    if RK_SLUGS:
+        for w in range(FIRST_RANK_WEEK, WEEK):
+            for k in RK_KEYS:
+                if k not in RK_SLUGS: continue
+                sl = f'week-{w}-{k}-rankings'; d = ROOT / sl; d.mkdir(exist_ok=True); OLDWEEKS.append(sl)
+                (d / 'index.html').write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Week {w} {RK_NAME[k][0]} rankings have moved to Week {WEEK}</title><meta name="robots" content="noindex,follow"><link rel="canonical" href="{URL}{RK_SLUGS[k]}/"><meta http-equiv="refresh" content="0; url=../{RK_SLUGS[k]}/"></head><body><p><a href="../{RK_SLUGS[k]}/">Week {WEEK} {RK_NAME[k][0]} rankings</a></p></body></html>')
+                (d / '.generated').write_text('')
+
 # ---- dynasty buy-low / sell-high: expert consensus vs the draft market, plus movers from the daily value history ----
 def mkt_val(p):
     m = [x for x in ((p.get('cs') or {}).get('sl'), (p.get('cs') or {}).get('ffc')) if x is not None]
@@ -664,7 +753,7 @@ if SSPAGES:
 ARTS = BLOG.build(ROOT, S, gen, genh)
 # ---- hub ----
 statics = S['statics']; allp = statics + PAGES
-order = S['sections'] + [s for s in ['Dynasty rankings', 'Dynasty movers', 'Rest of season', 'Weekly start/sit', 'Player values', 'Player comparisons', 'Start or sit'] if s not in S['sections']]
+order = S['sections'] + [s for s in ['Dynasty rankings', 'Dynasty movers', 'Rest of season', 'Weekly rankings', 'Weekly start/sit', 'Player values', 'Player comparisons', 'Start or sit'] if s not in S['sections']]
 body = ''
 for sec in order:
     ps = [p for p in allp if p['section'] == sec]
@@ -691,7 +780,7 @@ _lf = ROOT / 'llms.txt'
 if _lf.exists():
     _base = re.sub(r'\n## Data pages \(updated daily\).*', '', _lf.read_text(), flags=re.S).rstrip('\n')
     _fam = [('dynasty-rankings', 'Dynasty rankings 1QB'), ('dynasty-rankings-superflex', 'Superflex rankings'), ('dynasty-trade-value-chart', 'Trade value chart'), ('rookie-draft-pick-values', 'Rookie pick values'),
-            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet'), ('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds'), ('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high targets'), ('dynasty-value-risers-fallers', 'Dynasty value risers and fallers'), ('dynasty-rookie-rankings', 'Dynasty rookie rankings'), (f'week-{WEEK}-waiver-wire', f'Week {WEEK} waiver wire pickups')]
+            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet')] + [(RK_SLUGS[k], f'Week {WEEK} {RK_NAME[k][0]} rankings') for k in RK_KEYS if k in RK_SLUGS] + [('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds'), ('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high targets'), ('dynasty-value-risers-fallers', 'Dynasty value risers and fallers'), ('dynasty-rookie-rankings', 'Dynasty rookie rankings'), (f'week-{WEEK}-waiver-wire', f'Week {WEEK} waiver wire pickups')]
     _have = {p['slug'] for p in PAGES}
     _txt = f'\n\n## Data pages (updated daily)\nData as of {genh}. Each player has a dynasty value page at {URL}dynasty-value-<player-name>/ and, in season, a start-or-sit page at {URL}start-or-sit-<player-name>/.\n' + ''.join(f'- [{n}]({URL}{sl}/)\n' for sl, n in _fam if sl in _have)
     _txt += '\n### Top player value pages\n' + ''.join(f'- [{q["n"]} dynasty value]({URL}{vslug(q)}/): #{one_rank[q["id"]]} 1QB, {q["v1"]:,}\n' for q in valued[:50])
@@ -708,8 +797,9 @@ if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
     def _wk(pre):
         w = f'<a href="{pre}week-{WEEK}-waiver-wire/"><strong>Week {WEEK} waiver wire</strong> (trending adds by position) →</a>' if (ROOT / WAIVER_SLUG).exists() else ''
         ex = ' · '.join(f'<a href="{pre}{s}/">{l}</a>' for s, l in [('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high'), ('dynasty-rookie-rankings', 'Rookie rankings')] if (ROOT / s).exists())
-        return f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a>' + (' · ' + w if w else '') + '</p>' + (f'<p class="hint" style="margin:6px 0 0">{ex}</p>' if ex else '') + '<!--/wk-->'
-    for rel, pre in [('index.html', ''), ('start-sit/index.html', '../'), ('waiver-wire/index.html', '../'), ('waiver-wire-trending/index.html', '../'), ('trade-analyzer/index.html', '../')]:
+        rk = f'<p class="hint" style="margin:6px 0 0"><strong>This week’s rankings:</strong> {rk_block(pre)}</p>' if RK_SLUGS else ''
+        return f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a>' + (' · ' + w if w else '') + '</p>' + rk + (f'<p class="hint" style="margin:6px 0 0">{ex}</p>' if ex else '') + '<!--/wk-->'
+    for rel, pre in [('index.html', ''), ('start-sit/index.html', '../'), ('waiver-wire/index.html', '../'), ('waiver-wire-trending/index.html', '../'), ('trade-analyzer/index.html', '../'), ('guides/index.html', '../'), (f'week-{WEEK}-start-sit/index.html', '../'), (f'{WAIVER_SLUG}/index.html', '../')] + [(f'rest-of-season-{k}rankings/index.html', '../') for k in ('', 'qb-', 'rb-', 'wr-', 'te-')]:
         f = ROOT / rel
         if not f.exists(): continue
         h = re.sub(r'<!--wk-->.*?<!--/wk-->', '', f.read_text(), flags=re.S)

@@ -78,6 +78,24 @@ const [players, stats, proj, projPrev, trend, trend24, trend72, projN1, projN2] 
   week < 18 ? get(`/projections/nfl/${stype}/${season}/${week + 1}`, true) : null,
   week < 17 ? get(`/projections/nfl/${stype}/${season}/${week + 2}`, true) : null
 ]);
+// Kickers and team defenses for the weekly position rankings (not dynasty assets, so they stay out of `players`).
+const kd = [];
+for (const [id, p] of Object.entries(players)) {
+  if (!p || !p.team || !(p.position === 'DEF' || (p.position === 'K' && p.active))) continue;
+  const j = proj?.[id]; if (!j || !(j.pts_ppr > 0)) continue;
+  const row = { id, n: p.position === 'DEF' ? `${p.first_name} ${p.last_name}` : (p.full_name || `${p.first_name} ${p.last_name}`), pos: p.position, team: p.team, inj: p.injury_status || null, proj: { ppr: r1(j.pts_ppr), half: r1(j.pts_half_ppr ?? j.pts_ppr), std: r1(j.pts_std ?? j.pts_ppr) } };
+  row.x = p.position === 'DEF' ? { pa: r1(j.pts_allow || 0), sk: r1(j.sack || 0), to: r1((j.int || 0) + (j.fum_rec || 0)) } : { fgm: r1(j.fgm || 0), xpm: r1(j.xpm || 0) };
+  kd.push(row);
+}
+kd.sort((a, b) => b.proj.ppr - a.proj.ppr);
+// This week's opponent for each team (Sleeper schedule endpoint, undocumented). "@" = away. Teams missing from the map are on a bye.
+let opp = null;
+try {
+  const r = await fetch(`https://api.sleeper.app/schedule/nfl/${stype}/${season}`, { headers: { 'User-Agent': 'fantasy-tools-static-refresh' } });
+  if (!r.ok) throw new Error('schedule -> HTTP ' + r.status);
+  const games = (await r.json()).filter(g => g.week === week && g.home && g.away);
+  if (games.length) { opp = {}; for (const g of games) { opp[g.home] = g.away; opp[g.away] = '@' + g.home; } }
+} catch (e) { console.warn('WARN', e.message); }
 const t24 = new Map((trend24 || []).map(t => [t.player_id, t.count])), t72 = new Map((trend72 || []).map(t => [t.player_id, t.count]));
 const trending = new Map((trend || []).map(t => [t.player_id, t.count]));
 const out = [];
@@ -132,7 +150,7 @@ for (const k of Object.keys(SOURCE_INFO)) status[k] = { ...SOURCE_INFO[k], weigh
 // If every value source failed, keep yesterday's values rather than publishing nothing.
 if (!out.some(p => p.v1)) { try { const prev = JSON.parse(await readFile(new URL('../data/players.json', import.meta.url), 'utf8')); const pm = new Map(prev.players.map(p => [p.id, p]));
   for (const p of out) { const o = pm.get(p.id); if (o && o.v1) Object.assign(p, { v1: o.v1, v2: o.v2, cs: o.cs, sp: o.sp, con: o.con, sig: o.sig }); } console.warn('WARN all value sources failed; kept previous values'); } catch (e) {} }
-const data = { generated: new Date().toISOString(), season, week, stateWeek, seasonType: stype, source: 'Composite of DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse; see sources', sources: status, weights: WEIGHTS, valuesDate: (dpValues && dpValues[0] && dpValues[0].scrape_date) || null, players: out, picks };
+const data = { generated: new Date().toISOString(), season, week, stateWeek, seasonType: stype, source: 'Composite of DynastyProcess, Sleeper, Fantasy Football Calculator and nflverse; see sources', sources: status, weights: WEIGHTS, valuesDate: (dpValues && dpValues[0] && dpValues[0].scrape_date) || null, players: out, picks, kd, opp };
 await writeFile(new URL('../data/players.json', import.meta.url), JSON.stringify(data));
 console.log('Sources:', Object.entries(status).map(([k, v]) => `${k}=${v.ok ? 'ok(' + v.count + ')' : 'FAILED(' + v.note + ')'}`).join(' '));
-console.log(`Wrote ${out.length} players, ${picks.length} picks, ${dpBySleeper.size} DP values for ${season} week ${week} (stats: ${!!stats}, projections: ${!!proj}).`);
+console.log(`Wrote ${out.length} players, ${kd.length} K/DEF, ${opp ? Object.keys(opp).length : 0} team matchups, ${picks.length} picks, ${dpBySleeper.size} DP values for ${season} week ${week} (stats: ${!!stats}, projections: ${!!proj}).`);
