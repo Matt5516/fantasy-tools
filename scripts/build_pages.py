@@ -395,6 +395,8 @@ def rk_block(pre, current=None):
     """Links to this week's position rankings (home, start/sit, ROS, guides and the rankings pages themselves)."""
     return ' · '.join(f'<a href="{pre}{RK_SLUGS[k]}/">{RK_NAME[k][0]}</a>' for k in RK_KEYS if k in RK_SLUGS and k != current)
 if WEEK:
+    for key in RK_KEYS:  # register every page first so each page can link to all the others
+        if len(RK.rank_rows(_rk_pool(key))[:RK_N[key]]) >= (8 if key in ('kicker', 'defense') else 12): RK_SLUGS[key] = f'week-{WEEK}-{key}-rankings'
     for key in RK_KEYS:
         lab, longlab = RK_NAME[key]; kd_page = key in ('kicker', 'defense')
         rows = RK.rank_rows(_rk_pool(key))[:RK_N[key]]
@@ -432,9 +434,9 @@ if WEEK:
             qas.append((f'How are Week {WEEK} {word} ranked?', 'By projected fantasy points in Sleeper’s standard weekly projections. ' + ('Defense points come from projected sacks, takeaways and points allowed.' if key == 'defense' else 'Kicker points come from projected field goals and extra points.') + ' Scoring for K and D/ST is the same in PPR, half-PPR and standard.'))
         else:
             pj0 = t1['proj']; qas.append((f'How many points is {t1["n"]} projected for in Week {WEEK}?', f'{RK.fmt_pts(pj0["ppr"])} in PPR, {RK.fmt_pts(pj0.get("half"))} in half PPR and {RK.fmt_pts(pj0.get("std"))} in standard' + (f', {RK.opp_words(RK.opp_label(OPP, t1.get("team")))}' if OPP and t1.get('team') else '') + '.'))
-            qas.append((f'Are these Week {WEEK} {lab} rankings for PPR?', 'The order is by PPR projection. Half-PPR and standard projections sit next to it; pass-catchers move down a little in those formats and the top of the list barely changes.'))
+            qas.append((f'Are these Week {WEEK} {lab} rankings for PPR?', 'The order is by PPR projection. Half-PPR and standard projections for every player are in the table next to it.'))
         if key == 'defense':
-            qas.append((f'Who is the best streaming defense in Week {WEEK}?', f'On projected points allowed, {soft["n"]} ({RK.opp_words(RK.opp_label(OPP, soft.get("team")))}) has the softest projection at {RK.fmt_pts(soft["x"]["pa"])} points allowed, and it ranks #{rows.index(soft) + 1} of {len(rows)} defenses on total projected points. Check which defenses are free in your league first.'))
+            qas.append((f'Who is the best streaming defense in Week {WEEK}?', f'On projected points allowed, {soft["n"]} ({RK.opp_words(RK.opp_label(OPP, soft.get("team")))}) has the lowest projection at {RK.fmt_pts(soft["x"]["pa"])} points allowed, and it ranks #{rows.index(soft) + 1} of {len(rows)} defenses on total projected points. Check which defenses are free in your league first.'))
         if BYE_TEAMS: qas.append((f'Which teams are on a bye in Week {WEEK}?', f'{", ".join(BYE_TEAMS)} {"is" if len(BYE_TEAMS) == 1 else "are"} on a bye in Week {WEEK}, so their players are not ranked.'))
         qas.append((f'When do the Week {WEEK} {lab} rankings update?', f'Every day, and again on Tuesday when the next week opens. Injury statuses change late in the week, so check before kickoff. Data as of {genh}.'))
         others = rk_block('../', key)
