@@ -66,7 +66,7 @@ No. It's a free fantasy football tool for season-long leagues. No bets, no sport
 - [SidewallMath](https://matt5516.github.io/tire-size-calc/): Tire size calculator: compare two sizes, true speedometer, sizes that fit your wheel, regear and wheel offset.
 
 ## Data pages (updated daily)
-Data as of October 21, 2026. Each player has a dynasty value page at https://dynastymath.com/dynasty-value-<player-name>/ and, in season, a start-or-sit page at https://dynastymath.com/start-or-sit-<player-name>/.
+Data as of October 22, 2026. Each player has a dynasty value page at https://dynastymath.com/dynasty-value-<player-name>/ and, in season, a start-or-sit page at https://dynastymath.com/start-or-sit-<player-name>/.
 - [Dynasty rankings 1QB](https://dynastymath.com/dynasty-rankings/)
 - [Superflex rankings](https://dynastymath.com/dynasty-rankings-superflex/)
 - [Trade value chart](https://dynastymath.com/dynasty-trade-value-chart/)
@@ -95,52 +95,52 @@ Data as of October 21, 2026. Each player has a dynasty value page at https://dyn
 - [Puka Nacua dynasty value](https://dynastymath.com/dynasty-value-puka-nacua/): #2 1QB, 9,551
 - [Jahmyr Gibbs dynasty value](https://dynastymath.com/dynasty-value-jahmyr-gibbs/): #3 1QB, 9,444
 - [Bijan Robinson dynasty value](https://dynastymath.com/dynasty-value-bijan-robinson/): #4 1QB, 9,260
-- [Amon-Ra St. Brown dynasty value](https://dynastymath.com/dynasty-value-amon-ra-st-brown/): #5 1QB, 9,048
-- [Ja'Marr Chase dynasty value](https://dynastymath.com/dynasty-value-ja-marr-chase/): #6 1QB, 8,840
-- [CeeDee Lamb dynasty value](https://dynastymath.com/dynasty-value-ceedee-lamb/): #7 1QB, 8,617
-- [Kenneth Walker dynasty value](https://dynastymath.com/dynasty-value-kenneth-walker/): #8 1QB, 7,981
-- [Justin Jefferson dynasty value](https://dynastymath.com/dynasty-value-justin-jefferson/): #9 1QB, 7,122
-- [Zay Flowers dynasty value](https://dynastymath.com/dynasty-value-zay-flowers/): #10 1QB, 7,109
-- [Chris Olave dynasty value](https://dynastymath.com/dynasty-value-chris-olave/): #11 1QB, 7,107
-- [Jonathan Taylor dynasty value](https://dynastymath.com/dynasty-value-jonathan-taylor/): #12 1QB, 7,103
+- [Amon-Ra St. Brown dynasty value](https://dynastymath.com/dynasty-value-amon-ra-st-brown/): #5 1QB, 9,139
+- [Ja'Marr Chase dynasty value](https://dynastymath.com/dynasty-value-ja-marr-chase/): #6 1QB, 8,848
+- [CeeDee Lamb dynasty value](https://dynastymath.com/dynasty-value-ceedee-lamb/): #7 1QB, 8,427
+- [Kenneth Walker III dynasty value](https://dynastymath.com/dynasty-value-kenneth-walker-iii/): #8 1QB, 7,981
+- [Justin Jefferson dynasty value](https://dynastymath.com/dynasty-value-justin-jefferson/): #9 1QB, 7,305
+- [James Cook III dynasty value](https://dynastymath.com/dynasty-value-james-cook-iii/): #10 1QB, 7,145
+- [Zay Flowers dynasty value](https://dynastymath.com/dynasty-value-zay-flowers/): #11 1QB, 7,011
+- [Nico Collins dynasty value](https://dynastymath.com/dynasty-value-nico-collins/): #12 1QB, 6,922
 - [Josh Allen dynasty value](https://dynastymath.com/dynasty-value-josh-allen/): #13 1QB, 6,911
-- [Christian Watson dynasty value](https://dynastymath.com/dynasty-value-christian-watson/): #14 1QB, 6,535
-- [Malik Nabers dynasty value](https://dynastymath.com/dynasty-value-malik-nabers/): #15 1QB, 6,502
-- [James Cook dynasty value](https://dynastymath.com/dynasty-value-james-cook/): #16 1QB, 6,322
-- [Ashton Jeanty dynasty value](https://dynastymath.com/dynasty-value-ashton-jeanty/): #17 1QB, 6,292
-- [Garrett Wilson dynasty value](https://dynastymath.com/dynasty-value-garrett-wilson/): #18 1QB, 6,239
-- [Drake London dynasty value](https://dynastymath.com/dynasty-value-drake-london/): #19 1QB, 6,219
-- [Tetairoa McMillan dynasty value](https://dynastymath.com/dynasty-value-tetairoa-mcmillan/): #20 1QB, 6,200
-- [Nico Collins dynasty value](https://dynastymath.com/dynasty-value-nico-collins/): #21 1QB, 6,192
-- [Brock Bowers dynasty value](https://dynastymath.com/dynasty-value-brock-bowers/): #22 1QB, 5,967
-- [Kyren Williams dynasty value](https://dynastymath.com/dynasty-value-kyren-williams/): #23 1QB, 5,655
-- [Christian McCaffrey dynasty value](https://dynastymath.com/dynasty-value-christian-mccaffrey/): #24 1QB, 5,379
-- [Trey McBride dynasty value](https://dynastymath.com/dynasty-value-trey-mcbride/): #25 1QB, 5,065
-- [DeVonta Smith dynasty value](https://dynastymath.com/dynasty-value-devonta-smith/): #26 1QB, 4,877
-- [Parker Washington dynasty value](https://dynastymath.com/dynasty-value-parker-washington/): #27 1QB, 4,858
-- [Drake Maye dynasty value](https://dynastymath.com/dynasty-value-drake-maye/): #28 1QB, 4,834
-- [Lamar Jackson dynasty value](https://dynastymath.com/dynasty-value-lamar-jackson/): #29 1QB, 4,771
-- [Javonte Williams dynasty value](https://dynastymath.com/dynasty-value-javonte-williams/): #30 1QB, 4,613
-- [Breece Hall dynasty value](https://dynastymath.com/dynasty-value-breece-hall/): #31 1QB, 4,496
-- [A.J. Brown dynasty value](https://dynastymath.com/dynasty-value-a-j-brown/): #32 1QB, 4,351
-- [Carnell Tate dynasty value](https://dynastymath.com/dynasty-value-carnell-tate/): #33 1QB, 4,229
-- [Tee Higgins dynasty value](https://dynastymath.com/dynasty-value-tee-higgins/): #34 1QB, 4,211
-- [Jeremiyah Love dynasty value](https://dynastymath.com/dynasty-value-jeremiyah-love/): #35 1QB, 4,152
-- [Luther Burden dynasty value](https://dynastymath.com/dynasty-value-luther-burden/): #36 1QB, 3,993
+- [Chris Olave dynasty value](https://dynastymath.com/dynasty-value-chris-olave/): #14 1QB, 6,901
+- [Jonathan Taylor dynasty value](https://dynastymath.com/dynasty-value-jonathan-taylor/): #15 1QB, 6,763
+- [Malik Nabers dynasty value](https://dynastymath.com/dynasty-value-malik-nabers/): #16 1QB, 6,437
+- [Ashton Jeanty dynasty value](https://dynastymath.com/dynasty-value-ashton-jeanty/): #17 1QB, 6,409
+- [Drake London dynasty value](https://dynastymath.com/dynasty-value-drake-london/): #18 1QB, 6,332
+- [Tetairoa McMillan dynasty value](https://dynastymath.com/dynasty-value-tetairoa-mcmillan/): #19 1QB, 6,265
+- [Garrett Wilson dynasty value](https://dynastymath.com/dynasty-value-garrett-wilson/): #20 1QB, 6,239
+- [Jeremiyah Love dynasty value](https://dynastymath.com/dynasty-value-jeremiyah-love/): #21 1QB, 6,228
+- [Christian Watson dynasty value](https://dynastymath.com/dynasty-value-christian-watson/): #22 1QB, 6,201
+- [Brock Bowers dynasty value](https://dynastymath.com/dynasty-value-brock-bowers/): #23 1QB, 5,967
+- [Kyren Williams dynasty value](https://dynastymath.com/dynasty-value-kyren-williams/): #24 1QB, 5,655
+- [Christian McCaffrey dynasty value](https://dynastymath.com/dynasty-value-christian-mccaffrey/): #25 1QB, 5,379
+- [Trey McBride dynasty value](https://dynastymath.com/dynasty-value-trey-mcbride/): #26 1QB, 5,065
+- [Drake Maye dynasty value](https://dynastymath.com/dynasty-value-drake-maye/): #27 1QB, 4,907
+- [DeVonta Smith dynasty value](https://dynastymath.com/dynasty-value-devonta-smith/): #28 1QB, 4,877
+- [Parker Washington dynasty value](https://dynastymath.com/dynasty-value-parker-washington/): #29 1QB, 4,750
+- [Lamar Jackson dynasty value](https://dynastymath.com/dynasty-value-lamar-jackson/): #30 1QB, 4,698
+- [Javonte Williams dynasty value](https://dynastymath.com/dynasty-value-javonte-williams/): #31 1QB, 4,613
+- [Breece Hall dynasty value](https://dynastymath.com/dynasty-value-breece-hall/): #32 1QB, 4,475
+- [Carnell Tate dynasty value](https://dynastymath.com/dynasty-value-carnell-tate/): #33 1QB, 4,354
+- [A.J. Brown dynasty value](https://dynastymath.com/dynasty-value-a-j-brown/): #34 1QB, 4,351
+- [Tee Higgins dynasty value](https://dynastymath.com/dynasty-value-tee-higgins/): #35 1QB, 4,285
+- [George Pickens dynasty value](https://dynastymath.com/dynasty-value-george-pickens/): #36 1QB, 4,000
 - [Brock Purdy dynasty value](https://dynastymath.com/dynasty-value-brock-purdy/): #37 1QB, 3,965
 - [Joe Burrow dynasty value](https://dynastymath.com/dynasty-value-joe-burrow/): #38 1QB, 3,959
 - [De'Von Achane dynasty value](https://dynastymath.com/dynasty-value-de-von-achane/): #39 1QB, 3,955
 - [Sam LaPorta dynasty value](https://dynastymath.com/dynasty-value-sam-laporta/): #40 1QB, 3,952
-- [George Pickens dynasty value](https://dynastymath.com/dynasty-value-george-pickens/): #41 1QB, 3,870
-- [Jaylen Waddle dynasty value](https://dynastymath.com/dynasty-value-jaylen-waddle/): #42 1QB, 3,743
-- [Emeka Egbuka dynasty value](https://dynastymath.com/dynasty-value-emeka-egbuka/): #43 1QB, 3,702
+- [Luther Burden III dynasty value](https://dynastymath.com/dynasty-value-luther-burden-iii/): #41 1QB, 3,868
+- [Emeka Egbuka dynasty value](https://dynastymath.com/dynasty-value-emeka-egbuka/): #42 1QB, 3,781
+- [Jaylen Waddle dynasty value](https://dynastymath.com/dynasty-value-jaylen-waddle/): #43 1QB, 3,743
 - [Jalen Coker dynasty value](https://dynastymath.com/dynasty-value-jalen-coker/): #44 1QB, 3,658
-- [Matthew Golden dynasty value](https://dynastymath.com/dynasty-value-matthew-golden/): #45 1QB, 3,546
-- [Bucky Irving dynasty value](https://dynastymath.com/dynasty-value-bucky-irving/): #46 1QB, 3,404
-- [Rashee Rice dynasty value](https://dynastymath.com/dynasty-value-rashee-rice/): #47 1QB, 3,398
-- [Chase Brown dynasty value](https://dynastymath.com/dynasty-value-chase-brown/): #48 1QB, 3,396
-- [Derrick Henry dynasty value](https://dynastymath.com/dynasty-value-derrick-henry/): #49 1QB, 3,368
-- [Tyler Warren dynasty value](https://dynastymath.com/dynasty-value-tyler-warren/): #50 1QB, 3,365
+- [Matthew Golden dynasty value](https://dynastymath.com/dynasty-value-matthew-golden/): #45 1QB, 3,579
+- [Rashee Rice dynasty value](https://dynastymath.com/dynasty-value-rashee-rice/): #46 1QB, 3,498
+- [Chase Brown dynasty value](https://dynastymath.com/dynasty-value-chase-brown/): #47 1QB, 3,396
+- [Tyler Warren dynasty value](https://dynastymath.com/dynasty-value-tyler-warren/): #48 1QB, 3,365
+- [Isaiah Likely dynasty value](https://dynastymath.com/dynasty-value-isaiah-likely/): #49 1QB, 3,281
+- [Jordyn Tyson dynasty value](https://dynastymath.com/dynasty-value-jordyn-tyson/): #50 1QB, 3,258
 
 ## Blog (data-driven articles by DynastyMath Staff)
 - [Blog index](https://dynastymath.com/blog/) · [RSS feed](https://dynastymath.com/blog/feed.xml)
