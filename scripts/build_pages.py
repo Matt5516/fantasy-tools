@@ -751,11 +751,67 @@ if SSPAGES:
           f'Week {WEEK} start or sit: every player', 'Pick a player to see this week’s projection, positional rank, injury status and call.',
           f'{len(SSPAGES)} players have a Week {WEEK} start-or-sit page; the highest projection is <strong>{E(top["n"])}</strong> at {top["proj"]["ppr"]} PPR points. Data, not betting advice.',
           sb + f'<p class="hint">Projections from Sleeper’s public API, updated {genh}. Players ruled out and players without a projection (bye or inactive) have no page. Also see the <a href="../week-{WEEK}-start-sit/">Week {WEEK} cheat sheet</a>.</p>', cta=('Compare two players', ''), cta_text='Who should I start? Compare up to 4 players.', featured=True)
+# ---- trade deadline hub (/trade-deadline/): buy-low, sell-high and ROS risers from the value history and the ROS score above ----
+TD_POS = ('QB', 'RB', 'WR', 'TE'); TD_FLOOR = 500           # 1QB composite value floor for anyone listed
+TD_AGE = {'QB': 33, 'RB': 27, 'WR': 29, 'TE': 29}           # at or above this age a player counts as old for his position
+TD_N = 12
+TD = []; TD_BASE = None; TD_BUY = []; TD_SELL = []; TD_RISE = {}
+TD_START = {i['slug'] for i in SS.values()} | set(SSOFF)     # start-or-sit pages that exist this build
+if WEEK and ROS_PR and re.fullmatch(r'\d{4}-\d{2}-\d{2}', gen):
+    _lo = (datetime.date.fromisoformat(gen) - datetime.timedelta(days=14)).isoformat()
+    _ds = sorted(d for d in HIST if _lo <= d < gen)
+    if _ds:
+        TD_BASE = _ds[0]; _b = HIST[TD_BASE]   # oldest snapshot inside the 14-day window
+        for p in valued:
+            if p['pos'] not in TD_POS or p['v1'] < TD_FLOOR or p['id'] not in _b or p['id'] not in ROS_PR or not p.get('age'): continue
+            ch = p['v1'] - _b[p['id']][0]
+            TD.append(dict(p=p, ch=ch, pct=round(ch / _b[p['id']][0] * 100, 1), rk=ROS_PR[p['id']], ros=ros_score(p)))
+        td_strong = lambda t: t['rk'] <= ROS_LIM[t['p']['pos']]   # still inside the top of the position's ROS list
+        TD_BUY = sorted([t for t in TD if t['pct'] <= -10 and td_strong(t)], key=lambda t: t['pct'])[:TD_N]
+        TD_SELL = sorted([t for t in TD if t['ch'] > 0 and t['pct'] >= 5 and (not td_strong(t) or t['p']['age'] >= TD_AGE[t['p']['pos']])], key=lambda t: -t['pct'])[:TD_N]
+        TD_RISE = {pos: sorted([t for t in TD if t['p']['pos'] == pos and t['ch'] > 0], key=lambda t: (-t['ros'], t['p']['n']))[:5] for pos in TD_POS}
+if TD_BASE and (TD_BUY or TD_SELL):
+    def td_name(p):
+        s = 'start-or-sit-' + slugify(p['n'])
+        return f'<a href="../{s}/">{E(p["n"])}</a>' if s in TD_START else vlink(p)
+    def td_table(rows):
+        out = ('<div class="table-scroll"><table><thead><tr><th scope="col">#</th><th scope="col" style="text-align:left">Player</th><th scope="col">Team</th><th scope="col">Age</th><th scope="col">1QB value</th>'
+               f'<th scope="col">Change since {fmt_d(TD_BASE)}</th><th scope="col">ROS rank</th><th scope="col">ROS score</th><th scope="col">Status</th></tr></thead><tbody>')
+        for i, t in enumerate(rows):
+            p = t['p']
+            out += (f'<tr><td>{i+1}</td><td style="text-align:left">{tag(p["pos"])} {td_name(p)}</td><td>{E(p.get("team") or "FA")}</td><td>{p["age"]}</td><td><b>{p["v1"]:,}</b></td>'
+                    f'<td>{t["ch"]:+,} ({t["pct"]:+.1f}%)</td><td>{p["pos"]}{t["rk"]}</td><td><b>{t["ros"]}</b></td><td>{E(p.get("inj") or "Active")}</td></tr>')
+        return out + '</tbody></table></div>'
+    def td_list(rows, none_txt): return td_table(rows) if rows else f'<p>{none_txt}</p>'
+    b0 = TD_BUY[0] if TD_BUY else None; s0 = TD_SELL[0] if TD_SELL else None
+    ans = ' '.join(x for x in [
+        f'Buy <strong>{E(b0["p"]["n"])}</strong>: value down {abs(b0["pct"]):.0f}% since {fmt_d(TD_BASE)}, still {b0["p"]["pos"]}{b0["rk"]} for the rest of the season.' if b0 else '',
+        f'Sell <strong>{E(s0["p"]["n"])}</strong>: value up {s0["pct"]:.0f}%, with age or rest-of-season form working against him.' if s0 else ''] if x)
+    lede = 'Who the market dumped but still produces, who it overpaid for, and who is rising. Use it before your deadline.'
+    used_src = ', '.join(f'<a href="{SRCN[k][1]}" rel="noopener">{SRCN[k][0]}</a>' for k in used)
+    qas = [('When is the NFL trade deadline in 2026?', 'NFL teams usually stop trading in early-to-mid November, after Week 9 or 10. Your fantasy league sets its own trade deadline in its settings, and it is often earlier. Check your league’s deadline there.'),
+           ('What is the difference between buy-low and sell-high?', f'A buy-low lost at least 10% of its 1QB value since {fmt_d(TD_BASE)} and is still inside the top of its position for the rest of the season, so the market may be overreacting. A sell-high gained at least 5% while age or rest-of-season form argues against holding. Neither is a guarantee.'),
+           ('How do I use this list before the deadline?', 'Look at the buy list for players you can get and the sell list for players already on your roster. Check injury news first, then price the deal in the trade analyzer, which discounts 2-for-1 packages, before you send it.')]
+    body = (f'<h2>Buy low: value down, production still strong</h2><p>These players lost the most 1QB value since {fmt_d(TD_BASE)} and still sit inside the top of their position for the rest of the season. The market may be overreacting. Check the injury news first.</p>'
+            + td_list(TD_BUY, 'No player meets the buy-low rule today.')
+            + f'<h2>Sell high: value up, age or form working against them</h2><p>Each gained at least 5% since {fmt_d(TD_BASE)}, and is either outside the top of its position for the rest of the season or old for it. The price is high. Sell into it.</p>'
+            + td_list(TD_SELL, 'No player meets the sell-high rule today.')
+            + f'<h2>Top rest-of-season risers by position</h2><p>Value up since {fmt_d(TD_BASE)}, with the highest rest-of-season scores at each position.</p>'
+            + ''.join(f'<h3>{pos}</h3>' + td_list(TD_RISE[pos], f'No {pos} is rising and ranked yet.') for pos in TD_POS)
+            + f'<p class="hint">The ROS score is the PPR points-per-game blend behind our <a href="../rest-of-season-rankings/">rest of season rankings</a>. Players listed Out, IR, PUP or suspended are left off.</p>'
+            + '<p><a class="btn" href="../trade-analyzer/">Check your trade</a> <a class="btn" href="../sleeper-league-import/">Import your Sleeper league</a></p>'
+            + faq_html(qas)
+            + f'<p class="hint">Values as of {genh}. Sources below. <a href="../how-our-values-work/">How our values work</a>.</p><p class="hint">Sources: {used_src}. Projections: Sleeper public API. Data, not betting advice.</p>')
+    write('trade-deadline', 'Trade deadline', 'Trade deadline hub', 'Fantasy Football Trade Deadline 2026: Buy Low, Sell High Targets',
+          fit([f'Free fantasy football trade deadline 2026 targets: buy-low and sell-high players, rest-of-season scores and risers by position. No login. Updated {genh}.', f'Free trade deadline targets: buy-low, sell-high and ROS risers. No login. Updated {genh}.'], 70, 155),
+          'Fantasy Football Trade Deadline 2026: Buy Low, Sell High Targets', lede, ans, body,
+          cta=('Check your trade', ''), cta_text='Price the deal before you send it. Players and picks, both sides.', ld_extra=[faq_ld(qas)], featured=True)
+
 # ---- blog (content/blog/*.md -> blog/) ----
 ARTS = BLOG.build(ROOT, S, gen, genh)
 # ---- hub ----
 statics = S['statics']; allp = statics + PAGES
-order = S['sections'] + [s for s in ['Dynasty rankings', 'Dynasty movers', 'Rest of season', 'Weekly rankings', 'Weekly start/sit', 'Player values', 'Player comparisons', 'Start or sit'] if s not in S['sections']]
+order = S['sections'] + [s for s in ['Dynasty rankings', 'Dynasty movers', 'Trade deadline', 'Rest of season', 'Weekly rankings', 'Weekly start/sit', 'Player values', 'Player comparisons', 'Start or sit'] if s not in S['sections']]
 body = ''
 for sec in order:
     ps = [p for p in allp if p['section'] == sec]
@@ -782,7 +838,7 @@ _lf = ROOT / 'llms.txt'
 if _lf.exists():
     _base = re.sub(r'\n## Data pages \(updated daily\).*', '', _lf.read_text(), flags=re.S).rstrip('\n')
     _fam = [('dynasty-rankings', 'Dynasty rankings 1QB'), ('dynasty-rankings-superflex', 'Superflex rankings'), ('dynasty-trade-value-chart', 'Trade value chart'), ('rookie-draft-pick-values', 'Rookie pick values'),
-            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet')] + [(RK_SLUGS[k], f'Week {WEEK} {RK_NAME[k][0]} rankings') for k in RK_KEYS if k in RK_SLUGS] + [('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds'), ('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high targets'), ('dynasty-value-risers-fallers', 'Dynasty value risers and fallers'), ('dynasty-rookie-rankings', 'Dynasty rookie rankings'), (f'week-{WEEK}-waiver-wire', f'Week {WEEK} waiver wire pickups')]
+            ('dynasty-player-values', 'Every player value page'), ('dynasty-player-comparisons', 'Player vs player comparisons'), ('start-or-sit-players', 'Start or sit by player (this week)'), (f'week-{WEEK}-start-sit', f'Week {WEEK} start/sit cheat sheet')] + [(RK_SLUGS[k], f'Week {WEEK} {RK_NAME[k][0]} rankings') for k in RK_KEYS if k in RK_SLUGS] + [('injury-report', 'Injury report'), ('waiver-wire-trending', 'Trending waiver adds'), ('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high targets'), ('trade-deadline', 'Trade deadline buy/sell targets'), ('dynasty-value-risers-fallers', 'Dynasty value risers and fallers'), ('dynasty-rookie-rankings', 'Dynasty rookie rankings'), (f'week-{WEEK}-waiver-wire', f'Week {WEEK} waiver wire pickups')]
     _have = {p['slug'] for p in PAGES}
     _txt = f'\n\n## Data pages (updated daily)\nData as of {genh}. Each player has a dynasty value page at {URL}dynasty-value-<player-name>/ and, in season, a start-or-sit page at {URL}start-or-sit-<player-name>/.\n' + ''.join(f'- [{n}]({URL}{sl}/)\n' for sl, n in _fam if sl in _have)
     _txt += '\n### Top player value pages\n' + ''.join(f'- [{q["n"]} dynasty value]({URL}{vslug(q)}/): #{one_rank[q["id"]]} 1QB, {q["v1"]:,}\n' for q in valued[:50])
@@ -796,17 +852,19 @@ for d in ROOT.iterdir():
 print(f'fantasy data pages: {len(PAGES)} generated + {len(statics)} static + guides/glossary; total URLs in sitemap {len(ent)}')
 # ---- link this week's pages from the hub, start/sit and waiver pages (idempotent; refreshed daily) ----
 if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
-    def _wk(pre):
+    def _wk(pre, td=False):
         w = f'<a href="{pre}week-{WEEK}-waiver-wire/"><strong>Week {WEEK} waiver wire</strong> (trending adds by position) →</a>' if (ROOT / WAIVER_SLUG).exists() else ''
         ex = ' · '.join(f'<a href="{pre}{s}/">{l}</a>' for s, l in [('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high'), ('dynasty-rookie-rankings', 'Rookie rankings')] if (ROOT / s).exists())
+        if td and (ROOT / 'trade-deadline').exists(): ex = ' · '.join(x for x in [f'<a href="{pre}trade-deadline/">Trade deadline targets</a>', ex] if x)
         rk = f'<p class="hint" style="margin:6px 0 0"><strong>This week’s rankings:</strong> {rk_block(pre)}</p>' if RK_SLUGS else ''
         return f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a>' + (' · ' + w if w else '') + '</p>' + rk + (f'<p class="hint" style="margin:6px 0 0">{ex}</p>' if ex else '') + '<!--/wk-->'
     for rel, pre in [('index.html', ''), ('start-sit/index.html', '../'), ('waiver-wire/index.html', '../'), ('waiver-wire-trending/index.html', '../'), ('trade-analyzer/index.html', '../'), ('guides/index.html', '../'), (f'week-{WEEK}-start-sit/index.html', '../'), (f'{WAIVER_SLUG}/index.html', '../')] + [(f'rest-of-season-{k}rankings/index.html', '../') for k in ('', 'qb-', 'rb-', 'wr-', 'te-')]:
         f = ROOT / rel
         if not f.exists(): continue
+        td = rel in ('index.html', 'trade-analyzer/index.html', 'guides/index.html') or rel.startswith('rest-of-season-')   # trade-deadline link: home, guides, trade analyzer, ROS pages
         h = re.sub(r'<!--wk-->.*?<!--/wk-->', '', f.read_text(), flags=re.S)
-        if rel == 'index.html': h = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + _wk(pre), h, count=1, flags=re.S); f.write_text(h); continue
-        h = h.replace('<main id="main"><div class="wrap">', '<main id="main"><div class="wrap">' + _wk(pre), 1)
+        if rel == 'index.html': h = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + _wk(pre, td), h, count=1, flags=re.S); f.write_text(h); continue
+        h = h.replace('<main id="main"><div class="wrap">', '<main id="main"><div class="wrap">' + _wk(pre, td), 1)
         f.write_text(h)
 # ---- blog entry points on every page: nav + footer links, and a "Latest articles" block on the home page (idempotent) ----
 if ARTS:

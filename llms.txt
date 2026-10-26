@@ -86,6 +86,7 @@ Data as of October 26, 2026. Each player has a dynasty value page at https://dyn
 - [Trending waiver adds](https://dynastymath.com/waiver-wire-trending/)
 - [Rest of season rankings](https://dynastymath.com/rest-of-season-rankings/)
 - [Dynasty buy-low/sell-high targets](https://dynastymath.com/dynasty-buy-low-sell-high/)
+- [Trade deadline buy/sell targets](https://dynastymath.com/trade-deadline/)
 - [Dynasty value risers and fallers](https://dynastymath.com/dynasty-value-risers-fallers/)
 - [Dynasty rookie rankings](https://dynastymath.com/dynasty-rookie-rankings/)
 - [Week 8 waiver wire pickups](https://dynastymath.com/week-8-waiver-wire/)
