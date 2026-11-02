@@ -21,12 +21,12 @@ Six weeks in, the 2026 rookie class has split into a handful of real assets and 
 | [Jeremiyah Love](/dynasty-value-jeremiyah-love/) (ARI) | RB11 / 21 | **4,147** | 3,403 | +80 (+2.0%) | 5 | 10.2 | Out |
 | [Jordyn Tyson](/dynasty-value-jordyn-tyson/) (NO) | WR27 / 22 | **3,258** | 2,564 | -157 (-4.6%) | 0 | — | IR |
 | [Denzel Boston](/dynasty-value-denzel-boston/) (CLE) | WR34 / 22 | **2,287** | 1,496 | +122 (+5.6%) | 6 | 11.9 | Active |
-| [KC Concepcion](/dynasty-value-kc-concepcion/) (CLE) | WR38 / 22 | **1,550** | 1,246 | +363 (+30.6%) | 6 | 6.6 | Active |
+| [KC Concepcion](/dynasty-value-kc-concepcion-jr/) (CLE) | WR38 / 22 | **1,550** | 1,246 | +363 (+30.6%) | 6 | 6.6 | Active |
 | [Jadarian Price](/dynasty-value-jadarian-price/) (SEA) | RB25 / 23 | **1,425** | 1,049 | -313 (-18.0%) | 3 | 4.7 | IR |
 | [Makai Lemon](/dynasty-value-makai-lemon/) (PHI) | WR39 / 22 | **1,379** | 1,094 | -167 (-10.8%) | 6 | 5 | Questionable |
 | [Germie Bernard](/dynasty-value-germie-bernard/) (PIT) | WR40 / 22 | **1,337** | 907 | +863 (+182.1%) | 6 | 8.9 | Active |
 | [Kenyon Sadiq](/dynasty-value-kenyon-sadiq/) (NYJ) | TE14 / 21 | **1,100** | 810 | +16 (+1.5%) | 6 | 6.9 | Active |
-| [Omar Cooper](/dynasty-value-omar-cooper/) (NYJ) | WR47 / 22 | **1,084** | 802 | +497 (+84.7%) | 2 | 13.2 | Active |
+| [Omar Cooper](/dynasty-value-omar-cooper-jr/) (NYJ) | WR47 / 22 | **1,084** | 802 | +497 (+84.7%) | 2 | 13.2 | Active |
 
 [Carnell Tate](/dynasty-value-carnell-tate/) leads at 4,354 with 11.2 PPR points per game over 6 games and 14 over his last three. [Jeremiyah Love](/dynasty-value-jeremiyah-love/) is second at 4,147, but his sources disagree sharply: the experts value him at 7,846 and the Sleeper draft market at 330, and he is listed Out. [Jordyn Tyson](/dynasty-value-jordyn-tyson/) (3,258) has played 0 games and is listed IR, so his value rests on the expert consensus alone (3,258); there is no ADP or production signal behind it yet. Quarterbacks change by format: [Fernando Mendoza](/dynasty-value-fernando-mendoza/) is 895 in 1QB leagues but 3,182 in superflex.
 
@@ -55,10 +55,10 @@ Picks sit on the same scale as players, so you can see which rookie a pick buys.
 | Pick | 1QB | Superflex | Closest 2026 rookie (1QB) |
 |---|---|---|---|
 | 2027 Early 1st | 4,127 | 4,581 | [Jeremiyah Love](/dynasty-value-jeremiyah-love/) (4,147) |
-| 2027 Mid 1st | 1,864 | 2,126 | [KC Concepcion](/dynasty-value-kc-concepcion/) (1,550) |
+| 2027 Mid 1st | 1,864 | 2,126 | [KC Concepcion](/dynasty-value-kc-concepcion-jr/) (1,550) |
 | 2027 Late 1st | 871 | 1,037 | [Fernando Mendoza](/dynasty-value-fernando-mendoza/) (895) |
 | 2027 Early 2nd | 429 | 531 | [Chris Bell](/dynasty-value-chris-bell/) (412) |
-| 2028 1st | 1,508 | 1,729 | [KC Concepcion](/dynasty-value-kc-concepcion/) (1,550) |
+| 2028 1st | 1,508 | 1,729 | [KC Concepcion](/dynasty-value-kc-concepcion-jr/) (1,550) |
 
 A 2027 Early 1st at 4,127 is worth about Jeremiyah Love's 4,147. A 2027 Mid 1st at 1,864 is worth less than Denzel Boston (2,287), and even a 2027 Late 1st (871) is below Germie Bernard (1,337). Early 2027 picks are the pricey ones. The cost drops off fast after that.
 

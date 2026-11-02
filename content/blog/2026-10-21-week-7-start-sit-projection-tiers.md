@@ -38,7 +38,7 @@ Bo Nix is the one to watch. He is projected for 19.4, but he averages 12.1 for t
 | 1 | [Bijan Robinson](/start-or-sit-bijan-robinson/) (ATL) | 22.8 | 21.4 | 16.9 | Active |
 | 2 | [Christian McCaffrey](/start-or-sit-christian-mccaffrey/) (SF) | 21.2 | 20.3 | 21.3 | Active |
 | 2 | [Kyren Williams](/start-or-sit-kyren-williams/) (LAR) | 20 | 19.8 | 22 | Active |
-| 3 | [Kenneth Walker](/start-or-sit-kenneth-walker/) (KC) | 18.5 | 27.6 | 26.7 | Active |
+| 3 | [Kenneth Walker](/start-or-sit-kenneth-walker-iii/) (KC) | 18.5 | 27.6 | 26.7 | Active |
 | 3 | [Jonathan Taylor](/start-or-sit-jonathan-taylor/) (IND) | 17.7 | 19.8 | 18.3 | Active |
 | 3 | [Javonte Williams](/start-or-sit-javonte-williams/) (DAL) | 17.6 | 18.2 | 19.5 | Active |
 | 3 | [Derrick Henry](/start-or-sit-derrick-henry/) (BAL) | 17.5 | 19.5 | 14 | Active |
@@ -94,7 +94,7 @@ Jaylen Warren has the best last-three in the group at 20.7 PPG. Justin Jefferson
 |---|---|---|---|---|
 | [Isaiah Likely](/start-or-sit-isaiah-likely/) | TE | 12.5 | 23.3 | +10.8 |
 | [Drake Maye](/start-or-sit-drake-maye/) | QB | 21.6 | 29.8 | +8.2 |
-| [Kenneth Walker](/start-or-sit-kenneth-walker/) | RB | 18.5 | 26.7 | +8.2 |
+| [Kenneth Walker](/start-or-sit-kenneth-walker-iii/) | RB | 18.5 | 26.7 | +8.2 |
 | [Bo Nix](/start-or-sit-bo-nix/) | QB | 19.4 | 8.7 | -10.7 |
 | [Amon-Ra St. Brown](/start-or-sit-amon-ra-st-brown/) | WR | 19.5 | 13.4 | -6.1 |
 | [Justin Jefferson](/start-or-sit-justin-jefferson/) | WR | 16.9 | 10.8 | -6.1 |

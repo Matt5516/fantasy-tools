@@ -38,7 +38,7 @@ Lamar Jackson is listed Out, and his superflex value is down 414 since Oct 22 (f
 | Player | Team | 1QB value | 1QB change | Superflex value | Superflex change since Oct 22 | Status |
 |---|---|---|---|---|---|---|
 | [Dak Prescott](/dynasty-value-dak-prescott/) | DAL | **2,814** | +1,680 | 6,138 | +2,082 (+51.3%) | Active |
-| [Jacoby Brissett](/dynasty-value-jacoby-brissett/) | ARI | **1,257** | +1,054 | 2,726 | +1,994 (+272.4%) | Active |
+| [Jacoby Brissett](/start-or-sit-jacoby-brissett/) | ARI | **1,257** | +1,054 | 2,726 | +1,994 (+272.4%) | Active |
 | [Baker Mayfield](/dynasty-value-baker-mayfield/) | TB | **595** | +164 | 2,749 | +935 (+51.5%) | Active |
 | [Trevor Lawrence](/dynasty-value-trevor-lawrence/) | JAX | **3,596** | +517 | 6,977 | +818 (+13.3%) | Active |
 | [Bo Nix](/dynasty-value-bo-nix/) | DEN | **965** | -1,354 | 3,278 | -2,038 (-38.3%) | Active |

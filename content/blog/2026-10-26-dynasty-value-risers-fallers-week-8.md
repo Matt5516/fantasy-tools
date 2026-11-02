@@ -22,7 +22,7 @@ The rule: players valued at 1,000 or more on either date, ranked by raw points g
 | [Chase Brown](/dynasty-value-chase-brown/) (CIN) | RB10 / 26 | **4,866** | +1,431 (+41.7%) | Active |
 | [Dak Prescott](/dynasty-value-dak-prescott/) (DAL) | QB11 / 33 | **2,430** | +1,192 (+96.3%) | Active |
 | [Ashton Jeanty](/dynasty-value-ashton-jeanty/) (LV) | RB4 / 22 | **7,207** | +1,060 (+17.2%) | Active |
-| [Jacoby Brissett](/dynasty-value-jacoby-brissett/) (ARI) | QB16 / 33 | **1,240** | +1,000 (+416.7%) | Active |
+| [Jacoby Brissett](/start-or-sit-jacoby-brissett/) (ARI) | QB16 / 33 | **1,240** | +1,000 (+416.7%) | Active |
 | [Tyler Warren](/dynasty-value-tyler-warren/) (IND) | TE3 / 24 | **3,952** | +993 (+33.6%) | Out |
 | [DJ Moore](/dynasty-value-dj-moore/) (BUF) | WR30 / 29 | **2,747** | +923 (+50.6%) | Out |
 | [C.J. Stroud](/dynasty-value-c-j-stroud/) (HOU) | QB12 / 25 | **2,406** | +780 (+48.0%) | Active |

@@ -48,10 +48,10 @@ Each of these sits within 5% on the trade calculator's rule, after its depth dis
 
 | Format | You give | You get | Calculator totals | Gap |
 |---|---|---|---|---|
-| 1QB | 2027 Early 1st | [Luther Burden](/dynasty-value-luther-burden/) (WR, 22) | 4,127 vs 3,993 | 3.2% |
+| 1QB | 2027 Early 1st | [Luther Burden](/dynasty-value-luther-burden-iii/) (WR, 22) | 4,127 vs 3,993 | 3.2% |
 | 1QB | 2027 Mid 1st | [C.J. Stroud](/dynasty-value-c-j-stroud/) (QB, 25) | 1,864 vs 1,880 | 0.9% |
-| 1QB | 2027 Late 1st | [Marvin Harrison](/dynasty-value-marvin-harrison/) (WR, 24) | 871 vs 844 | 3.1% |
-| 1QB | 2028 1st | [KC Concepcion](/dynasty-value-kc-concepcion/) (WR, 22) | 1,508 vs 1,550 | 2.7% |
+| 1QB | 2027 Late 1st | [Marvin Harrison](/dynasty-value-marvin-harrison-jr/) (WR, 24) | 871 vs 844 | 3.1% |
+| 1QB | 2028 1st | [KC Concepcion](/dynasty-value-kc-concepcion-jr/) (WR, 22) | 1,508 vs 1,550 | 2.7% |
 | 1QB | 2027 Late 1st + 2027 Early 2nd | [Brenton Strange](/dynasty-value-brenton-strange/) (TE, 25) | 1,193 vs 1,178 | 1.3% |
 | 1QB | 2027 Early 2nd | [Jake Ferguson](/dynasty-value-jake-ferguson/) (TE, 27) | 429 vs 423 | 1.4% |
 | Superflex | 2027 Early 1st | [Garrett Wilson](/dynasty-value-garrett-wilson/) (WR, 26) | 4,581 vs 4,734 | 3.2% |
@@ -62,12 +62,12 @@ Each of these sits within 5% on the trade calculator's rule, after its depth dis
 
 Read the table as a floor for negotiation, not a guarantee. All 11 players are healthy as of Oct 21, 2026. The 1QB side has 6 deals and the superflex side 5.
 
-**Early 1st.** In 1QB, [Luther Burden](/dynasty-value-luther-burden/) is a clean match. In superflex, [Garrett Wilson](/dynasty-value-garrett-wilson/) is. The ask is the same: a starter for the pick, not a prospect for the pick.
+**Early 1st.** In 1QB, [Luther Burden](/dynasty-value-luther-burden-iii/) is a clean match. In superflex, [Garrett Wilson](/dynasty-value-garrett-wilson/) is. The ask is the same: a starter for the pick, not a prospect for the pick.
 
 **Mid 1st.** [C.J. Stroud](/dynasty-value-c-j-stroud/) is the lone fair 1-for-1 target in 1QB, age 25. In superflex, [Tucker Kraft](/dynasty-value-tucker-kraft/) fits.
-**Late 1st.** [Marvin Harrison](/dynasty-value-marvin-harrison/) is the 1QB match and [Makai Lemon](/dynasty-value-makai-lemon/) the superflex match. A late 1st buys depth, not a core piece.
+**Late 1st.** [Marvin Harrison](/dynasty-value-marvin-harrison-jr/) is the 1QB match and [Makai Lemon](/dynasty-value-makai-lemon/) the superflex match. A late 1st buys depth, not a core piece.
 
-**2028 1st.** [KC Concepcion](/dynasty-value-kc-concepcion/) in 1QB and [Cam Ward](/dynasty-value-cam-ward/) in superflex. If you hold a 2028 1st, it buys a player now.
+**2028 1st.** [KC Concepcion](/dynasty-value-kc-concepcion-jr/) in 1QB and [Cam Ward](/dynasty-value-cam-ward/) in superflex. If you hold a 2028 1st, it buys a player now.
 
 **Two picks for one.** [Brenton Strange](/dynasty-value-brenton-strange/) costs a late 1st plus an early 2nd in 1QB. [Bucky Irving](/dynasty-value-bucky-irving/) costs a mid 1st plus an early 2nd in superflex.
 

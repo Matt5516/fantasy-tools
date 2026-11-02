@@ -26,8 +26,8 @@ The calls follow three rules. A hot player whose value is up 10% or more is a **
 |---|---|---|---|---|---|---|---|
 | [Drake Maye](/dynasty-value-drake-maye/) (NE) | QB2 / 24 | 19.7 | 29.8 | +10.1 | **4,834** | +659 (+15.8%) | Sell-high |
 | [Malik Nabers](/dynasty-value-malik-nabers/) (NYG) | WR12 / 23 | 17.1 | 26.9 | +9.8 | **6,437** | +325 (+5.3%) | Hold |
-| [Kyle Pitts](/dynasty-value-kyle-pitts/) (ATL) | TE12 / 26 | 8.3 | 15.3 | +7 | **1,188** | +4 (+0.3%) | Hold |
-| [Ollie Gordon](/dynasty-value-ollie-gordon/) (MIA) | RB27 / 22 | 9.6 | 15.8 | +6.2 | **1,289** | +292 (+29.3%) | Sell-high |
+| [Kyle Pitts](/dynasty-value-kyle-pitts-sr/) (ATL) | TE12 / 26 | 8.3 | 15.3 | +7 | **1,188** | +4 (+0.3%) | Hold |
+| [Ollie Gordon](/dynasty-value-ollie-gordon-ii/) (MIA) | RB27 / 22 | 9.6 | 15.8 | +6.2 | **1,289** | +292 (+29.3%) | Sell-high |
 | [Germie Bernard](/dynasty-value-germie-bernard/) (PIT) | WR40 / 22 | 8.9 | 14.4 | +5.5 | **1,337** | +863 (+182.1%) | Sell-high |
 | [Isaiah Likely](/dynasty-value-isaiah-likely/) (NYG) | TE4 / 26 | 18.2 | 23.3 | +5.1 | **3,281** | +643 (+24.4%) | Sell-high |
 | [Colston Loveland](/dynasty-value-colston-loveland/) (CHI) | TE10 / 22 | 7.1 | 11.4 | +4.3 | **2,170** | +210 (+10.7%) | Sell-high |
@@ -65,7 +65,7 @@ These move heaters for slumpers, and each sits inside the calculator's fair rang
 | You give | You get | Calculator totals | Gap |
 |---|---|---|---|
 | [Germie Bernard](/dynasty-value-germie-bernard/) | [Tyler Shough](/dynasty-value-tyler-shough/) | 1,337 vs 1,358 | 1.5% |
-| [Kyle Pitts](/dynasty-value-kyle-pitts/) + [Jaylen Warren](/dynasty-value-jaylen-warren/) | [Brock Purdy](/dynasty-value-brock-purdy/) | 3,812 vs 3,737 | 2.0% |
+| [Kyle Pitts](/dynasty-value-kyle-pitts-sr/) + [Jaylen Warren](/dynasty-value-jaylen-warren/) | [Brock Purdy](/dynasty-value-brock-purdy/) | 3,812 vs 3,737 | 2.0% |
 | [Malik Nabers](/dynasty-value-malik-nabers/) + [Isaiah Likely](/dynasty-value-isaiah-likely/) | [Amon-Ra St. Brown](/dynasty-value-amon-ra-st-brown/) | 8,898 vs 9,048 | 1.7% |
 
 The third one trades a hold and a sell for Amon-Ra St. Brown, WR3 by value. Fair on paper is not fair for your roster. Run your version in the [dynasty trade analyzer](/trade-analyzer/).

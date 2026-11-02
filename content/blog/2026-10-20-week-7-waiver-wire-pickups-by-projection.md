@@ -23,14 +23,14 @@ The rule is simple. **Projection-backed** means healthy with a Week 7 projection
 | [Tyler Shough](/dynasty-value-tyler-shough/) | QB / NO | 57K | 15.9 | 31.8 (2 wk) | 19.5 | 14.2 | Active |
 | [Kirk Cousins](/dynasty-value-kirk-cousins/) | QB / LV | 68K | 15.8 | 49.8 (3 wk) | 19.3 | 18.3 | Active |
 | Tanner McKee | QB / PHI | 85K | 13.9 | 42.3 (3 wk) | 12.6 | 12.6 | Active |
-| [Omar Cooper](/dynasty-value-omar-cooper/) | WR / NYJ | 1.26M | 10 | 28.7 (3 wk) | 13.2 | 13.2 | Active |
+| [Omar Cooper](/dynasty-value-omar-cooper-jr/) | WR / NYJ | 1.26M | 10 | 28.7 (3 wk) | 13.2 | 13.2 | Active |
 | [Tre Tucker](/dynasty-value-tre-tucker/) | WR / LV | 177K | 9.1 | 28.2 (3 wk) | 13.1 | 14.2 | Active |
 
 "Next 3 wks" is the sum of the projections we have, and the number in parentheses is how many weeks that covers. Where it says 2 wk, the third week has no projection, so the sum is short.
 
 **Quarterbacks.** 5 of the 6 quarterbacks on the list are backed. That is a lot of quarterback traffic. [Kyler Murray](/dynasty-value-kyler-murray/) is the clearest case. He is projected for 17.8 this week against a 10.4 season average over 4 games, the widest gap between projection and season PPG on this list. His next-three sum, 53.4, is the biggest of the seven. [C.J. Stroud](/dynasty-value-c-j-stroud/) has the best last-three number of the group at 22.3. [Tyler Shough](/dynasty-value-tyler-shough/) and [Kirk Cousins](/dynasty-value-kirk-cousins/) are projected at 15.9 and 15.8. Tanner McKee is 13.9 on a single game of data, so treat him as the thinnest of the five. In a one-quarterback league you need one of these, not five.
 
-**Wide receivers.** [Omar Cooper](/dynasty-value-omar-cooper/) is the most-added player on the list by a mile: 1.26M adds in 24 hours, more than three times the next name. The projection is 10 and he has played 2 games, so the sample is tiny. The add is justified, the panic is not. [His Week 7 start/sit page](/start-or-sit-omar-cooper/) has the tiers. [Tre Tucker](/dynasty-value-tre-tucker/) is the quieter play at 9.1 projected and 14.2 over his last three.
+**Wide receivers.** [Omar Cooper](/dynasty-value-omar-cooper-jr/) is the most-added player on the list by a mile: 1.26M adds in 24 hours, more than three times the next name. The projection is 10 and he has played 2 games, so the sample is tiny. The add is justified, the panic is not. [His Week 7 start/sit page](/start-or-sit-omar-cooper-jr/) has the tiers. [Tre Tucker](/dynasty-value-tre-tucker/) is the quieter play at 9.1 projected and 14.2 over his last three.
 
 ## The hype: big adds, tiny projections
 
@@ -56,7 +56,7 @@ Those 9 players pulled 960K adds in 24 hours. The 7 backed players pulled 2.01M,
 
 ## The middle: depth, not a plan
 
-7 more are projected between 6 and 9 points. [Kyle Pitts](/dynasty-value-kyle-pitts/) has the biggest jump in scoring of the group, 15.3 PPG over his last three against 8.3 for the season. The Week 7 projection is 7.7. That is a tight end streaming option, not a hold-forever add. Tyler Higbee (8.6) had more adds over 72 hours than any other player in this group, 1.36M. Tyrone Tracy, Blake Corum, Ryan Flournoy, Michael Mayer and Dameon Pierce sit at 6.3 to 7.8. Add one if you have a hole and nobody better.
+7 more are projected between 6 and 9 points. [Kyle Pitts](/dynasty-value-kyle-pitts-sr/) has the biggest jump in scoring of the group, 15.3 PPG over his last three against 8.3 for the season. The Week 7 projection is 7.7. That is a tight end streaming option, not a hold-forever add. Tyler Higbee (8.6) had more adds over 72 hours than any other player in this group, 1.36M. Tyrone Tracy, Blake Corum, Ryan Flournoy, Michael Mayer and Dameon Pierce sit at 6.3 to 7.8. Add one if you have a hole and nobody better.
 
 ## IR stashes, and only that
 
