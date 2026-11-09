@@ -22,7 +22,7 @@ This is the Week 9 board. Values are on a 0 to 10,000 scale as of Nov 3, 2026, a
 | [Jeremiyah Love](/dynasty-value-jeremiyah-love/) (ARI) | RB7 / 21 | 4,256 | **5,641** | 4,459 | +1,385 (+32.5%) | 6 | 8.9 / 3.7 |
 | [Jonah Coleman](/dynasty-value-jonah-coleman/) (DEN) | RB24 / 23 | 652 | **1,827** | 1,391 | +1,175 (+180.2%) | 4 | 11 / 14.7 |
 | [Germie Bernard](/dynasty-value-germie-bernard/) (PIT) | WR42 / 22 | 1,017 | **1,251** | 749 | +234 (+23.0%) | 8 | 8.4 / 13.1 |
-| [Mike Washington Jr.](/dynasty-value-mike-washington-jr/) (LV) | RB46 / 23 | 132 | **311** | 203 | +179 (+135.6%) | 8 | 4.7 / 5.7 |
+| [Mike Washington Jr.](/start-or-sit-mike-washington-jr/) (LV) | RB46 / 23 | 132 | **311** | 203 | +179 (+135.6%) | 8 | 4.7 / 5.7 |
 | [KC Concepcion Jr.](/dynasty-value-kc-concepcion-jr/) (CLE) | WR37 / 22 | 1,539 | **1,673** | 1,084 | +134 (+8.7%) | 8 | 8.7 / 12.6 |
 | [Chris Bell](/dynasty-value-chris-bell/) (MIA) | WR69 / 22 | 394 | **476** | 357 | +82 (+20.8%) | 7 | 4.2 / 5 |
 | [Emmett Johnson](/dynasty-value-emmett-johnson/) (KC) | RB48 / 23 | 190 | **260** | 198 | +70 (+36.8%) | 7 | 7.3 / 11.1 |
@@ -31,7 +31,7 @@ This is the Week 9 board. Values are on a 0 to 10,000 scale as of Nov 3, 2026, a
 
 **[Jonah Coleman](/dynasty-value-jonah-coleman/) (DEN).** Up 1,175 (+180.2%) to 1,827, the biggest percentage gain among rookies worth 250 or more. Four games, 11 PPG, 14.7 over the last three. Experts have him at 639. The Sleeper draft market has him at 3,359, so the market is paying far more than the experts are.
 
-**[Mike Washington Jr.](/dynasty-value-mike-washington-jr/) (LV).** Up 179 (+135.6%) to 311. That is still a small price. He has played 8 games and scores 4.7 per game, so the climb is a price move, not a production story.
+**[Mike Washington Jr.](/start-or-sit-mike-washington-jr/) (LV).** Up 179 (+135.6%) to 311. That is still a small price. He has played 8 games and scores 4.7 per game, so the climb is a price move, not a production story.
 
 **[Germie Bernard](/dynasty-value-germie-bernard/) (PIT).** Up 234 to 1,251. His last three average 13.1 PPG against 8.4 for the season. The experts are at 292 and the market at 2,104.
 
@@ -67,14 +67,14 @@ The draft market below is Sleeper dynasty ADP. FFC had no dynasty data on Nov 3,
 | [Germie Bernard](/dynasty-value-germie-bernard/) (PIT) | 292 | 2,104 | +621% | **1,251** | 8 | 8.4 |
 | [Jonah Coleman](/dynasty-value-jonah-coleman/) (DEN) | 639 | 3,359 | +426% | **1,827** | 4 | 11 |
 | [Caleb Douglas](/dynasty-value-caleb-douglas/) (MIA) | 213 | 832 | +291% | **1,006** | 4 | 11.9 |
-| [Mike Washington Jr.](/dynasty-value-mike-washington-jr/) (LV) | 184 | 594 | +223% | **311** | 8 | 4.7 |
+| [Mike Washington Jr.](/start-or-sit-mike-washington-jr/) (LV) | 184 | 594 | +223% | **311** | 8 | 4.7 |
 | [Malachi Fields](/dynasty-value-malachi-fields/) (NYG) | 131 | 310 | +137% | **223** | 7 | 6.7 |
 | [Chris Bell](/dynasty-value-chris-bell/) (MIA) | 638 | 482 | -24% | **476** | 7 | 4.2 |
 | [Ja'Kobi Lane](/dynasty-value-ja-kobi-lane/) (BAL) | 310 | 227 | -27% | **234** | 4 | 4.5 |
 | [Emmett Johnson](/dynasty-value-emmett-johnson/) (KC) | 372 | 63 | -83% | **260** | 7 | 7.3 |
 | [Eli Stowers](/dynasty-value-eli-stowers/) (PHI) | 496 | 2 | -100% | **284** | 2 | 4.2 |
 
-Plus signs are sell-side, minus signs buy-side. [Germie Bernard](/dynasty-value-germie-bernard/) shows the widest premium in this table at +621%, and [Jonah Coleman](/dynasty-value-jonah-coleman/) is next at +426%. In both cases the market is the one paying it. [Mike Washington Jr.](/dynasty-value-mike-washington-jr/) sits at +223%. On the other side, [Eli Stowers](/dynasty-value-eli-stowers/) is priced -100% against the experts, and [Emmett Johnson](/dynasty-value-emmett-johnson/) -83%. When experts and market split this far, the final price tends to land somewhere in between, so decide which side you trust before you trade.
+Plus signs are sell-side, minus signs buy-side. [Germie Bernard](/dynasty-value-germie-bernard/) shows the widest premium in this table at +621%, and [Jonah Coleman](/dynasty-value-jonah-coleman/) is next at +426%. In both cases the market is the one paying it. [Mike Washington Jr.](/start-or-sit-mike-washington-jr/) sits at +223%. On the other side, [Eli Stowers](/dynasty-value-eli-stowers/) is priced -100% against the experts, and [Emmett Johnson](/dynasty-value-emmett-johnson/) -83%. When experts and market split this far, the final price tends to land somewhere in between, so decide which side you trust before you trade.
 
 ## What to do with this
 

@@ -43,7 +43,7 @@ The rule is simple. **Projection-backed** means a Week 8 projection of 9 points 
 | [Justice Hill](/start-or-sit-justice-hill/) | RB / BAL | 133K | 303K | 5.8 | 18.1 (3 wk) | 5.1 | 6.7 |
 | [Konata Mumpfield](/start-or-sit-konata-mumpfield/) | WR / LAR | 131K | 808K | 4.5 | 14.4 (3 wk) | 4.2 | 2.6 |
 | [Makai Lemon](/dynasty-value-makai-lemon/) | WR / PHI | 127K | 224K | 5.9 | 11.2 (2 wk) | 5 | 6.6 |
-| [Dameon Pierce](/start-or-sit-dameon-pierce/) | RB / PHI | 99K | 162K | 3.6 | 5.8 (2 wk) | 9.1 | 9.1 |
+| Dameon Pierce | RB / PHI | 99K | 162K | 3.6 | 5.8 (2 wk) | 9.1 | 9.1 |
 | [Zonovan Knight](/start-or-sit-zonovan-knight/) | RB / ARI | 84K | 247K | 5.4 | 7.9 (3 wk) | 3.5 | 7.3 |
 | Tank Dell | WR / HOU | 69K | 132K | — | 5 (2 wk) | 5.5 | 5.5 |
 
