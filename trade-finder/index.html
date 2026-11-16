@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en" data-root="../" data-repo="fantasy-tools">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Dynasty Trade Finder: Fair Trade Packages for Any Player (1QB, Superflex)</title>
+<meta name="description" content="Free dynasty trade finder. Pick a player to trade away or acquire and get 8-12 fair 1-for-1 and 2-for-1 packages within 5%. 1QB or superflex.">
+<link rel="canonical" href="https://dynastymath.com/trade-finder/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#8b5cf6">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website"><meta property="og:site_name" content="DynastyMath">
+<meta property="og:title" content="Dynasty Trade Finder: Fair Trade Packages for Any Player (1QB, Superflex)"><meta property="og:description" content="Free dynasty trade finder. Pick a player to trade away or acquire and get 8-12 fair 1-for-1 and 2-for-1 packages within 5%. 1QB or superflex.">
+<meta property="og:url" content="https://dynastymath.com/trade-finder/"><meta property="og:image" content="https://dynastymath.com/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="DynastyMath: Win the week. Win the trade. Build the dynasty."><meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Dynasty Trade Finder: Fair Trade Packages for Any Player (1QB, Superflex)"><meta name="twitter:description" content="Free dynasty trade finder. Pick a player to trade away or acquire and get 8-12 fair 1-for-1 and 2-for-1 packages within 5%. 1QB or superflex."><meta name="twitter:image" content="https://dynastymath.com/og.png">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="../apple-touch-icon.png"><link rel="manifest" href="../manifest.webmanifest">
+<link rel="alternate" type="text/plain" href="../llms.txt" title="LLM summary">
+<link rel="preload" href="../assets/brand.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../data/players.json" as="fetch" crossorigin>
+<script>(function(){try{var t=localStorage.getItem('theme');}catch(e){}if(!t)t='dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="../assets/ds.css">
+<style>@font-face{font-family:"Brand";src:url(../assets/brand.woff2) format("woff2");font-weight:500 900;font-display:swap}:root{--brand:#8b5cf6;--brand-2:#06b6d4;--accent:#f59e0b}</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "@id": "https://dynastymath.com/trade-finder/#app", "name": "Dynasty trade finder (DynastyMath)", "url": "https://dynastymath.com/trade-finder/", "applicationCategory": "SportsApplication", "operatingSystem": "Any (web browser)", "browserRequirements": "Requires JavaScript", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free dynasty trade finder. Pick a player to trade away or acquire and get 8-12 fair 1-for-1 and 2-for-1 packages within 5%. 1QB or superflex.", "dateModified": "2026-10-19", "inLanguage": "en-US", "screenshot": "https://dynastymath.com/og.png", "publisher": {"@type": "Organization", "name": "DynastyMath", "url": "https://dynastymath.com/", "logo": "https://dynastymath.com/logo.svg"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "DynastyMath", "item": "https://dynastymath.com/"}, {"@type": "ListItem", "position": 2, "name": "Dynasty trade finder", "item": "https://dynastymath.com/trade-finder/"}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What counts as a fair trade here?", "acceptedAnswer": {"@type": "Answer", "text": "Both sides land within 5% of each other after the same depth discount the trade analyzer uses. The best piece counts in full and extra pieces count less, so a 2-for-1 needs more total value than a 1-for-1."}}, {"@type": "Question", "name": "Why do some 2-for-1 packages add up to so much?", "acceptedAnswer": {"@type": "Answer", "text": "Roster spots are limited. The second player in a package counts at 75% of his value, so two mid-value players have to add up to more than the one star you're moving."}}, {"@type": "Question", "name": "Does superflex change the list?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Switch to Superflex and quarterbacks jump in value, so the packages change. Pick the format your league plays before you shop a deal."}}]}]}</script>
+<script data-goatcounter="https://dynastymath.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/><path d="M3.2 12H9l.5-1 2 4.5 2-7 1.5 3.5h4.8"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.2C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.2C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0 0 12 0V2Z"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></symbol>
+<symbol id="i-swap" viewBox="0 0 24 24"><path d="m16 3 4 4-4 4M20 7H4M8 21l-4-4 4-4M4 17h16"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-dollar" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2Z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+</svg>
+
+<a class="skip" href="#tool">Skip to the tool</a>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="../" aria-label="DynastyMath home"><svg class="logo-mark" width="34" height="34" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#g)"/><path d="M11 33.5l-2.2-15.6 8.4 6.4L24 12l6.8 12.3 8.4-6.4-2.2 15.6z" fill="#fff"/><rect x="11" y="35.6" width="26" height="4.4" rx="1.6" fill="#fff"/><circle cx="24" cy="26.5" r="2.6" fill="url(#g)"/></svg><span class="wordmark">Dynasty<span class="wm-hi">Math</span></span></a>
+  <nav class="topnav" aria-label="Main"><a href="../start-sit/" class="">Start/sit</a><a href="../trade-analyzer/" class="hide-sm">Dynasty trade analyzer</a><a href="../league-import/" class="hide-sm">Sleeper league import</a><a href="../guides/" class="hide-sm">Guides</a><a href="../blog/" class="hide-sm">Blog</a>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button></nav>
+</div></header>
+<main id="main"><div class="wrap"><nav class="crumbs top" aria-label="Breadcrumb"><a href="../">DynastyMath</a> › <span aria-current="page">Dynasty trade finder</span></nav>
+<header class="page-hero tool-hero"><span class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-swap"/></svg><span>Free · no signup · Values as of <span id="vd">today</span></span></span>
+<h1>Dynasty trade finder</h1><p class="lede">Pick a player. Get fair packages to trade for or trade away.</p></header>
+<section class="tool" id="tool" aria-labelledby="tfH">
+ <div class="panel simple">
+  <h2 id="tfH" class="sr-only">Find a trade</h2>
+  <div class="q"><span class="label" id="tfModeL">I want to</span><div class="seg" id="tfMode" role="group" aria-labelledby="tfModeL"><button type="button" data-v="give" aria-pressed="true">Trade a player away</button><button type="button" data-v="get" aria-pressed="false">Get a player</button></div></div>
+  <div class="q ac"><label for="tfSearch">Player</label><input id="tfSearch" type="search" autocomplete="off" placeholder="Search a player…" role="combobox" aria-expanded="false" aria-controls="tfList" aria-autocomplete="list" disabled><ul class="ac-list" id="tfList" role="listbox" hidden></ul><div id="tfChip"></div></div>
+  <div class="q"><span class="label" id="tfFmtL">League type</span><div class="seg" id="tfFmt" role="group" aria-labelledby="tfFmtL"><button type="button" data-v="0" aria-pressed="true">1QB</button><button type="button" data-v="1" aria-pressed="false">Superflex</button></div></div>
+  <details class="adv"><summary>Filter by position</summary><div class="fields"><div><label for="tfPos" class="label">Show only</label><select id="tfPos"><option value="">All positions</option><option>QB</option><option>RB</option><option>WR</option><option>TE</option></select></div></div></details>
+ </div>
+ <div class="sticky"><section class="panel" id="tfOut" aria-live="polite" aria-label="Trade packages"><p class="hint">Pick a player to see fair packages.</p></section></div>
+</section>
+<p class="hint">Fair means both sides are within 5% after the depth discount. Same math as the <a href="../trade-analyzer/">trade analyzer</a>. <a href="../how-our-values-work/">How values work</a>.</p>
+<div class="content">
+
+<section class="prose" id="faq"><h2>FAQ</h2><details class="faq"><summary>What counts as a fair trade here?</summary><p>Both sides land within 5% of each other after the same depth discount the trade analyzer uses. The best piece counts in full and extra pieces count less, so a 2-for-1 needs more total value than a 1-for-1.</p></details>
+<details class="faq"><summary>Why do some 2-for-1 packages add up to so much?</summary><p>Roster spots are limited. The second player in a package counts at 75% of his value, so two mid-value players have to add up to more than the one star you're moving.</p></details>
+<details class="faq"><summary>Does superflex change the list?</summary><p>Yes. Switch to Superflex and quarterbacks jump in value, so the packages change. Pick the format your league plays before you shop a deal.</p></details></section>
+<section aria-labelledby="ot"><h2 id="ot">More DynastyMath tools</h2><div class="tool-grid"><a class="tcard" href="../trade-analyzer/"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-swap"/></svg></span><b>Dynasty trade analyzer</b><span>Is this dynasty trade fair? Players and picks, with balance suggestions.</span><span class="go">Open →</span></a><a class="tcard" href="../start-sit/"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg></span><b>Start/sit tool</b><span>Torn between two to four players? Get a start/sit call.</span><span class="go">Open →</span></a><a class="tcard" href="../league-import/"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-trophy"/></svg></span><b>Sleeper league import <span class="new">New</span></b><span>Your optimal lineup, league power rankings and best free agents.</span><span class="go">Open →</span></a><a class="tcard" href="../waiver-wire/"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-sparkle"/></svg></span><b>Waiver wire helper <span class="new">New</span></b><span>Who to pick up: trending adds, and free agents who beat your starters.</span><span class="go">Open →</span></a><a class="tcard" href="../rookie-draft-board/"><span class="ticon"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg></span><b>Rookie draft board <span class="new">New</span></b><span>A live draft board ranked by dynasty value. Tick players off as they go.</span><span class="go">Open →</span></a></div></section>
+<section aria-labelledby="kg"><h2 id="kg">Guides</h2><div class="guide-grid"><a class="gcard" href="../how-dynasty-trade-values-work/"><span class="gtag">Guides</span><b>How dynasty trade values work</b></a><a class="gcard" href="../how-our-values-work/"><span class="gtag">Guides</span><b>How our values work (sources)</b></a><a class="gcard" href="../how-to-decide-start-sit/"><span class="gtag">Guides</span><b>How to make start/sit decisions</b></a><a class="gcard" href="../dynasty-trade-calculators-compared/"><span class="gtag">Comparisons</span><b>Trade calculators compared</b></a></div></section>
+<section aria-labelledby="more"><h2 id="more">More free sites</h2><div class="related"><a class="rcard" style="--rc:#f97316" href="https://gradeorflip.com/"><svg class="logo-mark sm" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="rcar" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f97316"/><stop offset="1" stop-color="#e11d48"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#rcar)"/><rect x="9" y="13" width="17" height="24" rx="3" fill="#fff" opacity=".5" transform="rotate(-14 17 25)"/><rect x="20" y="9" width="18" height="27" rx="3.5" fill="#fff" transform="rotate(9 29 22)"/><rect x="22.6" y="12" width="13" height="4.6" rx="1.4" fill="url(#rcar)" transform="rotate(9 29 22)"/><path d="M14 40.5c4 2.5 12 3 18-1" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M30.5 36.5l2.6 3.3-3.9 1.2" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><b>GradeOrFlip</b><span>Is it worth grading? Profit and break-even by grade for PSA, SGC, BGS and CGC.</span></a>
+<a class="rcard" style="--rc:#4f46e5" href="https://matt5516.github.io/time-card-calc/"><svg class="logo-mark sm" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="rtim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#rtim)"/><circle cx="24" cy="24" r="15.5" fill="#fff"/><path d="M24 13.5V24l7 4.2" stroke="url(#rtim)" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="2.2" fill="url(#rtim)"/><path d="M24 10.4v2M24 35.6v2M10.4 24h2M35.6 24h2" stroke="url(#rtim)" stroke-width="2.2" stroke-linecap="round"/></svg><b>ClockInMath</b><span>Time card calculator: weekly hours, decimal hours, overtime and gross pay, with a printable timesheet.</span></a>
+<a class="rcard" style="--rc:#0d9488" href="https://enrollmath.com/"><svg class="logo-mark sm" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="rope" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d9488"/><stop offset="1" stop-color="#2563eb"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#rope)"/><path d="M24 7.5l14 5.2v10.6c0 9.4-6.1 15.6-14 17.7-7.9-2.1-14-8.3-14-17.7V12.7z" fill="#fff"/><rect x="21.4" y="15" width="5.2" height="16" rx="1.6" fill="url(#rope)"/><rect x="16" y="20.4" width="16" height="5.2" rx="1.6" fill="url(#rope)"/></svg><b>EnrollMath</b><span>HSA vs PPO break-even, COBRA cost and marketplace comparison with 2026/2027 IRS limits.</span></a>
+<a class="rcard" style="--rc:#16a34a" href="https://bagorbulk.com/"><svg class="logo-mark sm" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="rmat" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16a34a"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#rmat)"/><path d="M13 19h22l-2.4 19.5a3 3 0 0 1-3 2.5H18.4a3 3 0 0 1-3-2.5z" fill="#fff"/><path d="M17 19c0-4 3-7 7-7s7 3 7 7" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M18 30l5 4 8-9" stroke="url(#rmat)" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><b>BagOrBulk</b><span>Concrete, gravel, mulch and topsoil calculators: yards, tons, bags, and whether bags or bulk costs less.</span></a>
+<a class="rcard" style="--rc:#db2777" href="https://matt5516.github.io/paint-calc/"><svg class="logo-mark sm" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="rpai" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#db2777"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#rpai)"/><rect x="8.5" y="10" width="26" height="12" rx="3.5" fill="#fff"/><path d="M34.5 16h3.4a1.6 1.6 0 0 1 1.6 1.6v6.2a2 2 0 0 1-2 2H24.5v4.2" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><rect x="21" y="30" width="7" height="10" rx="2.2" fill="#fff"/><path d="M13 16.2h12" stroke="url(#rpai)" stroke-width="2.2" stroke-linecap="round" opacity=".55"/></svg><b>CoatMath</b><span>Tells you how much paint to buy and the cheapest cans for it: gallons, quarts and 5-gallon buckets.</span></a>
+<a class="rcard" style="--rc:#dc2626" href="https://matt5516.github.io/tire-size-calc/"><svg class="logo-mark sm" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="rtir" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dc2626"/><stop offset="1" stop-color="#64748b"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#rtir)"/><circle cx="24" cy="24" r="17.5" fill="#fff"/><path d="M37.1 27.5L40.6 28.5M33.6 33.6L36.2 36.2M27.5 37.1L28.5 40.6M20.5 37.1L19.5 40.6M14.4 33.6L11.8 36.2M10.9 27.5L7.4 28.5M10.9 20.5L7.4 19.5M14.4 14.4L11.8 11.8M20.5 10.9L19.5 7.4M27.5 10.9L28.5 7.4M33.6 14.4L36.2 11.8M37.1 20.5L40.6 19.5" stroke="url(#rtir)" stroke-width="2.6" stroke-linecap="butt" fill="none"/><circle cx="24" cy="24" r="9.6" fill="url(#rtir)"/><circle cx="24" cy="24" r="3.2" fill="#fff"/></svg><b>SidewallMath</b><span>Tire size calculator: compare two sizes, true speedometer, sizes that fit your wheel, regear and wheel offset.</span></a></div></section>
+</div>
+</div></main>
+<footer class="site"><div class="wrap">
+<div class="foot-grid">
+ <div><a class="brand" href="../"><svg class="logo-mark" width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="f" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs><rect width="48" height="48" rx="13" fill="url(#f)"/><path d="M11 33.5l-2.2-15.6 8.4 6.4L24 12l6.8 12.3 8.4-6.4-2.2 15.6z" fill="#fff"/><rect x="11" y="35.6" width="26" height="4.4" rx="1.6" fill="#fff"/><circle cx="24" cy="26.5" r="2.6" fill="url(#f)"/></svg><span class="wordmark">Dynasty<span class="wm-hi">Math</span></span></a><p class="hint">Win the week. Win the trade. Build the dynasty.</p></div>
+ <div><h2 class="foot-h">Free tools</h2><ul class="foot-links"><li><a href="../start-sit/">Start/sit tool</a></li><li><a href="../trade-analyzer/">Dynasty trade analyzer</a></li><li><a href="../trade-finder/">Dynasty trade finder</a></li><li><a href="../league-import/">Sleeper league import</a></li><li><a href="../waiver-wire/">Waiver wire helper</a></li><li><a href="../rookie-draft-board/">Rookie draft board</a></li></ul></div>
+ <div><h2 class="foot-h">Popular guides</h2><ul class="foot-links"><li><a href="../how-dynasty-trade-values-work/">How dynasty trade values work</a></li><li><a href="../how-our-values-work/">How our values work (sources)</a></li><li><a href="../how-to-decide-start-sit/">How to make start/sit decisions</a></li><li><a href="../dynasty-trade-calculators-compared/">Trade calculators compared</a></li><li><a href="../blog/">Blog</a></li><li><a href="../guides/">All guides →</a></li></ul></div>
+ <div><h2 class="foot-h">More free tools</h2><ul class="foot-links"><li><a href="https://gradeorflip.com/">GradeOrFlip</a></li><li><a href="https://enrollmath.com/">EnrollMath</a></li><li><a href="https://bagorbulk.com/">BagOrBulk</a></li><li><a href="https://matt5516.github.io/time-card-calc/">ClockInMath</a></li><li><a href="https://matt5516.github.io/paint-calc/">CoatMath</a></li><li><a href="https://matt5516.github.io/tire-size-calc/">SidewallMath</a></li><li><a href="../glossary/">Glossary</a></li></ul></div>
+</div>
+<aside class="promo promo-footer no-print" aria-label="Printable companion"><a href="https://sorensenspark65.gumroad.com/l/dynastymath-2027-draft-kit" target="_blank" rel="noopener" data-goatcounter-click="promo-fantasy-tools-footer" data-goatcounter-title="2027 Draft Kit promo (footer)"><img src="../assets/promo.webp" width="240" height="135" loading="lazy" decoding="async" alt="Cover of the 2027 Draft Kit"><span class="promo-t"><b>Get the printable 2027 Draft Kit — $6</b><small>One-time download. Prints clean.</small></span></a></aside>
+<p>For entertainment. No outcome is guaranteed. 21+ for paid contests; play responsibly, 1-800-GAMBLER. Not affiliated with the NFL, Sleeper, DynastyProcess, Fantasy Football Calculator or nflverse. Dynasty values © DynastyProcess, GPL-3.0.</p>
+<p>© 2026 DynastyMath · Updated <time datetime="2026-10-19">October 19, 2026</time> · <a href="../about.html">About</a> · <a href="../contact.html">Contact</a> · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../llms.txt">llms.txt</a> · <a href="../sitemap.xml">Sitemap</a></p>
+</div></footer>
+<script src="../assets/ds.js" defer></script><script src="../assets/calc.js" defer></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);}, D, BY={}, PAGES={}, sel=null, mode='give', sf=0, pos='';
+  var POSC={QB:'#be123c',RB:'#047857',WR:'#1d4ed8',TE:'#b45309'};
+  var ESC={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'};
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return ESC[c];});}
+  function norm(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,'');}
+  function slug(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+  function fmt(n){return n.toLocaleString('en-US');}
+  function val(p){return sf?(p.v2||p.v1):p.v1;}
+  function tag(p){return '<span class="pos-tag" style="background:'+(POSC[p.pos]||'#475569')+'">'+p.pos+'</span>';}
+  function name(p){var s='dynasty-value-'+slug(p.n), t=esc(p.n); return PAGES[s]?'<a href="../'+s+'/">'+t+'</a>':t;}
+  function piece(p){return '<div>'+tag(p)+' <strong>'+name(p)+'</strong> <span class="hint-inline">'+(p.team||'FA')+(p.age?' · '+p.age:'')+' · '+fmt(val(p))+'</span></div>';}
+  // Same math as the trade analyzer: FFCalc.trade (side value with depth discount, fair = within 5%).
+  function find(){
+    var X=sel, xv=val(X), min=xv*0.25;
+    var cand=D.players.filter(function(p){return p.id!==X.id&&p.v1&&val(p)>0&&(!pos||p.pos===pos);});
+    function check(ps){
+      var vs=ps.map(val), t=mode==='give'?FFCalc.trade([xv],vs):FFCalc.trade(vs,[xv]);
+      return Math.abs(t.gapPct)<=5?{ps:ps,t:t}:null;
+    }
+    var singles=[], pairs=[], r;
+    cand.forEach(function(p){ if(r=check([p])) singles.push(r); });
+    var big=cand.filter(function(p){return val(p)>=min&&val(p)<=xv*1.05;});
+    for(var i=0;i<big.length;i++) for(var j=i+1;j<big.length;j++){ if(r=check([big[i],big[j]])) pairs.push(r); }
+    var gap=function(r){return Math.abs(r.t.gapPct);}, by=function(a,b){return gap(a)-gap(b);};
+    singles.sort(by); pairs.sort(by);
+    var used={}, pp=[];
+    pairs.forEach(function(r){
+      if(pp.length>=12||r.ps.some(function(p){return (used[p.id]||0)>=2;})) return;
+      r.ps.forEach(function(p){used[p.id]=(used[p.id]||0)+1;}); pp.push(r);
+    });
+    var s=singles.slice(0,6), q=pp.slice(0,6);
+    if(s.length<6) q=pp.slice(0,12-s.length); else if(q.length<6) s=singles.slice(0,12-q.length);
+    return {s:s,q:q};
+  }
+  function link(r){
+    var ids=r.ps.map(function(p){return p.id;}).join(',');
+    return '../trade-analyzer/?a='+(mode==='give'?sel.id:ids)+'&b='+(mode==='give'?ids:sel.id)+(sf?'&sf=1':'');
+  }
+  function rows(list){
+    return '<div class="table-scroll"><table><thead><tr><th scope="col" style="text-align:left">'+(mode==='give'?'You get':'You give')+'</th><th scope="col">Value</th><th scope="col">Gap</th><th scope="col"></th></tr></thead><tbody>'+
+    list.map(function(r){
+      var mine=mode==='give'?r.t.a:r.t.b, theirs=mode==='give'?r.t.b:r.t.a, d=r.t.gapPct, ahead=mode==='give'?d<0:d>0;
+      var g=d===0?'Even':Math.abs(d).toFixed(1)+'%'+(ahead?' <span class="badge good">in your favor</span>':' <span class="badge warn">against you</span>');
+      return '<tr><td style="text-align:left">'+r.ps.map(piece).join('')+'</td><td>'+fmt(theirs)+' vs '+fmt(mine)+'</td><td>'+g+'</td><td><a href="'+link(r)+'">Open in trade analyzer</a></td></tr>';
+    }).join('')+'</tbody></table></div>';
+  }
+  function render(){
+    var out=$('tfOut'); if(!D) return;
+    var u=new URLSearchParams(); if(sel) u.set('p',sel.id); if(mode!=='give') u.set('m',mode); if(sf) u.set('sf','1'); if(pos) u.set('pos',pos);
+    history.replaceState(null,'',location.pathname+(u.toString()?'?'+u:''));
+    $('tfChip').innerHTML=sel?'<span class="chip">'+tag(sel)+' '+esc(sel.n)+' <span class="hint-inline">'+fmt(val(sel))+'</span> <button type="button" class="icon-btn" id="tfClear" aria-label="Clear player"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></span>':'';
+    if($('tfClear')) $('tfClear').onclick=function(){sel=null;render();};
+    if(!sel){ out.innerHTML='<p class="hint">Pick a player to see fair packages.</p>'; return; }
+    var f=find(), n=f.s.length+f.q.length, who=esc(sel.n);
+    if(!n){ out.innerHTML='<div class="verdict warn"><span class="vicon"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg></span><div><strong class="big">No fair match'+(pos?' at '+pos:'')+'</strong><span>Nothing lands within 5% of '+who+'.'+(pos?' Try all positions.':' Try the trade analyzer with a pick.')+'</span></div></div>'; return; }
+    var h='<div class="verdict good"><span class="vicon"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg></span><div><strong class="big">'+n+' fair '+(mode==='give'?'returns for ':'prices for ')+who+'</strong><span>'+(sf?'Superflex':'1QB')+' value '+fmt(val(sel))+'. Every package is within 5%.</span></div></div>';
+    if(f.s.length) h+='<h3 style="margin-top:14px">1-for-1 swaps</h3>'+rows(f.s);
+    if(f.q.length) h+='<h3 style="margin-top:14px">2-for-1 packages</h3>'+rows(f.q);
+    out.innerHTML=h;
+  }
+  function seg(id,cb){ var el=$(id); el.addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; setSeg(id,b.dataset.v); cb(b.dataset.v); }); }
+  function setSeg(id,v){ $(id).querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.v===String(v)?'true':'false');}); }
+  seg('tfMode',function(v){mode=v;render();}); seg('tfFmt',function(v){sf=+v;render();}); $('tfPos').addEventListener('change',function(){pos=this.value;render();});
+  var inp=$('tfSearch'), list=$('tfList'), act=-1, shown=[];
+  function open(items){
+    shown=items; act=-1;
+    list.innerHTML=items.map(function(p,i){return '<li role="option" id="tfo'+i+'" data-i="'+i+'"><span>'+tag(p)+' '+esc(p.n)+'</span><span class="hint-inline">'+(p.team||'FA')+'</span></li>';}).join('');
+    list.hidden=!items.length; inp.setAttribute('aria-expanded',items.length?'true':'false');
+  }
+  function pick(p){ sel=p; inp.value=''; open([]); render(); }
+  inp.addEventListener('input',function(){
+    var q=norm(inp.value).trim(); if(!q){open([]);return;}
+    open(D.players.filter(function(p){return p.v1&&p._s.indexOf(q)>=0;}).sort(function(a,b){return b.v1-a.v1;}).slice(0,8));
+  });
+  inp.addEventListener('keydown',function(e){
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){
+      if(!shown.length) return; e.preventDefault(); act=(act+(e.key==='ArrowDown'?1:-1)+shown.length)%shown.length;
+      list.querySelectorAll('li').forEach(function(li,i){li.setAttribute('aria-selected',i===act?'true':'false');}); inp.setAttribute('aria-activedescendant','tfo'+act);
+    } else if(e.key==='Enter'){ e.preventDefault(); if(shown.length) pick(shown[act<0?0:act]); }
+    else if(e.key==='Escape') open([]);
+  });
+  list.addEventListener('mousedown',function(e){ var li=e.target.closest('li'); if(li){ e.preventDefault(); pick(shown[+li.dataset.i]); } });
+  inp.addEventListener('blur',function(){ open([]); });
+  Promise.all([
+    fetch('../data/players.json').then(function(r){if(!r.ok) throw 0; return r.json();}),
+    fetch('../data/pages.json').then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
+  ]).then(function(res){
+    D=res[0]; res[1].forEach(function(p){PAGES[p.slug]=1;});
+    D.players.forEach(function(p){p._s=norm(p.n+' '+(p.team||'')); BY[p.id]=p;});
+    var vd=D.valuesDate||D.generated, dt=new Date(/^\d{4}-\d{2}-\d{2}$/.test(vd)?vd+'T12:00:00':vd);
+    if(!isNaN(dt)) $('vd').textContent=dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    var P=new URLSearchParams(location.search);
+    if(P.get('m')==='get'){mode='get'; setSeg('tfMode','get');}
+    if(P.get('sf')==='1'){sf=1; setSeg('tfFmt',1);}
+    if(['QB','RB','WR','TE'].indexOf(P.get('pos'))>=0){pos=P.get('pos'); $('tfPos').value=pos; document.querySelector('details.adv').open=true;}
+    if(BY[P.get('p')]&&BY[P.get('p')].v1) sel=BY[P.get('p')];
+    inp.disabled=false; render();
+  }).catch(function(){ $('tfOut').innerHTML='<div class="alert err"><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg><div>Player data didn\'t load. Check your connection, then refresh.</div></div>'; });
+})();
+</script>
+</body>
+</html>
