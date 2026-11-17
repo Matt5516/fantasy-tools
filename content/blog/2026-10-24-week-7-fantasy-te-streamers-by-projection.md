@@ -25,7 +25,7 @@ The top three are not streamers. George Kittle (16.6), Brock Bowers (16.1) and T
 | [Tyler Higbee](/start-or-sit-tyler-higbee/) (LAR) | 33 | **251** | 9.7 | 8.4 | 9.7 | 942,579 | — |
 | [T.J. Hockenson](/dynasty-value-t-j-hockenson/) (MIN) | 29 | **371** | 9.6 | 9.8 | 9.9 | — | Questionable |
 | [Hunter Henry](/dynasty-value-hunter-henry/) (NE) | 31 | **254** | 9.5 | 9.7 | 14.1 | 198,006 | — |
-| [Mark Andrews](/dynasty-value-mark-andrews/) (BAL) | 31 | **298** | 9.4 | 7.5 | 6.6 | 132,066 | — |
+| Mark Andrews (BAL) | 31 | **298** | 9.4 | 7.5 | 6.6 | 132,066 | — |
 | [Dalton Schultz](/dynasty-value-dalton-schultz/) (HOU) | 30 | **236** | 8.8 | 9.3 | 5.4 | — | Questionable |
 | [Kyle Pitts Sr.](/dynasty-value-kyle-pitts-sr/) (ATL) | 26 | **1,123** | 8.7 | 8.3 | 15.3 | 595,280 | — |
 

@@ -27,7 +27,7 @@ Three more tight ends in range have no Week 8 projection: Juwan Johnson, Terranc
 | [Jake Ferguson](/dynasty-value-jake-ferguson/) (DAL) | 27 | **455** | 9.8 | 6.4 | 2.7 | 142,490 | — |
 | [Hunter Henry](/dynasty-value-hunter-henry/) (NE) | 31 | **276** | 9.6 | 9.7 | 14.1 | 318,978 | — |
 | [Pat Freiermuth](/dynasty-value-pat-freiermuth/) (PIT) | 28 | **287** | 9.4 | 9.6 | 9.5 | — | — |
-| [Mark Andrews](/dynasty-value-mark-andrews/) (BAL) | 31 | **318** | 9 | 7.2 | 3.8 | 119,052 | — |
+| Mark Andrews (BAL) | 31 | **318** | 9 | 7.2 | 3.8 | 119,052 | — |
 | [AJ Barner](/dynasty-value-aj-barner/) (SEA) | 24 | **240** | 8.4 | 6.2 | 6.1 | 159,048 | — |
 | [Kyle Pitts Sr.](/dynasty-value-kyle-pitts-sr/) (ATL) | 26 | **1,153** | 8.1 | 9 | 17.1 | 208,271 | — |
 
