@@ -30,7 +30,7 @@ Strange and Henry tie at 9.9, so season PPG breaks the tie.
 | [Chig Okonkwo](/dynasty-value-chig-okonkwo/) (WAS) | 27 | **363** | 8.7 | 7.3 | 7.1 | — | Questionable |
 | [Kyle Pitts Sr.](/dynasty-value-kyle-pitts-sr/) (ATL) | 26 | **1,276** | 8.6 | 7.9 | 7 | 46,774 | — |
 | [Juwan Johnson](/dynasty-value-juwan-johnson/) (NO) | 30 | **265** | 8.5 | 9.9 | 4.4 | — | — |
-| [AJ Barner](/dynasty-value-aj-barner/) (SEA) | 24 | **203** | 7.7 | 7 | 9.3 | 54,474 | — |
+| AJ Barner (SEA) | 24 | **203** | 7.7 | 7 | 9.3 | 54,474 | — |
 | [Michael Mayer](/dynasty-value-michael-mayer/) (LV) | 25 | **399** | 6.1 | 9.1 | 7.1 | — | — |
 
 **Travis Kelce** tops the pool at 12.3, 2.4 points clear of the next name, with 12.4 per game on the season and 12.5 over his last three, the best recent average of the ten. He is also 37, the oldest of the ten, and has no injury tag. Kelce is the only one of the ten projected for 10 or more.

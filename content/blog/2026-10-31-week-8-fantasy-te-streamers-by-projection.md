@@ -28,7 +28,7 @@ Three more tight ends in range have no Week 8 projection: Juwan Johnson, Terranc
 | [Hunter Henry](/dynasty-value-hunter-henry/) (NE) | 31 | **276** | 9.6 | 9.7 | 14.1 | 318,978 | — |
 | [Pat Freiermuth](/dynasty-value-pat-freiermuth/) (PIT) | 28 | **287** | 9.4 | 9.6 | 9.5 | — | — |
 | Mark Andrews (BAL) | 31 | **318** | 9 | 7.2 | 3.8 | 119,052 | — |
-| [AJ Barner](/dynasty-value-aj-barner/) (SEA) | 24 | **240** | 8.4 | 6.2 | 6.1 | 159,048 | — |
+| AJ Barner (SEA) | 24 | **240** | 8.4 | 6.2 | 6.1 | 159,048 | — |
 | [Kyle Pitts Sr.](/dynasty-value-kyle-pitts-sr/) (ATL) | 26 | **1,153** | 8.1 | 9 | 17.1 | 208,271 | — |
 
 **Travis Kelce** tops the pool at 11.4, but he is 37, the oldest of the ten, and listed Questionable. He scores 11.7 per game and 7.1 over his last three, so the projection sits just under the season line and well above the recent one. Only play him if the status clears.
