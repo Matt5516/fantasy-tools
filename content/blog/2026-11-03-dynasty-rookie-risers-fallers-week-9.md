@@ -72,9 +72,9 @@ The draft market below is Sleeper dynasty ADP. FFC had no dynasty data on Nov 3,
 | [Chris Bell](/dynasty-value-chris-bell/) (MIA) | 638 | 482 | -24% | **476** | 7 | 4.2 |
 | [Ja'Kobi Lane](/dynasty-value-ja-kobi-lane/) (BAL) | 310 | 227 | -27% | **234** | 4 | 4.5 |
 | [Emmett Johnson](/dynasty-value-emmett-johnson/) (KC) | 372 | 63 | -83% | **260** | 7 | 7.3 |
-| [Eli Stowers](/dynasty-value-eli-stowers/) (PHI) | 496 | 2 | -100% | **284** | 2 | 4.2 |
+| Eli Stowers (PHI) | 496 | 2 | -100% | **284** | 2 | 4.2 |
 
-Plus signs are sell-side, minus signs buy-side. [Germie Bernard](/dynasty-value-germie-bernard/) shows the widest premium in this table at +621%, and [Jonah Coleman](/dynasty-value-jonah-coleman/) is next at +426%. In both cases the market is the one paying it. [Mike Washington Jr.](/start-or-sit-mike-washington-jr/) sits at +223%. On the other side, [Eli Stowers](/dynasty-value-eli-stowers/) is priced -100% against the experts, and [Emmett Johnson](/dynasty-value-emmett-johnson/) -83%. When experts and market split this far, the final price tends to land somewhere in between, so decide which side you trust before you trade.
+Plus signs are sell-side, minus signs buy-side. [Germie Bernard](/dynasty-value-germie-bernard/) shows the widest premium in this table at +621%, and [Jonah Coleman](/dynasty-value-jonah-coleman/) is next at +426%. In both cases the market is the one paying it. [Mike Washington Jr.](/start-or-sit-mike-washington-jr/) sits at +223%. On the other side, Eli Stowers is priced -100% against the experts, and [Emmett Johnson](/dynasty-value-emmett-johnson/) -83%. When experts and market split this far, the final price tends to land somewhere in between, so decide which side you trust before you trade.
 
 ## What to do with this
 

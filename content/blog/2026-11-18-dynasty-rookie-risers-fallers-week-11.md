@@ -42,7 +42,7 @@ This is the Week 11 rookie board, with a twist: every rookie is priced against t
 |---|---|---|---|---|---|---|---|---|
 | [Germie Bernard](/dynasty-value-germie-bernard/) (PIT) | WR / 22 | 8 to 15 | 1,453 | **638** | 427 | -815 (-56.1%) | 9 | 7.5 / 4.9 |
 | [Chris Bell](/dynasty-value-chris-bell/) (MIA) | WR / 22 | 16 to 17 | 346 | **314** | 231 | -32 (-9.2%) | 8 | 3.7 / 4.1 |
-| [Eli Stowers](/dynasty-value-eli-stowers/) (PHI) | TE / 23 | 18 to 19 | 256 | **238** | 189 | -18 (-7.0%) | 3 | 2.8 / 2.8 |
+| Eli Stowers (PHI) | TE / 23 | 18 to 19 | 256 | **238** | 189 | -18 (-7.0%) | 3 | 2.8 / 2.8 |
 | [Jadarian Price](/dynasty-value-jadarian-price/) (SEA) | RB / 23 | 11 to 10 | 922 | **919** | 691 | -3 (-0.3%) | 6 | 7.2 / 9.6 |
 
 **[Germie Bernard](/dynasty-value-germie-bernard/) (PIT).** Down 815 (-56.1%) to 638, the biggest drop in the class by points and by percent. A week ago he was a riser at 1,453. He has 9 games, 7.5 PPG and 4.9 over the last three. Experts have him at 727 and Sleeper at 359.

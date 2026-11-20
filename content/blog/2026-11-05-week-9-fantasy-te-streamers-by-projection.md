@@ -27,7 +27,7 @@ One in-range tight end has no Week 9 projection: Pat Freiermuth. Treat that as m
 | [Dallas Goedert](/dynasty-value-dallas-goedert/) (PHI) | 31 | **485** | 9.9 | 10.7 | 9.7 | — | — |
 | [Brenton Strange](/dynasty-value-brenton-strange/) (JAX) | 25 | **643** | 9.8 | 9.6 | 10.2 | 66,312 | — |
 | [Kyle Pitts Sr.](/dynasty-value-kyle-pitts-sr/) (ATL) | 26 | **1,213** | 9.5 | 8.2 | 12.9 | — | — |
-| [Dalton Schultz](/dynasty-value-dalton-schultz/) (HOU) | 30 | **290** | 8.6 | 9.3 | 7.6 | — | — |
+| Dalton Schultz (HOU) | 30 | **290** | 8.6 | 9.3 | 7.6 | — | — |
 | [Jake Ferguson](/dynasty-value-jake-ferguson/) (DAL) | 27 | **431** | 8.3 | 5.6 | 2.7 | — | Questionable |
 | [Chig Okonkwo](/dynasty-value-chig-okonkwo/) (WAS) | 27 | **306** | 8.3 | 6.6 | 9 | — | — |
 
