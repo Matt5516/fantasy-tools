@@ -48,14 +48,14 @@ The rule is simple. **Backed** means a Week 10 projection of 8 points or more. *
 | [Jordan Watkins](/start-or-sit-jordan-watkins/) | WR / SF | 75K | 157K | 2 | 2.5 (3 wk) | 6.4 | 10.1 |
 | [Shedeur Sanders](/start-or-sit-shedeur-sanders/) | QB / CLE | 70K | 141K | — | 15.3 (1 wk) | 7.6 | 7.6 |
 | [Pat Bryant](/start-or-sit-pat-bryant/) | WR / DEN | 60K | 97K | — | 18.7 (2 wk) | 9.5 | 12.6 |
-| [Gregory Desrosiers](/start-or-sit-gregory-desrosiers/) | RB / NYG | 57K | 244K | — | — | 2 | — |
+| Gregory Desrosiers | RB / NYG | 57K | 244K | — | — | 2 | — |
 | [Seth McGowan](/start-or-sit-seth-mcgowan/) | RB / IND | 52K | 89K | 5 | 14.9 (3 wk) | 3.6 | 6.6 |
 
 These 10 players pulled 1.35M adds in 24 hours. The 11 backed players pulled 1.39M. Almost nothing separates the two piles by adds, and that is the point of this piece.
 
 **Two names say it loudest.** Tank Dell has 391K adds in 24 hours, the most of any hype add and second on the whole list. His projection is 2.7, and his next-three sum is 8.4 over 3 weeks. He has played 2 games and averaged 13. [Audric Estime](/start-or-sit-audric-estime/) is next with 320K adds, a projection of 2.4 and the same 2 games played. [Jordan Watkins](/start-or-sit-jordan-watkins/) is projected at 2, the lowest projection of any added player who has one.
 
-**Missing projections.** 5 of the 25 have no Week 10 projection in our data: Darius Cooper, Kenny Gainwell, Shedeur Sanders, Pat Bryant and Gregory Desrosiers. We won't guess a number for them. [Pat Bryant](/start-or-sit-pat-bryant/) has 18.7 projected over the next 2 weeks, but that is only two weeks of projections and 5 games played. [Gregory Desrosiers](/start-or-sit-gregory-desrosiers/) has 1 game played and no projection for any week.
+**Missing projections.** 5 of the 25 have no Week 10 projection in our data: Darius Cooper, Kenny Gainwell, Shedeur Sanders, Pat Bryant and Gregory Desrosiers. We won't guess a number for them. [Pat Bryant](/start-or-sit-pat-bryant/) has 18.7 projected over the next 2 weeks, but that is only two weeks of projections and 5 games played. Gregory Desrosiers has 1 game played and no projection for any week.
 
 **The bait is the add count.** [Corey Kiner](/start-or-sit-corey-kiner/) has 161K adds and a projection of 5. A big add count is not a projection.
 
