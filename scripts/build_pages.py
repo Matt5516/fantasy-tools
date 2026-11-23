@@ -372,6 +372,36 @@ if WEEK and all(ROS_BY.get(k) and len(ROS_BY[k]) >= 5 for k in ('QB', 'RB', 'WR'
           ros_table(flex) + ROS_METHOD + f'<p>By position: {ROS_LINKS}. Week {WEEK} specifics: <a href="../week-{WEEK}-start-sit/">start/sit cheat sheet</a> and <a href="../week-{WEEK}-waiver-wire/">waiver wire</a>. Dynasty league? See <a href="../dynasty-rankings/">dynasty rankings</a> and <a href="../dynasty-buy-low-sell-high/">buy-low/sell-high targets</a>.</p><p class="hint">Projections: Sleeper public API. Production: nflverse (CC BY 4.0). Updated {genh}.</p>' + faq_html(faqs),
           cta=('Compare two players', ''), cta_text='Stuck between two players? Compare up to 4.', ld_extra=[faq_ld(faqs), itemlist([p for s, p in flex], 'Rest of season rankings (RB, WR, TE)')], featured=True)
 
+# ---- fantasy points allowed by position (defense vs position): nflverse weekly stats, PPR, cached in data/ ----
+import fpa as FPA
+FPA_NAMES = {'ARI': 'Cardinals', 'ATL': 'Falcons', 'BAL': 'Ravens', 'BUF': 'Bills', 'CAR': 'Panthers', 'CHI': 'Bears', 'CIN': 'Bengals', 'CLE': 'Browns', 'DAL': 'Cowboys', 'DEN': 'Broncos', 'DET': 'Lions',
+             'GB': 'Packers', 'HOU': 'Texans', 'IND': 'Colts', 'JAX': 'Jaguars', 'KC': 'Chiefs', 'LA': 'Rams', 'LAR': 'Rams', 'LAC': 'Chargers', 'LV': 'Raiders', 'MIA': 'Dolphins', 'MIN': 'Vikings', 'NE': 'Patriots',
+             'NO': 'Saints', 'NYG': 'Giants', 'NYJ': 'Jets', 'PHI': 'Eagles', 'PIT': 'Steelers', 'SEA': 'Seahawks', 'SF': '49ers', 'TB': 'Buccaneers', 'TEN': 'Titans', 'WAS': 'Commanders'}
+FPA_SLUG = 'fantasy-points-allowed'
+FPA_D = FPA.load(SEASON) if SEASON else None
+if FPA_D and len(FPA_D['teams']) >= 28:
+    fpa_wk = FPA_D['weeks']; sections = ''; soft = {}; faqs = []
+    POSW = {'QB': 'quarterbacks', 'RB': 'running backs', 'WR': 'wide receivers', 'TE': 'tight ends'}
+    for pos in ('QB', 'RB', 'WR', 'TE'):
+        rows = sorted(((v[pos][0], t) for t, v in FPA_D['teams'].items()), key=lambda r: (-r[0], r[1]))
+        soft[pos] = rows[0]; hard = rows[-1]; avg = sum(r[0] for r in rows) / len(rows)
+        ftr = ''.join(f'<tr><td>{i+1}</td><td style="text-align:left"><strong>{E(FPA_NAMES.get(t, t))}</strong> <span class="hint" style="display:inline">{E(t)}</span></td><td><b>{a:.1f}</b></td><td>{a - avg:+.1f}</td><td>{FPA_D["teams"][t][pos][1]}</td></tr>' for i, (a, t) in enumerate(rows))
+        sections += (f'<h2 id="{pos.lower()}">{pos}: fantasy points allowed per game</h2>'
+                     f'<p>{E(FPA_NAMES.get(rows[0][1], rows[0][1]))} give up the most to {POSW[pos]} ({rows[0][0]:.1f}). {E(FPA_NAMES.get(hard[1], hard[1]))} give up the fewest ({hard[0]:.1f}). League average: {avg:.1f}.</p>'
+                     f'<div class="table-scroll"><table><thead><tr><th scope="col">Rank</th><th scope="col" style="text-align:left">Defense</th><th scope="col">PPR pts allowed/game</th><th scope="col">vs avg</th><th scope="col">Games</th></tr></thead><tbody>{ftr}</tbody></table></div>')
+        faqs.append((f'Which defense allows the most fantasy points to {POSW[pos]} in {SEASON}?', f'The {FPA_NAMES.get(rows[0][1], rows[0][1])} allow {rows[0][0]:.1f} PPR points per game to {pos}s, the most in the league through Week {fpa_wk}. The {FPA_NAMES.get(hard[1], hard[1])} allow the fewest at {hard[0]:.1f}.'))
+    faqs.append(('What does rank 1 mean?', 'Rank 1 is the defense that allows the most PPR points per game to that position, so it is the best matchup for your player. Rank 32 is the toughest.'))
+    faqs.append(('How should I use defense vs position?', 'Use it as a tiebreaker, not a trump card. Start your studs regardless of matchup, and let a soft defense break ties between close options in the start/sit tool.'))
+    nm = lambda p: FPA_NAMES.get(soft[p][1], soft[p][1])
+    ans = (f'The softest defenses in {SEASON}: <strong>{nm("QB")}</strong> against QBs ({soft["QB"][0]:.1f} PPR points per game), <strong>{nm("RB")}</strong> against RBs ({soft["RB"][0]:.1f}), '
+           f'<strong>{nm("WR")}</strong> against WRs ({soft["WR"][0]:.1f}) and <strong>{nm("TE")}</strong> against TEs ({soft["TE"][0]:.1f}). Through Week {fpa_wk}, {SEASON} season. Source: nflverse.')
+    body = (f'<p>Rank 1 allows the most points, so it is your best matchup. Jump to <a href="#qb">QB</a> · <a href="#rb">RB</a> · <a href="#wr">WR</a> · <a href="#te">TE</a>.</p>' + sections
+            + f'<p>Put it to work: the <a href="../week-{WEEK}-start-sit/">Week {WEEK} start/sit cheat sheet</a>, the <a href="../start-sit/">start/sit tool</a> and the <a href="../rest-of-season-rankings/">rest of season rankings</a>.</p>'
+            + f'<p class="hint">Through Week {fpa_wk}, {SEASON} season. Source: nflverse (CC BY 4.0).</p>' + faq_html(faqs))
+    write(FPA_SLUG, 'Weekly start/sit', 'Fantasy points allowed', f'Fantasy Points Allowed by Position {SEASON}: Defense vs Position',
+          f'Fantasy points allowed by position {SEASON}: every NFL defense ranked against QB, RB, WR and TE in PPR points per game. Softest matchups first. Through Week {fpa_wk}.',
+          f'Fantasy points allowed by position ({SEASON})', 'Defense vs position, ranked. Rank 1 is the softest matchup.', ans, body,
+          cta=('Compare two players', ''), cta_text='Got a matchup call? Compare your options.', featured=True, ld_extra=[faq_ld(faqs)])
 # ---- weekly position rankings (targets "week N rb rankings", "week N flex rankings", "week N kicker rankings", "week N defense streamers") ----
 # Rolls with the same WEEK as week-N-start-sit; older weeks become redirect stubs. Data: Sleeper weekly projections (data/players.json: players, kd, opp).
 import rankings as RK
@@ -854,7 +884,7 @@ print(f'fantasy data pages: {len(PAGES)} generated + {len(statics)} static + gui
 if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
     def _wk(pre, td=False):
         w = f'<a href="{pre}week-{WEEK}-waiver-wire/"><strong>Week {WEEK} waiver wire</strong> (trending adds by position) →</a>' if (ROOT / WAIVER_SLUG).exists() else ''
-        ex = ' · '.join(f'<a href="{pre}{s}/">{l}</a>' for s, l in [('rest-of-season-rankings', 'Rest of season rankings'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high'), ('dynasty-rookie-rankings', 'Rookie rankings')] if (ROOT / s).exists())
+        ex = ' · '.join(f'<a href="{pre}{s}/">{l}</a>' for s, l in [('rest-of-season-rankings', 'Rest of season rankings'), (FPA_SLUG, 'Fantasy points allowed by position'), ('dynasty-buy-low-sell-high', 'Dynasty buy-low/sell-high'), ('dynasty-rookie-rankings', 'Rookie rankings')] if (ROOT / s).exists())
         if td and (ROOT / 'trade-deadline').exists(): ex = ' · '.join(x for x in [f'<a href="{pre}trade-deadline/">Trade deadline targets</a>', ex] if x)
         rk = f'<p class="hint" style="margin:6px 0 0"><strong>This week’s rankings:</strong> {rk_block(pre)}</p>' if RK_SLUGS else ''
         return f'<!--wk--><p class="hint" style="margin:10px 0 0"><a href="{pre}week-{WEEK}-start-sit/"><strong>Week {WEEK} start/sit cheat sheet</strong> (every position, one page) →</a>' + (' · ' + w if w else '') + '</p>' + rk + (f'<p class="hint" style="margin:6px 0 0">{ex}</p>' if ex else '') + '<!--/wk-->'
@@ -865,6 +895,14 @@ if WEEK and (ROOT / f'week-{WEEK}-start-sit').exists():
         h = re.sub(r'<!--wk-->.*?<!--/wk-->', '', f.read_text(), flags=re.S)
         if rel == 'index.html': h = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + _wk(pre, td), h, count=1, flags=re.S); f.write_text(h); continue
         h = h.replace('<main id="main"><div class="wrap">', '<main id="main"><div class="wrap">' + _wk(pre, td), 1)
+        f.write_text(h)
+# ---- one-line link to defense vs position from this week's defense rankings and the start/sit position pages (idempotent) ----
+if (ROOT / FPA_SLUG).exists():
+    for rel in [f'{RK_SLUGS["defense"]}/index.html'] * ('defense' in RK_SLUGS) + [f'start-sit-{k}/index.html' for k in ('qb', 'rb', 'wr', 'te', 'flex')]:
+        f = ROOT / rel
+        if not f.exists(): continue
+        h = re.sub(r'<!--fpa-->.*?<!--/fpa-->', '', f.read_text(), flags=re.S)
+        h = h.replace('<main id="main"><div class="wrap">', '<main id="main"><div class="wrap"><!--fpa--><p class="hint" style="margin:10px 0 0">Which defenses give up the most points? See <a href="../' + FPA_SLUG + '/"><strong>fantasy points allowed by position</strong></a>.</p><!--/fpa-->', 1)
         f.write_text(h)
 # ---- blog entry points on every page: nav + footer links, and a "Latest articles" block on the home page (idempotent) ----
 if ARTS:
