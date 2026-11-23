@@ -23,7 +23,7 @@ The rule: players valued at 1,000 or more on either date, ranked by raw points g
 | [Bhayshul Tuten](/dynasty-value-bhayshul-tuten/) (JAX) | RB11 / 23 | **4,197** | +1,223 (+41.1%) | 15.9 / 21.2 | **Hold** |
 | [Jayden Daniels](/dynasty-value-jayden-daniels/) (WAS) | QB8 / 25 | **3,782** | +1,056 (+38.7%) | 19.2 / 16.8 | **Hold** |
 | [Bryce Young](/dynasty-value-bryce-young/) (CAR) | QB11 / 25 | **2,243** | +1,053 (+88.5%) | 19.1 / 12 | **Sell** |
-| [Drew Lock](/dynasty-value-drew-lock/) (SEA, Questionable) | QB20 / 29 | **1,044** | +1,029 (+6,860.0%) | 15.6 / 15.6 | **Sell** |
+| Drew Lock (SEA, Questionable) | QB20 / 29 | **1,044** | +1,029 (+6,860.0%) | 15.6 / 15.6 | **Sell** |
 | [Jaylen Warren](/dynasty-value-jaylen-warren/) (PIT) | RB17 / 28 | **3,061** | +933 (+43.8%) | 17.6 / 15.9 | **Sell** |
 | [Matthew Golden](/dynasty-value-matthew-golden/) (GB) | WR17 / 23 | **4,904** | +873 (+21.7%) | 18.2 / 21.1 | **Hold** |
 | [Malik Nabers](/dynasty-value-malik-nabers/) (NYG) | WR6 / 23 | **7,881** | +847 (+12.0%) | 16.2 / 18.6 | **Hold** |
@@ -33,7 +33,7 @@ These 10 added 10,975 points between them. [Jeremiyah Love](/dynasty-value-jerem
 
 **4 of the 10 carry a sell flag.** That means the draft market sits at least 35% above the experts. [D'Andre Swift](/dynasty-value-d-andre-swift/) is up 1,380 (53.4%) to 3,966. The market has him at 6,593 against 2,144 from the experts, 208% higher. [Bryce Young](/dynasty-value-bryce-young/) went up 1,053 (88.5%) to 2,243 with a market of 3,664 and experts at 738. [Jaylen Warren](/dynasty-value-jaylen-warren/) is the same story: market 4,881, experts 1,667. When the price runs past the experts, you sell into it.
 
-[Drew Lock](/dynasty-value-drew-lock/) is the percentage leader. He went from 15 to 1,044, +1,029 (+6,860.0%), is listed Questionable and has played 3 games. Sample is thin. The experts sit at 30. Treat it as a spike, not a trend.
+Drew Lock is the percentage leader. He went from 15 to 1,044, +1,029 (+6,860.0%), is listed Questionable and has played 3 games. Sample is thin. The experts sit at 30. Treat it as a spike, not a trend.
 
 **The clean risers.** [Bhayshul Tuten](/dynasty-value-bhayshul-tuten/) is up 1,223 (41.1%) to 4,197 with no flag, 15.9 PPG on the year and 21.2 over his last three. [Jayden Daniels](/dynasty-value-jayden-daniels/) is up 1,056 (38.7%) to 3,782, and in superflex he is worth 6,619. Both are holds: the price moved and the market and experts still agree.
 

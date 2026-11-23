@@ -39,7 +39,7 @@ Brock Purdy lost ground among the elite. He was sixth overall on Nov 7 and is te
 |---|---|---|---|---|---|---|---|
 | [Tyler Shough](/dynasty-value-tyler-shough/) | NO | **1,415** | +488 | 4,522 | +1,571 (+53.2%) | 55 to 35 | Active |
 | [Bryce Young](/dynasty-value-bryce-young/) | CAR | **2,208** | +1,044 | 4,846 | +1,488 (+44.3%) | 48 to 30 | Active |
-| [Aaron Rodgers](/dynasty-value-aaron-rodgers/) | PIT | **528** | +352 | 2,084 | +1,336 (+178.6%) | 122 to 74 | Active |
+| Aaron Rodgers | PIT | **528** | +352 | 2,084 | +1,336 (+178.6%) | 122 to 74 | Active |
 | [C.J. Stroud](/dynasty-value-c-j-stroud/) | HOU | **2,118** | +241 | 5,599 | +1,136 (+25.5%) | 32 to 20 | Active |
 | Jacoby Brissett | BAL | 115 | -1,025 | 473 | -2,029 (-81.1%) | 68 to 151 | Active |
 | [Kyler Murray](/dynasty-value-kyler-murray/) | MIN | **286** | -469 | 1,143 | -1,493 (-56.6%) | 64 to 102 | Doubtful |
@@ -59,7 +59,7 @@ The gap is the extra value a second QB slot adds. These are the five biggest mul
 | Player | 1QB value | Superflex value | Premium | Extra value in superflex |
 |---|---|---|---|---|
 | [Baker Mayfield](/dynasty-value-baker-mayfield/) | **334** | 1,904 | 5.7x | +1,570 |
-| [Aaron Rodgers](/dynasty-value-aaron-rodgers/) | **528** | 2,084 | 3.9x | +1,556 |
+| Aaron Rodgers | **528** | 2,084 | 3.9x | +1,556 |
 | [Malik Willis](/dynasty-value-malik-willis/) | **658** | 2,577 | 3.9x | +1,919 |
 | [Matthew Stafford](/dynasty-value-matthew-stafford/) | **507** | 1,985 | 3.9x | +1,478 |
 | [Justin Herbert](/dynasty-value-justin-herbert/) | **677** | 2,621 | 3.9x | +1,944 |

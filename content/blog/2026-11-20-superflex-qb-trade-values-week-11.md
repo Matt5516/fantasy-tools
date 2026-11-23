@@ -62,7 +62,7 @@ The gap is the extra value a second QB slot adds. These are the five biggest mul
 | [Cam Ward](/dynasty-value-cam-ward/) | **583** | 2,288 | 3.9x | +1,705 |
 | [Jaxson Dart](/dynasty-value-jaxson-dart/) | **933** | 3,621 | 3.9x | +2,688 |
 | [Jared Goff](/dynasty-value-jared-goff/) | **892** | 3,434 | 3.8x | +2,542 |
-| [Drew Lock](/dynasty-value-drew-lock/) | **480** | 1,836 | 3.8x | +1,356 |
+| Drew Lock | **480** | 1,836 | 3.8x | +1,356 |
 | [Joe Burrow](/dynasty-value-joe-burrow/) | **5,872** | 9,398 | 1.6x | +3,526 |
 
 Fernando Mendoza has the biggest premium at 4.1x (485 to 2,000). Joe Burrow has the smallest of the 24 at 1.6x, because his 1QB value is already high. Lamar Jackson adds the most raw value in superflex: 3,989 points, and he is listed IR.

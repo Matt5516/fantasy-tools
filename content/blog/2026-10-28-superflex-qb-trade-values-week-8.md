@@ -42,7 +42,7 @@ Lamar Jackson is listed Out, and his superflex value is down 414 since Oct 22 (f
 | [Baker Mayfield](/dynasty-value-baker-mayfield/) | TB | **595** | +164 | 2,749 | +935 (+51.5%) | Active |
 | [Trevor Lawrence](/dynasty-value-trevor-lawrence/) | JAX | **3,596** | +517 | 6,977 | +818 (+13.3%) | Active |
 | [Bo Nix](/dynasty-value-bo-nix/) | DEN | **965** | -1,354 | 3,278 | -2,038 (-38.3%) | Active |
-| [Aaron Rodgers](/dynasty-value-aaron-rodgers/) | PIT | **183** | -356 | 727 | -1,036 (-58.8%) | Active |
+| Aaron Rodgers | PIT | **183** | -356 | 727 | -1,036 (-58.8%) | Active |
 | [Caleb Williams](/dynasty-value-caleb-williams/) | CHI | **2,754** | -393 | 5,528 | -934 (-14.5%) | Active |
 | [Jaxson Dart](/dynasty-value-jaxson-dart/) | NYG | **978** | -447 | 3,562 | -923 (-20.6%) | IR |
 
