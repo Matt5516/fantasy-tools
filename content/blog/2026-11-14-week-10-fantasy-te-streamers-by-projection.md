@@ -29,7 +29,7 @@ Strange and Henry tie at 9.9, so season PPG breaks the tie.
 | [Pat Freiermuth](/dynasty-value-pat-freiermuth/) (PIT) | 28 | **319** | 8.9 | 9.9 | 6.2 | — | — |
 | [Chig Okonkwo](/dynasty-value-chig-okonkwo/) (WAS) | 27 | **363** | 8.7 | 7.3 | 7.1 | — | Questionable |
 | [Kyle Pitts Sr.](/dynasty-value-kyle-pitts-sr/) (ATL) | 26 | **1,276** | 8.6 | 7.9 | 7 | 46,774 | — |
-| [Juwan Johnson](/dynasty-value-juwan-johnson/) (NO) | 30 | **265** | 8.5 | 9.9 | 4.4 | — | — |
+| Juwan Johnson (NO) | 30 | **265** | 8.5 | 9.9 | 4.4 | — | — |
 | AJ Barner (SEA) | 24 | **203** | 7.7 | 7 | 9.3 | 54,474 | — |
 | [Michael Mayer](/dynasty-value-michael-mayer/) (LV) | 25 | **399** | 6.1 | 9.1 | 7.1 | — | — |
 

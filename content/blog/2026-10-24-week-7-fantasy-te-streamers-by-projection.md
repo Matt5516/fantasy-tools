@@ -20,7 +20,7 @@ The top three are not streamers. George Kittle (16.6), Brock Bowers (16.1) and T
 |---|---|---|---|---|---|---|---|
 | [Travis Kelce](/dynasty-value-travis-kelce/) (KC) | 37 | **1,218** | 11.4 | 12.4 | 8.9 | — | Questionable |
 | [Dallas Goedert](/dynasty-value-dallas-goedert/) (PHI) | 31 | **1,111** | 11.1 | 11.8 | 7.8 | — | Questionable |
-| [Juwan Johnson](/dynasty-value-juwan-johnson/) (NO) | 30 | **700** | 10.4 | 11 | 5.8 | — | — |
+| Juwan Johnson (NO) | 30 | **700** | 10.4 | 11 | 5.8 | — | — |
 | [Pat Freiermuth](/dynasty-value-pat-freiermuth/) (PIT) | 27 | **654** | 9.7 | 10.6 | 11.8 | — | — |
 | [Tyler Higbee](/start-or-sit-tyler-higbee/) (LAR) | 33 | **251** | 9.7 | 8.4 | 9.7 | 942,579 | — |
 | [T.J. Hockenson](/dynasty-value-t-j-hockenson/) (MIN) | 29 | **371** | 9.6 | 9.8 | 9.9 | — | Questionable |

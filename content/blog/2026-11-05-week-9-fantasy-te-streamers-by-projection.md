@@ -22,7 +22,7 @@ One in-range tight end has no Week 9 projection: Pat Freiermuth. Treat that as m
 |---|---|---|---|---|---|---|---|
 | [Travis Kelce](/dynasty-value-travis-kelce/) (KC) | 37 | **1,260** | 13.2 | 11.7 | 9.8 | — | Questionable |
 | [T.J. Hockenson](/dynasty-value-t-j-hockenson/) (MIN) | 29 | **693** | 10.8 | 11.2 | 10.3 | — | — |
-| [Juwan Johnson](/dynasty-value-juwan-johnson/) (NO) | 30 | **520** | 10.2 | 9.6 | 2.4 | 62,644 | — |
+| Juwan Johnson (NO) | 30 | **520** | 10.2 | 9.6 | 2.4 | 62,644 | — |
 | [Mike Gesicki](/dynasty-value-mike-gesicki/) (CIN) | 31 | **452** | 10.2 | 11 | 10.9 | 721,560 | — |
 | [Dallas Goedert](/dynasty-value-dallas-goedert/) (PHI) | 31 | **485** | 9.9 | 10.7 | 9.7 | — | — |
 | [Brenton Strange](/dynasty-value-brenton-strange/) (JAX) | 25 | **643** | 9.8 | 9.6 | 10.2 | 66,312 | — |

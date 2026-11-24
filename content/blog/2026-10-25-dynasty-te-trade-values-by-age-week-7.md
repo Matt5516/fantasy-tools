@@ -25,7 +25,7 @@ Values use a 0-10,000 scale. "Flag" is our buy/sell signal: how far the draft ma
 | [George Kittle](/dynasty-value-george-kittle/) (SF) | 33 | **2,594** | 2,030 | +359 (+16.1%) | 15.0 | 14.1 | sell (+460%) |
 | [Dalton Kincaid](/dynasty-value-dalton-kincaid/) (BUF) (Questionable) | 27 | **2,366** | 1,732 | -233 (-9.0%) | 10.1 | 5.4 | — |
 | [Travis Kelce](/dynasty-value-travis-kelce/) (KC) | 37 | **1,321** | 940 | -288 (-17.9%) | 12.4 | 8.9 | sell (+692%) |
-| [Juwan Johnson](/dynasty-value-juwan-johnson/) (NO) | 30 | **1,017** | 655 | -577 (-36.2%) | 11.0 | 5.8 | sell (+139%) |
+| Juwan Johnson (NO) | 30 | **1,017** | 655 | -577 (-36.2%) | 11.0 | 5.8 | sell (+139%) |
 | [Dallas Goedert](/dynasty-value-dallas-goedert/) (PHI) (Questionable) | 31 | **975** | 694 | +24 (+2.5%) | 11.8 | 7.8 | — |
 | [Pat Freiermuth](/dynasty-value-pat-freiermuth/) (PIT) | 27 | **698** | 557 | -176 (-20.1%) | 10.6 | 11.8 | — |
 
