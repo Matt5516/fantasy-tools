@@ -60,7 +60,7 @@ Streamers are compared against the top 12. Here they are.
 | 9 | [Jared Goff](/start-or-sit-jared-goff/) (DET) | 18.6 | 10.8 | 1,783 |
 | 10 | [C.J. Stroud](/start-or-sit-c-j-stroud/) (HOU) | 18 | 25 | 2,440 |
 | 11 | [Dak Prescott](/start-or-sit-dak-prescott/) (DAL) | 17.9 | 20.9 | 1,364 |
-| 12 | [Aaron Rodgers](/start-or-sit-aaron-rodgers/) (PIT) | 17.6 | 11.3 | 528 |
+| 12 | Aaron Rodgers (PIT) | 17.6 | 11.3 | 528 |
 
 Josh Allen projects 24.1, 6.6 points above the best streamer. That is the price of skipping a top-12 quarterback. The most valuable streamer, Jordan Love at 1,845, is still worth less than every one of the top five (3,453 or more). Aaron Rodgers is the 12th quarterback at 17.6 and has 152,868 adds in 72 hours, more than any streamer. If you already hold a top-12 quarterback, do not stream.
 

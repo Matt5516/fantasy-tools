@@ -20,7 +20,7 @@ The rule is simple. Take every quarterback with a Week 11 projection, rank them,
 |---|---|---|---|---|---|---|---|
 | [Jared Goff](/start-or-sit-jared-goff/) (DET) | 32 | 17 | 19.1 | 11.6 | — / — | 1,001 | — |
 | [Cam Ward](/start-or-sit-cam-ward/) (TEN) | 24 | 16.9 | 14 | 17 | — / — | 614 | — |
-| [Aaron Rodgers](/start-or-sit-aaron-rodgers/) (PIT) | 42 | 16.7 | 15.4 | 11.2 | 8,736 / 98,296 | 278 | — |
+| Aaron Rodgers (PIT) | 42 | 16.7 | 15.4 | 11.2 | 8,736 / 98,296 | 278 | — |
 | [Justin Herbert](/start-or-sit-justin-herbert/) (LAC) | 28 | 16.6 | 12 | 11.5 | — / — | 861 | — |
 | [Geno Smith](/start-or-sit-geno-smith/) (NYJ) | 36 | 16.2 | 13.9 | 10.4 | 12,012 / 50,104 | 177 | — |
 | [Tyler Shough](/start-or-sit-tyler-shough/) (NO) | 27 | 16.1 | 18.1 | 14.5 | 8,384 / 45,256 | 839 | — |
